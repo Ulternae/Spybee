@@ -1,0 +1,334 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// Better Auth
+
+model User {
+  id               String   @id @default(cuid())
+  name             String
+  email            String   @unique
+  emailVerified    Boolean  @default(false) @map("email_verified")
+  image            String?
+  twoFactorEnabled Boolean? @default(false) @map("two_factor_enabled")
+  createdAt        DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt        DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  accounts             Account[]
+  sessions             Session[]
+  organizationMembers  Member[]
+  sentInvitations      Invitation[]          @relation("InvitationInviter")
+  twoFactors           TwoFactor[]
+  projectMemberships   ProjectMember[]
+  createdIncidents     Incident[]            @relation("IncidentCreator")
+  incidentParticipants IncidentParticipant[]
+
+  @@map("users")
+}
+
+model Session {
+  id                   String   @id @default(cuid())
+  expiresAt            DateTime @map("expires_at") @db.Timestamptz(3)
+  token                String   @unique
+  createdAt            DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt            DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+  ipAddress            String?  @map("ip_address")
+  userAgent            String?  @map("user_agent")
+  userId               String   @map("user_id")
+  activeOrganizationId String?  @map("active_organization_id")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([activeOrganizationId])
+  @@map("sessions")
+}
+
+model Account {
+  id                    String    @id @default(cuid())
+  accountId             String    @map("account_id")
+  providerId            String    @map("provider_id")
+  userId                String    @map("user_id")
+  accessToken           String?   @map("access_token")
+  refreshToken          String?   @map("refresh_token")
+  idToken               String?   @map("id_token")
+  accessTokenExpiresAt  DateTime? @map("access_token_expires_at") @db.Timestamptz(3)
+  refreshTokenExpiresAt DateTime? @map("refresh_token_expires_at") @db.Timestamptz(3)
+  scope                 String?
+  password              String?
+  createdAt             DateTime  @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt             DateTime  @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([providerId, accountId])
+  @@index([userId])
+  @@map("accounts")
+}
+
+model Verification {
+  id         String   @id @default(cuid())
+  identifier String
+  value      String
+  expiresAt  DateTime @map("expires_at") @db.Timestamptz(3)
+  createdAt  DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt  DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@index([identifier])
+  @@map("verifications")
+}
+
+model Organization {
+  id        String   @id @default(cuid())
+  name      String
+  slug      String   @unique
+  logo      String?
+  metadata  String?
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+
+  members     Member[]
+  invitations Invitation[]
+  projects    Project[]
+  tags        Tag[]
+
+  @@map("organizations")
+}
+
+model Member {
+  id             String   @id @default(cuid())
+  organizationId String   @map("organization_id")
+  userId         String   @map("user_id")
+  role           String   @default("member")
+  createdAt      DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([organizationId, userId])
+  @@index([userId])
+  @@map("organization_members")
+}
+
+model Invitation {
+  id             String   @id @default(cuid())
+  organizationId String   @map("organization_id")
+  email          String
+  role           String?
+  status         String   @default("pending")
+  expiresAt      DateTime @map("expires_at") @db.Timestamptz(3)
+  inviterId      String   @map("inviter_id")
+  createdAt      DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  inviter      User         @relation("InvitationInviter", fields: [inviterId], references: [id], onDelete: Cascade)
+
+  @@index([organizationId])
+  @@index([email])
+  @@index([inviterId])
+  @@map("organization_invitations")
+}
+
+model TwoFactor {
+  id          String  @id @default(cuid())
+  userId      String  @map("user_id")
+  secret      String
+  backupCodes String  @map("backup_codes")
+  verified    Boolean @default(false)
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("two_factors")
+}
+
+model RateLimit {
+  id          String @id @default(cuid())
+  key         String @unique
+  count       Int
+  lastRequest BigInt @map("last_request")
+
+  @@map("auth_rate_limits")
+}
+
+// Application domain
+
+model Project {
+  id             String   @id @default(cuid())
+  organizationId String   @map("organization_id")
+  name           String
+  slug           String
+  createdAt      DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt      DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  organization Organization    @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  members      ProjectMember[]
+  incidents    Incident[]
+
+  @@unique([organizationId, slug])
+  @@index([organizationId])
+  @@map("projects")
+}
+
+model ProjectMember {
+  id        String      @id @default(cuid())
+  projectId String      @map("project_id")
+  userId    String      @map("user_id")
+  role      ProjectRole @default(VIEWER)
+  createdAt DateTime    @default(now()) @map("created_at") @db.Timestamptz(3)
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([projectId, userId])
+  @@index([userId])
+  @@map("project_members")
+}
+
+model IncidentCategory {
+  id     String @id @default(cuid())
+  key    String @unique
+  nameEs String @map("name_es")
+  nameEn String @map("name_en")
+
+  incidents Incident[]
+
+  @@map("incident_categories")
+}
+
+model Incident {
+  id                  String           @id @default(cuid())
+  projectId           String           @map("project_id")
+  sequenceNo          Int              @map("sequence_no")
+  categoryId          String           @map("category_id")
+  createdById         String?          @map("created_by_id")
+  title               String
+  description         String
+  priority            IncidentPriority @default(MEDIUM)
+  status              IncidentStatus   @default(OPEN)
+  isApproved          Boolean          @default(false) @map("is_approved")
+  latitude            Float            @db.DoublePrecision
+  longitude           Float            @db.DoublePrecision
+  locationDescription String?          @map("location_description")
+  dueDate             DateTime?        @map("due_date") @db.Date
+  closedAt            DateTime?        @map("closed_at") @db.Timestamptz(3)
+  deletedAt           DateTime?        @map("deleted_at") @db.Timestamptz(3)
+  createdAt           DateTime         @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt           DateTime         @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  project      Project               @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  category     IncidentCategory      @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+  createdBy    User?                 @relation("IncidentCreator", fields: [createdById], references: [id], onDelete: SetNull)
+  participants IncidentParticipant[]
+  tags         IncidentTag[]
+  media        IncidentMedia[]
+
+  @@unique([projectId, sequenceNo])
+  @@index([projectId, status])
+  @@index([projectId, priority])
+  @@index([categoryId])
+  @@index([createdById])
+  @@index([createdAt])
+  @@map("incidents")
+}
+
+model IncidentParticipant {
+  incidentId String          @map("incident_id")
+  userId     String          @map("user_id")
+  role       ParticipantRole
+
+  incident Incident @relation(fields: [incidentId], references: [id], onDelete: Cascade)
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([incidentId, userId, role])
+  @@index([userId])
+  @@map("incident_participants")
+}
+
+model Tag {
+  id             String   @id @default(cuid())
+  organizationId String   @map("organization_id")
+  parentId       String?  @map("parent_id")
+  name           String
+  slug           String
+  color          String?
+  createdAt      DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+
+  organization Organization  @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  parent       Tag?          @relation("TagHierarchy", fields: [parentId], references: [id], onDelete: Restrict)
+  children     Tag[]         @relation("TagHierarchy")
+  incidents    IncidentTag[]
+
+  @@unique([organizationId, slug])
+  @@index([parentId])
+  @@map("tags")
+}
+
+model IncidentTag {
+  incidentId String @map("incident_id")
+  tagId      String @map("tag_id")
+
+  incident Incident @relation(fields: [incidentId], references: [id], onDelete: Cascade)
+  tag      Tag      @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([incidentId, tagId])
+  @@index([tagId])
+  @@map("incident_tags")
+}
+
+model IncidentMedia {
+  id           String            @id @default(cuid())
+  incidentId   String            @map("incident_id")
+  originalName String            @map("original_name")
+  mediaType    IncidentMediaType @map("media_type")
+  mimeType     String            @map("mime_type")
+  sizeBytes    BigInt?           @map("size_bytes")
+  uploadStatus UploadStatus      @default(PENDING) @map("upload_status")
+  storagePath  String?           @map("storage_path")
+  externalUrl  String?           @map("external_url")
+  createdAt    DateTime          @default(now()) @map("created_at") @db.Timestamptz(3)
+
+  incident Incident @relation(fields: [incidentId], references: [id], onDelete: Cascade)
+
+  @@index([incidentId])
+  @@map("incident_media")
+}
+
+enum ProjectRole {
+  PROJECT_ADMIN @map("project_admin")
+  EDITOR        @map("editor")
+  VIEWER        @map("viewer")
+}
+
+enum IncidentPriority {
+  LOW    @map("low")
+  MEDIUM @map("medium")
+  HIGH   @map("high")
+}
+
+enum IncidentStatus {
+  OPEN     @map("open")
+  ON_PAUSE @map("on_pause")
+  CLOSED   @map("closed")
+}
+
+enum ParticipantRole {
+  ASSIGNEE @map("assignee")
+  OBSERVER @map("observer")
+}
+
+enum IncidentMediaType {
+  IMAGE    @map("image")
+  VIDEO    @map("video")
+  DOCUMENT @map("document")
+}
+
+enum UploadStatus {
+  PENDING  @map("pending")
+  UPLOADED @map("uploaded")
+  FAILED   @map("failed")
+}
