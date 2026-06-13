@@ -1,0 +1,150 @@
+@use "styles" as *;
+
+.overlay {
+  @include overlay-backdrop;
+
+  &[data-state="open"] {
+    animation: fade-in $transition-base;
+  }
+
+  &[data-state="closed"] {
+    animation: fade-out $transition-base;
+  }
+}
+
+.content {
+  position: fixed;
+  z-index: layer("modal");
+  display: flex;
+  flex-direction: column;
+  gap: space(4);
+  color: var(--foreground);
+  background: var(--background);
+  box-shadow: var(--shadow-lg);
+  transition: transform $transition-slow;
+
+  &[data-state="open"] {
+    transform: translate(0);
+  }
+}
+
+.right,
+.left {
+  top: 0;
+  bottom: 0;
+  width: 75%;
+  max-width: rem(384);
+}
+
+.right {
+  right: 0;
+  border-left: 1px solid var(--border);
+
+  &[data-state="closed"] {
+    transform: translateX(100%);
+  }
+}
+
+.left {
+  left: 0;
+  border-right: 1px solid var(--border);
+
+  &[data-state="closed"] {
+    transform: translateX(-100%);
+  }
+}
+
+.top,
+.bottom {
+  right: 0;
+  left: 0;
+  height: auto;
+  max-height: 85vh;
+}
+
+.top {
+  top: 0;
+  border-bottom: 1px solid var(--border);
+
+  &[data-state="closed"] {
+    transform: translateY(-100%);
+  }
+}
+
+.bottom {
+  bottom: 0;
+  border-top: 1px solid var(--border);
+
+  &[data-state="closed"] {
+    transform: translateY(100%);
+  }
+}
+
+.close {
+  @include focus-ring;
+
+  position: absolute;
+  top: space(4);
+  right: space(4);
+  display: inline-flex;
+  padding: space(1);
+  color: var(--muted-foreground);
+  background: transparent;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+
+  &:hover {
+    color: var(--foreground);
+    background: var(--accent);
+  }
+
+  svg {
+    width: rem(16);
+    height: rem(16);
+  }
+}
+
+.header,
+.footer {
+  display: flex;
+  flex-direction: column;
+  gap: space(1.5);
+  padding: space(4);
+}
+
+.footer {
+  margin-top: auto;
+  gap: space(2);
+}
+
+.title {
+  font-weight: 600;
+}
+
+.description {
+  color: var(--muted-foreground);
+  font-size: rem(14);
+  line-height: var(--leading-tight);
+}
+
+.srOnly {
+  @include visually-hidden;
+}
+
+@include reduced-motion {
+  .overlay,
+  .content {
+    animation-duration: 1ms !important;
+    transition-duration: 1ms !important;
+  }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fade-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}

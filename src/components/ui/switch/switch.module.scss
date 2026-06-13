@@ -1,0 +1,49 @@
+@use "styles" as *;
+
+.root {
+  @include focus-ring;
+
+  display: inline-flex;
+  width: rem(32);
+  height: rem(18);
+  flex-shrink: 0;
+  align-items: center;
+  padding: 0;
+  background: color-mix(in srgb, var(--foreground) 16%, var(--input));
+  border: 1px solid color-mix(in srgb, var(--foreground) 24%, transparent);
+  border-radius: 999px;
+  outline: none;
+  box-shadow: var(--shadow-xs);
+  cursor: pointer;
+  transition:
+    background-color $transition-base,
+    box-shadow $transition-base;
+
+  &[data-state="checked"] {
+    background: var(--primary);
+    border-color: var(--primary);
+  }
+
+  &:disabled {
+    @include disabled;
+  }
+}
+
+.thumb {
+  display: block;
+  width: rem(16);
+  height: rem(16);
+  background: var(--foreground);
+  border-radius: 50%;
+  pointer-events: none;
+  transition: transform $transition-base;
+
+  &[data-state="unchecked"] {
+    transform: translateX(0);
+  }
+
+  &[data-state="checked"] {
+    background: var(--primary-foreground);
+    transform: translateX(rem(14));
+  }
+}

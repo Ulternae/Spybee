@@ -1,0 +1,44 @@
+@use "styles" as *;
+
+.container {
+  justify-content: center;
+}
+
+.group {
+  display: flex;
+  width: fit-content;
+  max-width: 100%;
+  min-width: 0;
+  flex-wrap: wrap;
+  justify-content: center;
+  row-gap: space(2);
+}
+
+.slot {
+  width: clamp(rem(32), 8vw, rem(36));
+  height: clamp(rem(32), 8vw, rem(36));
+  flex: 0 0 auto;
+  border: 1px solid color-mix(in srgb, var(--foreground) 18%, var(--border));
+  border-radius: 0;
+
+  &:not(:first-child) {
+    margin-left: -1px;
+  }
+
+  &:first-child {
+    border-radius: var(--radius-md) 0 0 var(--radius-md);
+  }
+
+  &:last-child {
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  }
+
+  &[data-active="true"] {
+    border-color: var(--ring);
+  }
+}
+
+.gap {
+  width: space(8);
+  flex: 0 0 space(8);
+}

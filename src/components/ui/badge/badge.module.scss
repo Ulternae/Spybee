@@ -1,0 +1,88 @@
+@use "styles" as *;
+
+.root {
+  @include focus-ring;
+  @include transition-colors($transition-fast);
+
+  display: inline-flex;
+  width: fit-content;
+  flex-shrink: 0;
+  gap: space(1);
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: space(0.5) space(2);
+  border: 1px solid transparent;
+  border-radius: 999px;
+  font-size: rem(12);
+  font-weight: 500;
+  line-height: var(--leading-tight);
+  white-space: nowrap;
+  svg {
+    width: rem(12);
+    height: rem(12);
+    flex-shrink: 0;
+    pointer-events: none;
+  }
+
+  &[aria-invalid="true"] {
+    border-color: var(--destructive);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--destructive) 20%, transparent);
+  }
+}
+
+.default {
+  color: var(--primary-foreground);
+  background: var(--primary);
+}
+
+.secondary {
+  color: var(--secondary-foreground);
+  background: var(--secondary);
+}
+
+.destructive {
+  color: var(--destructive-foreground);
+  background: var(--destructive);
+}
+
+.outline {
+  color: var(--foreground);
+  background: transparent;
+  border-color: var(--border);
+}
+
+.ghost {
+  color: var(--foreground);
+  background: transparent;
+}
+
+.link {
+  padding-inline: 0;
+  color: var(--primary);
+  background: transparent;
+  border-radius: 0;
+  text-underline-offset: rem(4);
+}
+
+a.default:hover {
+  filter: brightness(0.96);
+}
+
+a.secondary:hover {
+  background: var(--accent);
+}
+
+a.destructive:hover {
+  filter: brightness(0.94);
+}
+
+a.outline:hover,
+a.ghost:hover {
+  color: var(--accent-foreground);
+  background: var(--accent);
+}
+
+a.link:hover {
+  text-decoration: underline;
+}

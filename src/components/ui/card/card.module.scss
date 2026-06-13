@@ -1,0 +1,53 @@
+@use "styles" as *;
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: space(6);
+  padding-block: space(6);
+  color: var(--card-foreground);
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-sm);
+}
+
+.header {
+  display: grid;
+  grid-template-rows: auto auto;
+  gap: space(2);
+  align-items: start;
+  padding-inline: space(6);
+
+  &:has(.action) {
+    grid-template-columns: 1fr auto;
+  }
+}
+
+.title {
+  font-weight: 600;
+  line-height: 1;
+}
+
+.description {
+  color: var(--muted-foreground);
+  font-size: rem(14);
+  line-height: var(--leading-tight);
+}
+
+.action {
+  grid-row: 1 / span 2;
+  grid-column: 2;
+  align-self: start;
+  justify-self: end;
+}
+
+.content,
+.footer {
+  padding-inline: space(6);
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+}

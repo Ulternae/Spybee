@@ -1,4 +1,4 @@
-:root {
+@mixin light-theme {
   color-scheme: light;
 
   --background: #ffffff;
@@ -14,7 +14,7 @@
   --muted: #f8f9fa;
   --muted-foreground: #828282;
   --accent: #fff5d6;
-  --accent-foreground: #f2c94c;
+  --accent-foreground: #8a6a00;
   --destructive: #eb5757;
   --destructive-foreground: #ffffff;
   --border: #e0e0e0;
@@ -30,19 +30,9 @@
   --sidebar-primary: #f2c94c;
   --sidebar-primary-foreground: #333333;
   --sidebar-accent: #fff5d6;
-  --sidebar-accent-foreground: #f2c94c;
+  --sidebar-accent-foreground: #8a6a00;
   --sidebar-border: #f2f2f2;
   --sidebar-ring: #f2c94c;
-
-  --font-sans: var(--font-montserrat-alternates), system-ui, sans-serif;
-  --font-serif: Georgia, serif;
-  --font-mono: monospace;
-
-  --radius: 0.5rem;
-  --radius-sm: calc(var(--radius) - 0.25rem);
-  --radius-md: calc(var(--radius) - 0.125rem);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 0.25rem);
 
   --shadow-2xs: 0 4px 10px hsl(0 0% 0% / 0.03);
   --shadow-xs: 0 4px 10px hsl(0 0% 0% / 0.03);
@@ -52,17 +42,9 @@
   --shadow-lg: 0 4px 10px hsl(0 0% 0% / 0.05), 0 4px 6px -1px hsl(0 0% 0% / 0.05);
   --shadow-xl: 0 4px 10px hsl(0 0% 0% / 0.05), 0 8px 10px -1px hsl(0 0% 0% / 0.05);
   --shadow-2xl: 0 4px 10px hsl(0 0% 0% / 0.13);
-
-  --tracking-normal: -0.01em;
-  --tracking-tighter: calc(var(--tracking-normal) - 0.05em);
-  --tracking-tight: calc(var(--tracking-normal) - 0.025em);
-  --tracking-wide: calc(var(--tracking-normal) + 0.025em);
-  --tracking-wider: calc(var(--tracking-normal) + 0.05em);
-  --tracking-widest: calc(var(--tracking-normal) + 0.1em);
-  --spacing: 0.25rem;
 }
 
-.dark {
+@mixin dark-theme {
   color-scheme: dark;
 
   --background: #1a1a1a;
@@ -81,7 +63,7 @@
   --accent-foreground: #f2c94c;
   --destructive: #ff4d4d;
   --destructive-foreground: #ffffff;
-  --border: #333333;
+  --border: #454545;
   --input: #2b2b2b;
   --ring: #f2c94c;
   --chart-1: #f2c94c;
@@ -106,4 +88,41 @@
   --shadow-lg: 0 10px 20px hsl(0 0% 0% / 0.4), 0 4px 6px -1px hsl(0 0% 0% / 0.4);
   --shadow-xl: 0 10px 20px hsl(0 0% 0% / 0.4), 0 8px 10px -1px hsl(0 0% 0% / 0.4);
   --shadow-2xl: 0 10px 20px hsl(0 0% 0% / 1);
+}
+
+:root {
+  @include light-theme;
+
+  --font-sans: var(--font-montserrat-alternates), system-ui, sans-serif;
+  --font-serif: Georgia, serif;
+  --font-mono: monospace;
+
+  --radius: 0.5rem;
+  --radius-sm: calc(var(--radius) - 0.25rem);
+  --radius-md: calc(var(--radius) - 0.125rem);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 0.25rem);
+
+  --tracking-normal: -0.01em;
+  --tracking-tighter: calc(var(--tracking-normal) - 0.05em);
+  --tracking-tight: calc(var(--tracking-normal) - 0.025em);
+  --tracking-wide: calc(var(--tracking-normal) + 0.025em);
+  --tracking-wider: calc(var(--tracking-normal) + 0.05em);
+  --tracking-widest: calc(var(--tracking-normal) + 0.1em);
+  --leading-tight: 1.25;
+  --spacing: 0.25rem;
+}
+
+.light {
+  @include light-theme;
+}
+
+.dark {
+  @include dark-theme;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not(.light) {
+    @include dark-theme;
+  }
 }

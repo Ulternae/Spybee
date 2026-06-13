@@ -1,0 +1,31 @@
+@use "styles" as *;
+
+.toaster {
+  font-family: var(--font-sans);
+
+  svg {
+    width: rem(16);
+    height: rem(16);
+  }
+}
+
+.description {
+  color: var(--muted-foreground) !important;
+  line-height: var(--leading-tight);
+}
+
+.spinner {
+  animation: spin 1s linear infinite;
+}
+
+@include reduced-motion {
+  .spinner {
+    animation: none;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

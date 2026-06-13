@@ -1,0 +1,72 @@
+@use "styles" as *;
+
+.container {
+  position: relative;
+  width: 100%;
+
+  &:focus-within .errorOverlay {
+    opacity: 0;
+  }
+}
+
+.input {
+  @include transition-colors;
+
+  width: 100%;
+  min-width: 0;
+  height: rem(36);
+  padding: space(1) space(3);
+  color: var(--foreground);
+  background: var(--input);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  outline: none;
+  box-shadow: var(--shadow-xs);
+  font-size: rem(14);
+  &::placeholder {
+    color: var(--muted-foreground);
+  }
+
+  &::selection {
+    color: var(--primary-foreground);
+    background: var(--primary);
+  }
+
+  &:focus-visible {
+    @include control-focus;
+  }
+
+  &[aria-invalid="true"] {
+    @include control-invalid;
+  }
+
+  &:disabled {
+    @include disabled;
+  }
+
+  &::file-selector-button {
+    height: rem(28);
+    padding: 0;
+    color: var(--foreground);
+    background: transparent;
+    border: 0;
+    font: inherit;
+    font-weight: 500;
+  }
+}
+
+.errorOverlay {
+  position: absolute;
+  top: 50%;
+  right: space(3);
+  padding-left: space(2);
+  color: var(--destructive);
+  background: var(--input);
+  font-size: rem(11);
+  font-weight: 600;
+  line-height: 1;
+  text-transform: uppercase;
+  pointer-events: none;
+  transform: translateY(-50%);
+  transition: opacity $transition-base;
+}

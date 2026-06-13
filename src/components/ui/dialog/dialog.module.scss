@@ -1,0 +1,149 @@
+@use "styles" as *;
+
+.overlay {
+  @include overlay-backdrop;
+
+  &[data-state="open"] {
+    animation: fade-in $transition-base;
+  }
+
+  &[data-state="closed"] {
+    animation: fade-out $transition-base;
+  }
+}
+
+.content {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: layer("modal");
+  display: grid;
+  width: calc(100% - space(8));
+  max-width: rem(512);
+  gap: space(4);
+  padding: space(6);
+  color: var(--foreground);
+  background: var(--background);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  outline: none;
+  box-shadow: var(--shadow-lg);
+  transform: translate(-50%, -50%);
+
+  &[data-state="open"] {
+    animation: content-show $transition-base;
+  }
+
+  &[data-state="closed"] {
+    animation: content-hide $transition-base;
+  }
+}
+
+.close {
+  @include focus-ring;
+
+  position: absolute;
+  top: space(4);
+  right: space(4);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: space(1);
+  color: var(--muted-foreground);
+  background: transparent;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  opacity: 0.7;
+  transition:
+    color $transition-fast,
+    background-color $transition-fast,
+    opacity $transition-fast;
+
+  &:hover {
+    color: var(--foreground);
+    background: var(--accent);
+    opacity: 1;
+  }
+
+  svg {
+    width: rem(16);
+    height: rem(16);
+  }
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: space(2);
+  text-align: center;
+
+  @include from("sm") {
+    text-align: left;
+  }
+}
+
+.footer {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: space(2);
+
+  @include from("sm") {
+    flex-direction: row;
+    justify-content: flex-end;
+  }
+}
+
+.title {
+  font-size: rem(18);
+  font-weight: 600;
+  line-height: 1;
+}
+
+.description {
+  color: var(--muted-foreground);
+  font-size: rem(14);
+  line-height: var(--leading-tight);
+}
+
+.srOnly {
+  @include visually-hidden;
+}
+
+@include reduced-motion {
+  .overlay,
+  .content {
+    animation-duration: 1ms !important;
+  }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fade-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+@keyframes content-show {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -48%) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes content-hide {
+  from {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translate(-50%, -48%) scale(0.95);
+  }
+}

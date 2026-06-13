@@ -1,0 +1,63 @@
+@use "styles" as *;
+
+.root {
+  @include focus-ring;
+  @include transition-colors($transition-fast);
+
+  display: inline-flex;
+  gap: space(2);
+  align-items: center;
+  justify-content: center;
+  color: var(--foreground);
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  outline: none;
+  font-size: rem(14);
+  font-weight: 500;
+  white-space: nowrap;
+  cursor: pointer;
+  svg {
+    width: rem(16);
+    height: rem(16);
+    flex-shrink: 0;
+    pointer-events: none;
+  }
+
+  &:hover,
+  &[data-state="on"] {
+    color: var(--accent-foreground);
+    background: var(--accent);
+  }
+
+  &:disabled {
+    @include disabled;
+  }
+}
+
+.default {
+  background: transparent;
+}
+
+.outline {
+  background: transparent;
+  border-color: var(--border);
+  box-shadow: var(--shadow-xs);
+}
+
+.sizeDefault {
+  min-width: rem(36);
+  height: rem(36);
+  padding-inline: space(2);
+}
+
+.sm {
+  min-width: rem(32);
+  height: rem(32);
+  padding-inline: space(1.5);
+}
+
+.lg {
+  min-width: rem(40);
+  height: rem(40);
+  padding-inline: space(2.5);
+}

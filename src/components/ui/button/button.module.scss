@@ -2,6 +2,7 @@
 
 .root {
   @include focus-ring;
+  @include transition-colors($transition-fast);
 
   display: inline-flex;
   flex-shrink: 0;
@@ -15,12 +16,6 @@
   line-height: 1;
   white-space: nowrap;
   cursor: pointer;
-  transition:
-    color $transition-fast,
-    background-color $transition-fast,
-    border-color $transition-fast,
-    box-shadow $transition-fast;
-
   svg {
     flex-shrink: 0;
     pointer-events: none;

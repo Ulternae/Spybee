@@ -1,0 +1,50 @@
+@use "styles" as *;
+
+.content {
+  z-index: layer("modal");
+  width: rem(288);
+  padding: space(4);
+  color: var(--popover-foreground);
+  background: var(--popover);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  outline: none;
+  box-shadow: var(--shadow-md);
+  transform-origin: var(--radix-popover-content-transform-origin);
+
+  &[data-state="open"] {
+    animation: popover-show $transition-base;
+  }
+
+  &[data-state="closed"] {
+    animation: popover-hide $transition-base;
+  }
+}
+
+@include reduced-motion {
+  .content {
+    animation-duration: 1ms !important;
+  }
+}
+
+@keyframes popover-show {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes popover-hide {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+}

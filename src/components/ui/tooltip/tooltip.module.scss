@@ -1,0 +1,58 @@
+@use "styles" as *;
+
+.content {
+  z-index: layer("toast");
+  width: fit-content;
+  max-width: rem(280);
+  padding: space(1.5) space(3);
+  color: var(--background);
+  background: var(--foreground);
+  border-radius: var(--radius-md);
+  font-size: rem(12);
+  line-height: var(--leading-tight);
+  text-wrap: balance;
+  transform-origin: var(--radix-tooltip-content-transform-origin);
+
+  &[data-state="delayed-open"],
+  &[data-state="instant-open"] {
+    animation: tooltip-show $transition-fast;
+  }
+
+  &[data-state="closed"] {
+    animation: tooltip-hide $transition-fast;
+  }
+}
+
+.arrow {
+  width: rem(10);
+  height: rem(5);
+  fill: var(--foreground);
+}
+
+@include reduced-motion {
+  .content {
+    animation-duration: 1ms !important;
+  }
+}
+
+@keyframes tooltip-show {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes tooltip-hide {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+}

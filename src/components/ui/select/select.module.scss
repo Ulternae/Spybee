@@ -1,0 +1,169 @@
+@use "styles" as *;
+
+.trigger {
+  @include focus-ring;
+  @include transition-colors;
+
+  display: inline-flex;
+  width: fit-content;
+  min-width: rem(128);
+  align-items: center;
+  justify-content: space-between;
+  gap: space(2);
+  padding-inline: space(3);
+  color: var(--foreground);
+  background: var(--input);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  outline: none;
+  box-shadow: var(--shadow-xs);
+  font-size: rem(14);
+  white-space: nowrap;
+  cursor: pointer;
+  &[data-size="default"] {
+    height: rem(36);
+  }
+
+  &[data-size="sm"] {
+    height: rem(32);
+  }
+
+  &[data-placeholder] {
+    color: var(--muted-foreground);
+  }
+
+  &[aria-invalid="true"] {
+    border-color: var(--destructive);
+  }
+
+  &:disabled {
+    @include disabled;
+  }
+
+  svg {
+    width: rem(16);
+    height: rem(16);
+    flex-shrink: 0;
+    color: var(--muted-foreground);
+    pointer-events: none;
+  }
+}
+
+.value {
+  display: flex;
+  min-width: 0;
+  gap: space(2);
+  align-items: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.content {
+  z-index: layer("modal");
+  max-height: var(--radix-select-content-available-height);
+  min-width: rem(128);
+  overflow: hidden auto;
+  color: var(--popover-foreground);
+  background: var(--popover);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  transform-origin: var(--radix-select-content-transform-origin);
+
+  &[data-state="open"] {
+    animation: select-show $transition-base;
+  }
+
+}
+
+.viewport {
+  padding: space(1);
+
+  &[data-position="popper"] {
+    width: 100%;
+    min-width: var(--radix-select-trigger-width);
+  }
+}
+
+.label {
+  padding: space(1.5) space(2);
+  color: var(--muted-foreground);
+  font-size: rem(12);
+}
+
+.item {
+  position: relative;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: space(2);
+  padding: space(1.5) space(8) space(1.5) space(2);
+  border-radius: var(--radius-sm);
+  outline: none;
+  font-size: rem(14);
+  cursor: default;
+  user-select: none;
+
+  &:focus {
+    color: var(--accent-foreground);
+    background: var(--accent);
+  }
+
+  &[data-disabled] {
+    pointer-events: none;
+    opacity: 0.5;
+  }
+
+  svg {
+    width: rem(16);
+    height: rem(16);
+  }
+}
+
+.indicator {
+  position: absolute;
+  right: space(2);
+  display: flex;
+  width: rem(14);
+  height: rem(14);
+  align-items: center;
+  justify-content: center;
+}
+
+.separator {
+  height: 1px;
+  margin: space(1) calc(space(1) * -1);
+  background: var(--border);
+  pointer-events: none;
+}
+
+.scrollButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-block: space(1);
+  cursor: default;
+
+  svg {
+    width: rem(16);
+    height: rem(16);
+  }
+}
+
+@include reduced-motion {
+  .content {
+    animation-duration: 1ms !important;
+  }
+}
+
+@keyframes select-show {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

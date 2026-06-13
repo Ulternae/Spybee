@@ -19,6 +19,21 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+html.theme-transition,
+html.theme-transition *,
+html.theme-transition *::before,
+html.theme-transition *::after {
+  transition-duration: 300ms !important;
+  transition-property:
+    color,
+    background-color,
+    border-color,
+    box-shadow,
+    fill,
+    stroke !important;
+  transition-timing-function: ease !important;
+}
+
 *,
 *::before,
 *::after {
@@ -41,6 +56,10 @@ a {
   text-decoration: none;
 }
 
+p {
+  line-height: var(--leading-tight);
+}
+
 button {
   border: 0;
 }
@@ -61,4 +80,13 @@ ol {
 ::selection {
   color: var(--primary-foreground);
   background: var(--primary);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.theme-transition,
+  html.theme-transition *,
+  html.theme-transition *::before,
+  html.theme-transition *::after {
+    transition-duration: 1ms !important;
+  }
 }
