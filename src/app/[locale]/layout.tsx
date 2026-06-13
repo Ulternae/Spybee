@@ -4,6 +4,8 @@ import "../globals.scss";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
 import { LOCALES } from "@/i18n/routing";
+import { ExternalTranslationDomGuard } from "@/internal/instrumentation/external-translation-dom-guard";
+import { ReactScan } from "@/internal/instrumentation/react-scan";
 
 export const generateStaticParams = () => {
   return LOCALES.map((locale) => ({ locale }));
@@ -35,6 +37,8 @@ const RootLayout = async ({ children, params }: Readonly<RootLayoutProps>) => {
   return (
     <html lang={locale} className={montserratAlternates.variable}>
       <body>
+        <ReactScan />
+        <ExternalTranslationDomGuard />
         <NextIntlClientProvider locale={locale} messages={messages}>
           {children}
         </NextIntlClientProvider>
