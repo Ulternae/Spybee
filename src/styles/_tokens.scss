@@ -1,0 +1,19 @@
+$breakpoints: (
+  "sm": 36rem,
+  "md": 48rem,
+  "lg": 64rem,
+  "xl": 80rem,
+);
+
+$transition-fast: 120ms ease;
+$transition-base: 180ms ease;
+$transition-slow: 240ms ease;
+
+$z-index: (
+  "base": 0,
+  "dropdown": 100,
+  "sticky": 200,
+  "overlay": 300,
+  "modal": 400,
+  "toast": 500,
+);

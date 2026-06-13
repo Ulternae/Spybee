@@ -1,0 +1,23 @@
+@use "sass:map";
+@use "sass:math";
+@use "tokens" as tokens;
+
+@function rem($pixels) {
+  @if math.is-unitless($pixels) {
+    @return math.div($pixels, 16) * 1rem;
+  }
+
+  @error "The rem() function expects a unitless pixel value.";
+}
+
+@function space($step) {
+  @return calc(var(--spacing) * #{$step});
+}
+
+@function layer($name) {
+  @if not map.has-key(tokens.$z-index, $name) {
+    @error "Unknown z-index layer: #{$name}.";
+  }
+
+  @return map.get(tokens.$z-index, $name);
+}

@@ -1,0 +1,94 @@
+@use "../../../styles" as *;
+
+.root {
+  @include focus-ring;
+
+  display: inline-flex;
+  gap: space(2);
+  align-items: center;
+  justify-content: center;
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  font-size: rem(14);
+  font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    color $transition-fast,
+    background-color $transition-fast,
+    border-color $transition-fast,
+    box-shadow $transition-fast;
+
+  &:disabled {
+    @include disabled;
+  }
+}
+
+.primary {
+  color: var(--primary-foreground);
+  background: var(--primary);
+
+  &:hover:not(:disabled) {
+    filter: brightness(0.96);
+  }
+}
+
+.secondary {
+  color: var(--secondary-foreground);
+  background: var(--secondary);
+
+  &:hover:not(:disabled) {
+    background: var(--accent);
+  }
+}
+
+.outline {
+  color: var(--foreground);
+  background: var(--background);
+  border-color: var(--border);
+
+  &:hover:not(:disabled) {
+    background: var(--accent);
+  }
+}
+
+.ghost {
+  color: var(--foreground);
+  background: transparent;
+
+  &:hover:not(:disabled) {
+    background: var(--accent);
+  }
+}
+
+.destructive {
+  color: var(--destructive-foreground);
+  background: var(--destructive);
+
+  &:hover:not(:disabled) {
+    filter: brightness(0.94);
+  }
+}
+
+.sm {
+  min-height: rem(32);
+  padding-inline: space(3);
+}
+
+.md {
+  min-height: rem(40);
+  padding-inline: space(4);
+}
+
+.lg {
+  min-height: rem(44);
+  padding-inline: space(6);
+  font-size: rem(16);
+}
+
+.icon {
+  width: rem(40);
+  height: rem(40);
+  padding: 0;
+}

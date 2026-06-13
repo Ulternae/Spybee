@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
-import { Geist } from "next/font/google";
-import "./globals.css";
+import { Montserrat_Alternates } from "next/font/google";
+import "./globals.scss";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const montserratAlternates = Montserrat_Alternates({
+  variable: "--font-montserrat-alternates",
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
@@ -18,7 +19,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={geistSans.variable}>
+    <html lang="en" className={montserratAlternates.variable}>
       <body>{children}</body>
     </html>
   );
