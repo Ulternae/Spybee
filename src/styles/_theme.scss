@@ -120,9 +120,3 @@
 .dark {
   @include dark-theme;
 }
-
-@media (prefers-color-scheme: dark) {
-  :root:not(.light) {
-    @include dark-theme;
-  }
-}

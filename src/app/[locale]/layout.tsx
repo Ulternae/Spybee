@@ -6,6 +6,12 @@ import { getMessages, setRequestLocale } from "next-intl/server";
 import { LOCALES } from "@/i18n/routing";
 import { ExternalTranslationDomGuard } from "@/internal/instrumentation/external-translation-dom-guard";
 import { ReactScan } from "@/internal/instrumentation/react-scan";
+import { ZodLocaleSync } from "@/components/controllers/ZodLocaleSync";
+import { Toaster } from "@/components/ui/sonner";
+import { ThemeProvider } from "@/store/theme/theme.provider";
+import { ThemeClassSync } from "@/store/theme/theme-class.sync";
+import { ThemeInitializationScript } from "@/store/theme/theme-initialization-script";
+import { TooltipProvider } from "@/components/ui/tooltip";
 
 export const generateStaticParams = () => {
   return LOCALES.map((locale) => ({ locale }));
@@ -35,12 +41,20 @@ const RootLayout = async ({ children, params }: Readonly<RootLayoutProps>) => {
   const messages = await getMessages();
 
   return (
-    <html lang={locale} className={montserratAlternates.variable}>
+    <html lang={locale} className={montserratAlternates.variable} suppressHydrationWarning>
       <body>
+        <ThemeInitializationScript />
         <ReactScan />
         <ExternalTranslationDomGuard />
         <NextIntlClientProvider locale={locale} messages={messages}>
-          {children}
+          <ZodLocaleSync locale={locale} />
+          <Toaster />
+          <ThemeProvider>
+            <ThemeClassSync />
+            <TooltipProvider>
+              {children}
+            </TooltipProvider>
+          </ThemeProvider>
         </NextIntlClientProvider>
       </body>
     </html>

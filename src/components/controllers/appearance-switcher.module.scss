@@ -1,0 +1,17 @@
+@use "styles" as *;
+
+.root {
+  display: flex;
+  gap: space(2);
+  align-items: center;
+}
+
+.icon {
+  width: rem(24);
+  height: rem(24);
+  transition: transform $transition-fast;
+
+  @include reduced-motion {
+    transition: none;
+  }
+}

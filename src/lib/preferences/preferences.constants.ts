@@ -1,0 +1,9 @@
+const USER_PREFERENCES_COOKIE_KEY = "user_prefs";
+const APPEARANCE_THEME_STORAGE_KEY = "spybee:theme";
+const DEFAULT_THEME = "light";
+
+export {
+  APPEARANCE_THEME_STORAGE_KEY,
+  USER_PREFERENCES_COOKIE_KEY,
+  DEFAULT_THEME,
+};

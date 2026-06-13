@@ -1,3 +1,7 @@
 {
-  "brand": "Spybee ES"
+  "brand": "Spybee ES",
+  "accessibility": {
+    "toggle_theme": "Cambiar tema",
+    "change_language": "Cambiar idioma"
+  }
 }
