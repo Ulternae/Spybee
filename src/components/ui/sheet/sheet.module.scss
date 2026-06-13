@@ -17,7 +17,11 @@
   z-index: layer("modal");
   display: flex;
   flex-direction: column;
+  max-height: 100vh;
+  max-height: 100dvh;
   gap: space(4);
+  overflow-y: auto;
+  overscroll-behavior: contain;
   color: var(--foreground);
   background: var(--background);
   box-shadow: var(--shadow-lg);
@@ -59,7 +63,8 @@
   right: 0;
   left: 0;
   height: auto;
-  max-height: 85vh;
+  max-height: calc(100vh - space(4));
+  max-height: calc(100dvh - space(4));
 }
 
 .top {
