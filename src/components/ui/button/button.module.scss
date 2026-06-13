@@ -4,6 +4,7 @@
   @include focus-ring;
 
   display: inline-flex;
+  flex-shrink: 0;
   gap: space(2);
   align-items: center;
   justify-content: center;
@@ -20,12 +21,27 @@
     border-color $transition-fast,
     box-shadow $transition-fast;
 
+  svg {
+    flex-shrink: 0;
+    pointer-events: none;
+  }
+
+  svg:not([class*="size-"]) {
+    width: rem(16);
+    height: rem(16);
+  }
+
   &:disabled {
     @include disabled;
   }
+
+  &[aria-invalid="true"] {
+    border-color: var(--destructive);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--destructive) 20%, transparent);
+  }
 }
 
-.primary {
+.default {
   color: var(--primary-foreground);
   background: var(--primary);
 
@@ -71,23 +87,48 @@
   }
 }
 
+.link {
+  height: auto;
+  padding: 0;
+  color: var(--primary);
+  background: transparent;
+  border-radius: 0;
+  text-underline-offset: rem(4);
+
+  &:hover:not(:disabled) {
+    text-decoration: underline;
+  }
+}
+
 .sm {
   min-height: rem(32);
+  gap: space(1.5);
   padding-inline: space(3);
 }
 
-.md {
-  min-height: rem(40);
+.sizeDefault {
+  min-height: rem(36);
   padding-inline: space(4);
 }
 
 .lg {
-  min-height: rem(44);
+  min-height: rem(40);
   padding-inline: space(6);
-  font-size: rem(16);
 }
 
 .icon {
+  width: rem(36);
+  height: rem(36);
+  padding: 0;
+}
+
+.iconSm {
+  width: rem(32);
+  height: rem(32);
+  padding: 0;
+}
+
+.iconLg {
   width: rem(40);
   height: rem(40);
   padding: 0;

@@ -4,7 +4,7 @@ export default function Home() {
   return (
     <main>
       <h1>Spybee</h1>
-      <Button variant="outline">Create incident</Button>
+      <Button variant="destructive" size="icon-sm" type="submit">Create incident</Button>
     </main>
   );
 }
