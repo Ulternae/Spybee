@@ -1,0 +1,27 @@
+{
+  "i18n-ally.localesPaths": [
+    "src/messages"
+  ],
+  "i18n-ally.keystyle": "nested",
+  "i18n-ally.namespace": true,
+  "i18n-ally.pathMatcher": "{locale}/{namespace}.json",
+  "i18n-ally.enabledFrameworks": [
+    "next-intl"
+  ],
+  "i18n-ally.sourceLanguage": "es",
+  "i18n-ally.displayLanguage": "es",
+  "i18n-ally.sortKeys": true,
+  "i18n-ally.extract.autoDetect": false,
+  "i18n-ally.editor.enabled": true,
+  "i18n-ally.extract.parsers.html.attributes": [
+    "alt",
+    "placeholder",
+    "label",
+    "title"
+  ],
+  "i18n-ally.translate.source": "google",
+  "i18n-ally.translate.fallbackLanguage": "en",
+  "i18n-ally.usage.identifiers": [
+    "t"
+  ]
+}
