@@ -15,3 +15,17 @@
     transition: none;
   }
 }
+
+.sunIcon {
+  display: none;
+}
+
+:global(.dark) {
+  .sunIcon {
+    display: block;
+  }
+
+  .moonIcon {
+    display: none;
+  }
+}

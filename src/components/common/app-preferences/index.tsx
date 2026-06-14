@@ -7,24 +7,15 @@ import { cn } from "@/lib/utils/cn";
 import { useTranslations } from "next-intl";
 import { MinaLanguage, MinaMoon, MinaSun } from "@zcorvus/icons-react";
 import { useTheme } from "@/store/theme/theme.provider";
-import type { Theme } from "@/store/theme/theme.types";
-import styles from "./appearance-switcher.module.scss";
+import styles from "./app-preferences.module.scss";
 
-interface AppearanceSwitcherProps {
+interface AppPreferencesProps {
   className?: string;
 }
 
-const ThemeButton = ({ theme }: { theme: Theme }) => {
-  if (theme === "dark") {
-    return <MinaSun className={styles.icon} />;
-  }
-
-  return <MinaMoon className={styles.icon} />;
-};
-
-const AppearanceSwitcher = ({ className }: AppearanceSwitcherProps) => {
+const AppPreferences = ({ className }: AppPreferencesProps) => {
   const pathname = usePathname();
-  const { theme, toggleTheme } = useTheme();
+  const { toggleTheme } = useTheme();
   const { nextLocale } = useLocale();
   const t = useTranslations("common.accessibility");
 
@@ -36,7 +27,14 @@ const AppearanceSwitcher = ({ className }: AppearanceSwitcherProps) => {
         onClick={toggleTheme}
         aria-label={t("toggle_theme")}
       >
-        <ThemeButton theme={theme} />
+        <MinaSun
+          aria-hidden="true"
+          className={cn(styles.icon, styles.sunIcon)}
+        />
+        <MinaMoon
+          aria-hidden="true"
+          className={cn(styles.icon, styles.moonIcon)}
+        />
       </Button>
       <Button variant="secondary" size="icon" asChild>
         <Link
@@ -44,11 +42,11 @@ const AppearanceSwitcher = ({ className }: AppearanceSwitcherProps) => {
           locale={nextLocale}
           aria-label={t("change_language")}
         >
-          <MinaLanguage className={styles.icon} />
+          <MinaLanguage aria-hidden="true" className={styles.icon} />
         </Link>
       </Button>
     </div>
   );
 };
 
-export { AppearanceSwitcher };
+export { AppPreferences };

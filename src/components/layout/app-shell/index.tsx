@@ -2,7 +2,7 @@
 
 import type { ReactNode } from "react";
 import { useTranslations } from "next-intl";
-import { AppearanceSwitcher } from "@/components/controllers/AppearanceSwitcher";
+import { AppPreferences } from "@/components/common/app-preferences";
 import { AppSidebar } from "@/components/layout/app-sidebar";
 import {
   SidebarInset,
@@ -28,7 +28,7 @@ function AppShell({ children }: AppShellProps) {
           <div className={styles.topbarTitle}>
             <span>{tRoutes("dashboard")}</span>
           </div>
-          <AppearanceSwitcher />
+          <AppPreferences />
         </header>
         <div className={styles.content}>{children}</div>
       </SidebarInset>
