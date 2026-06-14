@@ -1,14 +1,9 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { useTranslations } from "next-intl";
-import { AppPreferences } from "@/components/common/app-preferences";
+import { AppHeader } from "@/components/layout/app-header";
 import { AppSidebar } from "@/components/layout/app-sidebar";
-import {
-  SidebarInset,
-  SidebarProvider,
-  SidebarTrigger,
-} from "@/components/ui/sidebar";
+import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import styles from "./app-shell.module.scss";
 
 interface AppShellProps {
@@ -16,20 +11,11 @@ interface AppShellProps {
 }
 
 function AppShell({ children }: AppShellProps) {
-  const tSidebar = useTranslations("common.sidebar");
-  const tRoutes = useTranslations("common.routes");
-
   return (
     <SidebarProvider>
       <AppSidebar />
       <SidebarInset>
-        <header className={styles.topbar}>
-          <SidebarTrigger label={tSidebar("toggle")} />
-          <div className={styles.topbarTitle}>
-            <span>{tRoutes("dashboard")}</span>
-          </div>
-          <AppPreferences />
-        </header>
+        <AppHeader />
         <div className={styles.content}>{children}</div>
       </SidebarInset>
     </SidebarProvider>
