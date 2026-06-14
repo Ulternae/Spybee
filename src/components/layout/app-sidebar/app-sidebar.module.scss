@@ -1,0 +1,50 @@
+@use "styles" as *;
+
+.brand {
+  @include focus-ring;
+
+  display: flex;
+  min-width: 0;
+  height: rem(44);
+  gap: space(3);
+  align-items: center;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+}
+
+.brandMark {
+  display: inline-flex;
+  width: rem(42);
+  height: rem(40);
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  color: var(--sidebar-primary-foreground);
+  background: var(--sidebar-primary);
+  border-radius: var(--radius-lg);
+
+  svg {
+    width: rem(20);
+    height: rem(20);
+  }
+}
+
+.brandText {
+  overflow: hidden;
+  font-size: rem(18);
+  font-weight: 700;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  transition:
+    width $transition-slow,
+    opacity $transition-fast;
+}
+
+[data-state="collapsed"] .brand {
+  gap: 0;
+}
+
+[data-state="collapsed"] .brandText {
+  width: 0;
+  opacity: 0;
+}

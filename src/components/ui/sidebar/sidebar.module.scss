@@ -1,0 +1,275 @@
+@use "styles" as *;
+
+.provider {
+  --sidebar-width: #{rem(272)};
+  --sidebar-width-icon: #{rem(72)};
+
+  position: relative;
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: var(--background);
+}
+
+.desktopSidebar {
+  position: sticky;
+  top: 0;
+  z-index: layer("sticky");
+  display: none;
+  width: var(--sidebar-width);
+  height: 100vh;
+  height: 100dvh;
+  flex: 0 0 var(--sidebar-width);
+  padding: space(3) 0 space(3) space(3);
+  transition:
+    width $transition-slow,
+    flex-basis $transition-slow;
+
+  &[data-state="collapsed"] {
+    width: var(--sidebar-width-icon);
+    flex-basis: var(--sidebar-width-icon);
+  }
+
+  @include from("md") {
+    display: block;
+  }
+}
+
+.panel,
+.mobileSidebar {
+  display: flex;
+  height: 100%;
+  min-height: 0;
+  flex-direction: column;
+  color: var(--sidebar-foreground);
+  background: var(--sidebar);
+}
+
+.panel {
+  position: relative;
+  border: 1px solid var(--sidebar-border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-xs);
+}
+
+.mobileContent {
+  width: min(#{rem(384)}, 90vw);
+  max-width: none;
+  gap: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.mobileSidebar {
+  width: 100%;
+}
+
+.header,
+.footer {
+  flex: none;
+  padding: space(4) space(3);
+}
+
+.header {
+  border-bottom: 1px solid transparent;
+}
+
+.footer {
+  margin-top: auto;
+  border-top: 1px solid var(--sidebar-border);
+}
+
+.content {
+  display: flex;
+  min-height: 0;
+  flex: 1;
+  flex-direction: column;
+  gap: space(1);
+  overflow-x: hidden;
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+
+.group {
+  display: flex;
+  flex-direction: column;
+  gap: space(1);
+  padding: space(2) space(3);
+}
+
+.groupLabel {
+  height: rem(28);
+  padding: space(2);
+  overflow: hidden;
+  color: var(--muted-foreground);
+  font-size: rem(12);
+  line-height: 1;
+  white-space: nowrap;
+  transition:
+    height $transition-slow,
+    padding $transition-slow,
+    opacity $transition-fast;
+}
+
+.groupContent {
+  min-width: 0;
+}
+
+.menu {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: space(1);
+}
+
+.menuItem {
+  position: relative;
+  min-width: 0;
+}
+
+.menuButton {
+  @include focus-ring;
+  @include transition-colors($transition-fast);
+
+  display: flex;
+  width: 100%;
+  min-width: 0;
+  height: rem(40);
+  gap: space(3);
+  align-items: center;
+  padding: 0 space(3);
+  overflow: hidden;
+  color: var(--sidebar-foreground);
+  background: transparent;
+  border-radius: var(--radius-md);
+  font-size: rem(14);
+  text-align: left;
+  white-space: nowrap;
+  cursor: pointer;
+
+  &:hover,
+  &[data-active="true"] {
+    color: var(--sidebar-accent-foreground);
+    background: var(--sidebar-accent);
+  }
+
+  &[data-active="true"] {
+    font-weight: 600;
+  }
+
+  svg {
+    width: rem(18);
+    height: rem(18);
+    flex: none;
+    pointer-events: none;
+  }
+
+  span:not(.menuBadge) {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+.menuBadge {
+  display: inline-flex;
+  min-width: rem(22);
+  height: rem(22);
+  align-items: center;
+  justify-content: center;
+  margin-left: auto;
+  padding-inline: space(1.5);
+  color: var(--sidebar-foreground);
+  background: var(--secondary);
+  border-radius: 999px;
+  font-size: rem(11);
+  font-weight: 600;
+}
+
+.desktopSidebar[data-state="collapsed"] {
+
+  .header,
+  .footer {
+    padding-inline: space(2);
+  }
+
+  .group {
+    padding-inline: space(2);
+  }
+
+  .groupLabel {
+    height: 0;
+    padding: 0;
+    opacity: 0;
+  }
+
+  .menuButton {
+    gap: 0;
+    padding-inline: space(3);
+
+    span {
+      width: 0;
+      opacity: 0;
+    }
+  }
+
+  .menuBadge {
+    display: none;
+  }
+}
+
+.inset {
+  width: 100%;
+  min-width: 0;
+  flex: 1;
+  background: var(--background);
+}
+
+.trigger {
+  color: var(--foreground);
+}
+
+.rail {
+  position: absolute;
+  top: 0;
+  right: rem(-8);
+  bottom: 0;
+  z-index: 1;
+  display: none;
+  width: rem(16);
+  background: transparent;
+  cursor: ew-resize;
+
+  &::after {
+    position: absolute;
+    top: 20%;
+    bottom: 20%;
+    left: 50%;
+    width: rem(2);
+    background: transparent;
+    border-radius: 999px;
+    content: "";
+    transition: background-color $transition-fast;
+  }
+
+  &:hover::after {
+    background: var(--sidebar-border);
+  }
+
+  @include from("md") {
+    display: block;
+  }
+}
+
+.srOnly {
+  @include visually-hidden;
+}
+
+@include reduced-motion {
+
+  .desktopSidebar,
+  .groupLabel,
+  .rail::after {
+    transition-duration: 1ms !important;
+  }
+}

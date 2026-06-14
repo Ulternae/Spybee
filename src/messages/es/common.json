@@ -1,7 +1,30 @@
 {
-  "brand": "Spybee ES",
+  "brand": "Spybee",
   "accessibility": {
     "toggle_theme": "Cambiar tema",
     "change_language": "Cambiar idioma"
+  },
+  "sidebar": {
+    "navigation": "Navegación principal",
+    "navigation_description": "Navega por el espacio de trabajo de Spybee",
+    "toggle": "Alternar barra lateral"
+  },
+  "routes": {
+    "auth": "Autenticación",
+    "password": "Contraseña",
+    "security": "Seguridad",
+    "settings": "Configuración",
+    "home": "Inicio",
+    "general": "General",
+    "login": "Iniciar sesión",
+    "signup": "Crear cuenta",
+    "forgot_password": "Olvidé mi contraseña",
+    "reset_password": "Restablecer contraseña",
+    "2fa": "2FA",
+    "recovery_codes": "Códigos de recuperación",
+    "refresh_codes": "Renovar códigos",
+    "dashboard": "Dashboard",
+    "incidents": "Incidencias",
+    "map": "Mapa"
   }
 }
