@@ -1,12 +1,12 @@
 import type { ReactNode } from "react";
 import { AppShell } from "@/components/layout/app-shell";
 
-interface DashboardLayoutProps {
+interface AppLayoutProps {
   children: ReactNode;
 }
 
-const DashboardLayout = ({ children }: DashboardLayoutProps) => {
+const AppLayout = ({ children }: AppLayoutProps) => {
   return <AppShell>{children}</AppShell>;
 };
 
-export default DashboardLayout;
+export default AppLayout;
