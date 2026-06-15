@@ -5,7 +5,11 @@ import type { SignInInput } from "../schemas/sign-in.schema";
 import type { SignUpInput } from "../schemas/sign-up.schema";
 import type { VerifyTwoFactorInput } from "../schemas/verify-two-factor.schema";
 
-type SignInState = FormActionState<SignInInput>;
+type SignInResult = {
+  twoFactorRedirect: boolean;
+};
+
+type SignInState = FormActionState<SignInInput, SignInResult>;
 type SignUpState = FormActionState<SignUpInput>;
 type ForgotPasswordState = FormActionState<ForgotPasswordInput>;
 type ResetPasswordState = FormActionState<ResetPasswordInput>;
@@ -17,5 +21,6 @@ export type {
   ForgotPasswordState,
   ResetPasswordState,
   TwoFactorState,
+  SignInResult,
 };
 

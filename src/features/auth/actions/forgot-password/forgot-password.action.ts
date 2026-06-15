@@ -1,4 +1,4 @@
-"use server";
+"use client";
 
 import {
   createFormErrorState,
@@ -6,16 +6,17 @@ import {
   createValidationErrorState,
 } from "@/lib/forms/form-action-state";
 import { extractErrorCode } from "@/lib/errors/extract-error-code";
-import { auth } from "@/lib/auth/auth";
-import { ForgotPasswordInput, forgotPasswordSchema } from "../../schemas/forgot-password.schema";
+import { authClient } from "@/lib/auth/client";
+import { forgotPasswordSchema } from "../../schemas/forgot-password.schema";
+import type { ForgotPasswordInput } from "../../schemas/forgot-password.schema";
 import type { ForgotPasswordState } from "../../types/form.types";
 
 const forgotPasswordAction = async (_: ForgotPasswordState, formData: FormData): Promise<ForgotPasswordState> => {
 
+  const data = Object.fromEntries(formData);
   const values: ForgotPasswordInput = {
-    email: String(formData.get("email") ?? ""),
+    email: String(data.email),
   };
-
   const parsed = forgotPasswordSchema.safeParse(values);
 
   if (!parsed.success) {
@@ -23,12 +24,14 @@ const forgotPasswordAction = async (_: ForgotPasswordState, formData: FormData):
   }
 
   try {
-    await auth.api.requestPasswordReset({
-      body: {
-        email: parsed.data.email,
-        redirectTo: "/reset-password",
-      },
+    const { error } = await authClient.requestPasswordReset({
+      email: parsed.data.email,
+      redirectTo: "/reset-password",
     });
+
+    if (error) {
+      return createFormErrorState(values, extractErrorCode(error));
+    }
 
     return createSuccessFormState(values);
   } catch (error: unknown) {
