@@ -1,0 +1,42 @@
+@use "styles" as *;
+
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: space(3);
+  padding-top: space(2);
+}
+
+.error {
+  position: relative;
+  padding: space(4);
+  color: var(--foreground);
+  background: var(--background);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  font-size: rem(13);
+}
+
+.label {
+  position: absolute;
+  top: 0;
+  left: space(4);
+  max-width: calc(100% - #{space(8)});
+  padding-inline: space(2);
+  overflow: hidden;
+  color: var(--destructive);
+  background: var(--background);
+  font-size: rem(11);
+  font-weight: 600;
+  line-height: 1;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transform: translateY(-50%);
+}
+
+.messages {
+  margin: 0;
+  padding: 0;
+  line-height: var(--leading-tight);
+}

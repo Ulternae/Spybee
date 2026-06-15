@@ -26,5 +26,35 @@
     "dashboard": "Dashboard",
     "incidents": "Incidencias",
     "map": "Mapa"
+  },
+  "fields": {
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "name": "Nombre",
+    "user": "Usuario",
+    "role": "Rol",
+    "state": "Estado",
+    "error": "Error",
+    "language": "Idioma",
+    "confirmPassword": "Confirmar contraseña",
+    "newPassword": "Nueva contraseña",
+    "code": "Código",
+    "currentPassword": "Contraseña actual",
+    "revokeOtherSessions": "Cerrar todas las demás sesiones activas",
+    "confirmNewPassword": "Confirma tu nueva contraseña"
+  },
+  "actions": {
+    "confirm": "Confirmar",
+    "loading": "Cargando...",
+    "next": "Siguiente",
+    "back": "Volver",
+    "cancel": "Cancelar",
+    "finish": "Finalizar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "update": "Actualizar",
+    "see": "Ver",
+    "create": "Crear",
+    "redirecting": "Redirecting"
   }
 }

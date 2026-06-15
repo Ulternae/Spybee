@@ -1,0 +1,10 @@
+@use "styles" as *;
+
+.provider {
+  width: 100%;
+
+  svg {
+    width: rem(18);
+    height: rem(18);
+  }
+}

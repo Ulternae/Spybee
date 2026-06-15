@@ -26,5 +26,35 @@
     "dashboard": "Dashboard",
     "incidents": "Incidents",
     "map": "Map"
+  },
+  "fields": {
+    "email": "Email",
+    "password": "Password",
+    "name": "Name",
+    "user": "User",
+    "role": "Role",
+    "state": "State",
+    "error": "Error",
+    "language": "Language",
+    "confirmPassword": "Confirm Password",
+    "newPassword": "New Password",
+    "code": "Code",
+    "currentPassword": "Current password",
+    "revokeOtherSessions": "Sign out other sessions",
+    "confirmNewPassword": "Confirm new password"
+  },
+  "actions": {
+    "confirm": "Confirmar",
+    "loading": "Cargando...",
+    "next": "Siguiente",
+    "back": "Volver",
+    "cancel": "Cancelar",
+    "finish": "Finalizar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "update": "Actualizar",
+    "see": "Ver",
+    "create": "Crear",
+    "redirecting": "Redirecting"
   }
 }
