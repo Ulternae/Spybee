@@ -13,8 +13,11 @@ interface AuthShellProps {
 }
 
 const AuthShell = async ({ children }: AuthShellProps) => {
-  const t = await getTranslations("common");
-  const brand = t("brand");
+  const [tCommon, tAuth] = await Promise.all([
+    getTranslations("common"),
+    getTranslations("auth.shell"),
+  ]);
+  const brand = tCommon("brand");
 
   return (
     <main className={styles.root}>
@@ -32,7 +35,10 @@ const AuthShell = async ({ children }: AuthShellProps) => {
           <img src="/auth/background-light.png" alt="" className={cn(styles.background, styles.backgroundLight)} />
           <img src="/auth/background-dark.png" alt="" className={cn(styles.background, styles.backgroundDark)} />
         </div>
-        <h1 className={styles.productName}>{brand}</h1>
+        <section className={styles.productName}>
+          <h1>{tAuth("title")}</h1>
+          <h2>{tAuth("description")}</h2>
+        </section>
         <AppPreferences className={styles.preferences} />
       </aside>
     </main>
