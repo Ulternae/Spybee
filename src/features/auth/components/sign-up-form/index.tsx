@@ -19,6 +19,7 @@ const INITIAL_STATE: SignUpState = {
   values: {
     email: "",
     name: "",
+    password: "",
   },
 };
 
@@ -74,6 +75,7 @@ const SignUpForm = () => {
             name="password"
             autoComplete="new-password"
             placeholder={tCommon("fields.password")}
+            defaultValue={state.values.password}
             isInvalid={Boolean(state.fieldErrors?.password)}
             showErrorLabel={showErrorLabel}
             required

@@ -18,6 +18,7 @@ const INITIAL_STATE: SignInState = {
   status: FORM_STATUS.IDLE,
   values: {
     email: "",
+    password: "",
   },
 };
 
@@ -64,6 +65,7 @@ const SignInForm = () => {
             name="password"
             autoComplete="current-password"
             placeholder={tCommon("fields.password")}
+            defaultValue={state.values.password}
             isInvalid={Boolean(state.fieldErrors?.password)}
             showErrorLabel={showErrorLabel}
             required

@@ -68,6 +68,7 @@ const ResetPasswordForm = ({ token }: ResetPasswordFormProps) => {
             name="newPassword"
             autoComplete="new-password"
             placeholder={tCommon("fields.newPassword")}
+            defaultValue={state.values.newPassword}
             isInvalid={Boolean(state.fieldErrors?.newPassword)}
             showErrorLabel={showErrorLabel}
             required
@@ -76,6 +77,7 @@ const ResetPasswordForm = ({ token }: ResetPasswordFormProps) => {
             name="confirmPassword"
             autoComplete="new-password"
             placeholder={tCommon("fields.confirmPassword")}
+            defaultValue={state.values.confirmPassword}
             isInvalid={Boolean(state.fieldErrors?.confirmPassword)}
             showErrorLabel={showErrorLabel}
             required

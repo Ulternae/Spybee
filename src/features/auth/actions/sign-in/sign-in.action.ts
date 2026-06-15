@@ -17,6 +17,7 @@ const signInAction = async (_: SignInState, formData: FormData): Promise<SignInS
   const parsed = signInSchema.safeParse(data);
   const values: Partial<SignInInput> = {
     email: String(data.email ?? ""),
+    password: String(data.password ?? ""),
   };
 
   if (!parsed.success) {

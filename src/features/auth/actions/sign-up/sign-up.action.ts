@@ -19,6 +19,7 @@ const signUpAction = async (_: SignUpState, formData: FormData): Promise<SignUpS
   const values: Partial<SignUpInput> = {
     name: String(data.name ?? ""),
     email: String(data.email ?? ""),
+    password: String(data.password ?? ""),
   };
 
   if (!parsed.success) {

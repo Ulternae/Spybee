@@ -15,7 +15,10 @@ const resetPasswordAction = async (token: string, _: ResetPasswordState, formDat
 
   const data = Object.fromEntries(formData);
   const parsed = resetPasswordSchema.safeParse(data);
-  const values: Partial<ResetPasswordInput> = {};
+  const values: Partial<ResetPasswordInput> = {
+    confirmPassword: String(data.confirmPassword ?? ""),
+    newPassword: String(data.newPassword ?? ""),
+  };
 
   if (!token) {
     return createFormErrorState(values, "INVALID_TOKEN");
