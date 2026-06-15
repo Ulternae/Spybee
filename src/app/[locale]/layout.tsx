@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Montserrat_Alternates } from "next/font/google";
+import { Urbanist } from "next/font/google";
 import "../globals.scss";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
@@ -17,8 +17,8 @@ export const generateStaticParams = () => {
   return LOCALES.map((locale) => ({ locale }));
 }
 
-const montserratAlternates = Montserrat_Alternates({
-  variable: "--font-montserrat-alternates",
+const urbanist = Urbanist({
+  variable: "--font-urbanist",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
 });
@@ -41,7 +41,7 @@ const RootLayout = async ({ children, params }: Readonly<RootLayoutProps>) => {
   const messages = await getMessages();
 
   return (
-    <html lang={locale} className={montserratAlternates.variable} suppressHydrationWarning>
+    <html lang={locale} className={urbanist.variable} suppressHydrationWarning>
       <body>
         <ThemeInitializationScript />
         <ReactScan />
