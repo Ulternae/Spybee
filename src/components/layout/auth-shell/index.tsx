@@ -28,6 +28,8 @@ const AuthShell = async ({ children }: AuthShellProps) => {
         </Link>
 
         <div className={styles.formContainer}>{children}</div>
+
+        <AppPreferences className={styles.mobilePreferences} />
       </section>
 
       <aside className={styles.visual} aria-label={brand}>
