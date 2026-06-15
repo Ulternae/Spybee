@@ -44,17 +44,17 @@
     "confirmNewPassword": "Confirm new password"
   },
   "actions": {
-    "confirm": "Confirmar",
-    "loading": "Cargando...",
-    "next": "Siguiente",
-    "back": "Volver",
-    "cancel": "Cancelar",
-    "finish": "Finalizar",
-    "delete": "Eliminar",
-    "edit": "Editar",
-    "update": "Actualizar",
-    "see": "Ver",
-    "create": "Crear",
+    "confirm": "Confirm",
+    "loading": "Loading...",
+    "next": "Next",
+    "back": "Back",
+    "cancel": "Cancel",
+    "finish": "Finish",
+    "delete": "Delete",
+    "edit": "Edit",
+    "update": "Update",
+    "see": "See",
+    "create": "Create",
     "redirecting": "Redirecting"
   }
 }

@@ -1,0 +1,65 @@
+@use "styles" as *;
+
+.root {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  gap: space(10);
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: space(2);
+}
+
+.title {
+  font-size: rem(18);
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.subtitle {
+  color: var(--muted-foreground);
+  font-size: rem(14);
+  line-height: var(--leading-tight);
+}
+
+.social {
+  display: flex;
+  flex-direction: column;
+  gap: space(10);
+}
+
+.separator {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &::before {
+    position: absolute;
+    right: 0;
+    left: 0;
+    height: 1px;
+    background: var(--border);
+    content: "";
+  }
+
+  span {
+    position: relative;
+    z-index: 1;
+    padding-inline: space(2);
+    color: var(--muted-foreground);
+    background: var(--background);
+    font-size: rem(13);
+
+    @include transition-colors;
+  }
+}
+
+@include from("sm") {
+  .root {
+    width: rem(320);
+  }
+}

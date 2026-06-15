@@ -1,0 +1,25 @@
+@use "styles" as *;
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: space(8);
+}
+
+.completed {
+  height: rem(80);
+}
+
+.backupSlot {
+  width: clamp(rem(28), 7vw, rem(32));
+}
+
+.methodToggle {
+  align-self: flex-end;
+  color: var(--muted-foreground);
+  font-size: rem(12);
+
+  &:hover {
+    color: var(--foreground);
+  }
+}

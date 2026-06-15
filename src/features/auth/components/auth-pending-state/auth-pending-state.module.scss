@@ -1,0 +1,22 @@
+@use "styles" as *;
+
+.root {
+  display: grid;
+  place-content: center;
+}
+
+.spinner {
+  width: rem(32);
+  height: rem(32);
+  animation: spin 700ms linear infinite;
+
+  @include reduced-motion {
+    animation-duration: 1400ms;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

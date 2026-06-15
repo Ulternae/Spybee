@@ -1,0 +1,24 @@
+@use "styles" as *;
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: space(2);
+}
+
+.forgotPassword {
+  align-self: flex-end;
+  color: var(--muted-foreground);
+  font-size: rem(12);
+}
+
+.completed {
+  height: rem(96);
+}
+
+.actions {
+  display: flex;
+  gap: space(2);
+  justify-content: flex-end;
+  margin-top: space(2);
+}
