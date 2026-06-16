@@ -4,7 +4,8 @@ import { AppPreferences } from "@/components/common/app-preferences";
 import type { SettingsAccount } from "../../queries/get-settings-account";
 import styles from "./general-settings-panel.module.scss";
 import { cn } from "@/lib/utils/cn";
-import { PasswordSettingsDialog } from "../password-settings-dialog";
+import { PasswordSettingsPanel } from "../password-settings-panel";
+import { TwoFactorSettingsPanel } from "../two-factor-settings-panel";
 
 interface GeneralSettingsPanelProps {
   account: SettingsAccount;
@@ -85,7 +86,7 @@ const GeneralSettingsPanel = async ({ account }: GeneralSettingsPanelProps) => {
               </Badge>
             </div>
             <div className={cn(styles.dataItemWithIcon)}>
-              <PasswordSettingsDialog hasPassword={account.hasPassword} />
+              <PasswordSettingsPanel hasPassword={account.hasPassword} />
               <div className={styles.dataItem}>
                 <span>{t("security.password")}</span>
                 <Badge variant={account.hasPassword ? "default" : "secondary"}>
@@ -96,13 +97,19 @@ const GeneralSettingsPanel = async ({ account }: GeneralSettingsPanelProps) => {
               </div>
 
             </div>
-            <div className={styles.dataItem}>
-              <span>2FA</span>
-              <Badge variant={account.user.twoFactorEnabled ? "default" : "secondary"}>
-                {account.user.twoFactorEnabled
-                  ? t("security.enabled")
-                  : t("security.disabled")}
-              </Badge>
+            <div className={styles.dataItemWithIcon}>
+              <TwoFactorSettingsPanel
+                enabled={account.user.twoFactorEnabled}
+                canManage={account.user.emailVerified && account.hasPassword}
+              />
+              <div className={styles.dataItem}>
+                <span>2FA</span>
+                <Badge variant={account.user.twoFactorEnabled ? "default" : "secondary"}>
+                  {account.user.twoFactorEnabled
+                    ? t("security.enabled")
+                    : t("security.disabled")}
+                </Badge>
+              </div>
             </div>
           </div>
         </div>

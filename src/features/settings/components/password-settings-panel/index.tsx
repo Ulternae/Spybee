@@ -1,8 +1,8 @@
 "use client";
 
-import { useTranslations } from "next-intl";
+import { useState } from "react";
 import { MinaLockKeyhole, MinaPassword } from "@zcorvus/icons-react";
-
+import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -17,18 +17,15 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { ChangePasswordForm } from "./components/change-password-form";
+import { SetPasswordForm } from "./components/set-password-form";
+import styles from "./password-settings-panel.module.scss";
 
-import { PasswordSettingsForm } from "../password-settings-form";
-
-import styles from "./password-settings-dialog.module.scss";
-import { useState } from "react";
-
-interface PasswordSettingsDialogProps {
+interface PasswordSettingsPanelProps {
   hasPassword: boolean;
 }
 
-const PasswordSettingsDialog = ({ hasPassword }: PasswordSettingsDialogProps) => {
-
+const PasswordSettingsPanel = ({ hasPassword }: PasswordSettingsPanelProps) => {
   const [open, setOpen] = useState(false);
   const t = useTranslations("settings.security.password");
 
@@ -45,23 +42,23 @@ const PasswordSettingsDialog = ({ hasPassword }: PasswordSettingsDialogProps) =>
             </Button>
           </DialogTrigger>
         </TooltipTrigger>
-
         <TooltipContent>{label}</TooltipContent>
       </Tooltip>
 
-      <DialogContent className={styles.content}>
+      <DialogContent className={styles.dialog}>
         <DialogHeader>
           <DialogTitle>{t("title")}</DialogTitle>
           <DialogDescription>{description}</DialogDescription>
         </DialogHeader>
 
-        <PasswordSettingsForm
-          hasPassword={hasPassword}
-          onCompleted={() => setOpen(false)}
-        />
+        {hasPassword ? (
+          <ChangePasswordForm onCompleted={() => setOpen(false)} />
+        ) : (
+          <SetPasswordForm onCompleted={() => setOpen(false)} />
+        )}
       </DialogContent>
     </Dialog>
   );
 };
 
-export { PasswordSettingsDialog };
+export { PasswordSettingsPanel };

@@ -51,6 +51,8 @@
     "two_factor": {
       "title": "Two-factor authentication",
       "summary_description": "Second authentication layer for sensitive access.",
+      "setup_description": "Enable two-factor authentication with an authenticator app and backup codes.",
+      "disable_description": "Disable two-factor authentication for this account.",
       "method": "Method",
       "method_totp": "Authenticator app",
       "next_step": "Next step",
@@ -58,14 +60,40 @@
       "disabled_description": "Add an authenticator app to reduce account takeover risk.",
       "status": "Two-factor status",
       "password_required": "Create a password before enabling two-factor authentication.",
+      "requirements_tooltip": "Verify your account and create a password before enabling 2FA.",
+      "activate_tooltip": "Enable two-factor authentication.",
+      "disable_tooltip": "Disable two-factor authentication.",
+      "activate": "Enable 2FA",
       "start": "Start setup",
       "scan": "Scan this QR code with your authenticator app.",
       "manual": "Or enter this setup URI manually.",
       "backup_codes": "Save these backup codes in a safe place.",
+      "copy_backup_codes": "Copy backup codes",
+      "download_backup_codes": "Download backup codes",
+      "copied": "Copied to clipboard",
       "verify": "Verify code",
       "disable": "Disable 2FA",
       "enabled": "Two-factor authentication enabled",
-      "disabled": "Two-factor authentication disabled"
+      "disabled": "Two-factor authentication disabled",
+      "steps": {
+        "password": "Password",
+        "qr": "QR",
+        "code": "Code",
+        "backup_codes": "Backup codes",
+        "finish": "Finish"
+      },
+      "password_step": {
+        "title": "Confirm your password",
+        "description": "We need your current password before creating the 2FA secret."
+      },
+      "code_step": {
+        "title": "Enter the authentication code",
+        "description": "Use the six-digit code from your authenticator app."
+      },
+      "finish_step": {
+        "title": "2FA is ready",
+        "description": "Keep your backup codes safe before finishing."
+      }
     }
   }
 }

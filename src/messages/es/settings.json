@@ -51,6 +51,8 @@
     "two_factor": {
       "title": "Autenticación de dos factores",
       "summary_description": "Segunda capa de autenticación para accesos sensibles.",
+      "setup_description": "Activa la autenticación de dos factores con una app de autenticación y códigos de respaldo.",
+      "disable_description": "Desactiva la autenticación de dos factores para esta cuenta.",
       "method": "Método",
       "method_totp": "App de autenticación",
       "next_step": "Siguiente paso",
@@ -58,14 +60,40 @@
       "disabled_description": "Agrega una app de autenticación para reducir el riesgo de acceso no autorizado.",
       "status": "Estado de 2FA",
       "password_required": "Crea una contraseña antes de activar la autenticación de dos factores.",
+      "requirements_tooltip": "Verifica tu cuenta y crea una contraseña antes de activar 2FA.",
+      "activate_tooltip": "Activar autenticación de dos factores.",
+      "disable_tooltip": "Desactivar autenticación de dos factores.",
+      "activate": "Activar 2FA",
       "start": "Iniciar configuración",
       "scan": "Escanea este código QR con tu app de autenticación.",
       "manual": "O ingresa esta URI de configuración manualmente.",
       "backup_codes": "Guarda estos códigos de respaldo en un lugar seguro.",
+      "copy_backup_codes": "Copiar códigos de respaldo",
+      "download_backup_codes": "Descargar códigos de respaldo",
+      "copied": "Copiado al portapapeles",
       "verify": "Verificar código",
       "disable": "Desactivar 2FA",
       "enabled": "Autenticación de dos factores activada",
-      "disabled": "Autenticación de dos factores desactivada"
+      "disabled": "Autenticación de dos factores desactivada",
+      "steps": {
+        "password": "Contraseña",
+        "qr": "QR",
+        "code": "Código",
+        "backup_codes": "Códigos de respaldo",
+        "finish": "Finalizar"
+      },
+      "password_step": {
+        "title": "Confirma tu contraseña",
+        "description": "Necesitamos tu contraseña actual antes de crear el secreto 2FA."
+      },
+      "code_step": {
+        "title": "Ingresa el código de autenticación",
+        "description": "Usa el código de seis dígitos de tu app de autenticación."
+      },
+      "finish_step": {
+        "title": "2FA está listo",
+        "description": "Guarda tus códigos de respaldo antes de finalizar."
+      }
     }
   }
 }
