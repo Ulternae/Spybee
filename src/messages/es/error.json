@@ -16,6 +16,7 @@
   "EMAIL_NOT_VERIFIED": "El correo electrónico no está verificado",
   "PASSWORD_TOO_SHORT": "La contraseña es demasiado corta",
   "PASSWORD_TOO_LONG": "La contraseña es demasiado larga",
+  "PASSWORDS_DO_NOT_MATCH": "Las contraseñas no coinciden",
   "USER_ALREADY_EXISTS": "El usuario ya existe",
   "USER_ALREADY_EXISTS_USE_ANOTHER_EMAIL": "El usuario ya existe. Use otro correo electrónico",
   "EMAIL_CAN_NOT_BE_UPDATED": "El correo electrónico no puede actualizarse",
