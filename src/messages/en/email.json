@@ -1,0 +1,70 @@
+{
+  "brand": {
+    "footer": {
+      "tagline": "Secure access. Total control."
+    }
+  },
+  "verify_account": {
+    "preview": "Confirm your email to activate your account on Spybee",
+    "heading": "Verify your account",
+    "body": {
+      "welcome": "Hi {name}, thanks for signing up for Spybee! Please verify your email address to get started.",
+      "button": "Verify Email",
+      "ignore_title": "Didn't sign up?",
+      "ignore_text": "Don't worry, you can safely ignore this email.",
+      "link": "If the button doesn't work, copy and paste the link below into your browser:"
+    }
+  },
+  "subjects": {
+    "verify_account": "Verify your account",
+    "reset_password": "Reset your password",
+    "password_changed": "Your password was changed",
+    "two_factor_enabled": "Two-factor authentication enabled",
+    "two_factor_disabled": "Two-factor authentication disabled"
+  },
+  "reset_password": {
+    "preview": "Reset your password request for Spybee",
+    "heading": "Reset your password",
+    "body": {
+      "request": "Hi {name}, we received a request to reset your account password, click the link below to create a new password:",
+      "button": "Reset Password",
+      "ignore_title": "Did you receive this email by mistake?",
+      "ignore_text": "Don't worry, you can ignore it."
+    }
+  },
+  "password_changed": {
+    "preview": "We detected a password change on your Spybee account",
+    "heading": "Password updated",
+    "body": {
+      "greeting": "Hi {name},",
+      "message": "your password was updated successfully. If you made this change, no further action is needed.",
+      "button": "Review security",
+      "footer": "If this wasn't you, reset your password immediately."
+    }
+  },
+  "two_factor_enabled": {
+    "preview": "2FA is now active on your Spybee account",
+    "heading": "Two-factor enabled",
+    "body": {
+      "greeting": "Hi {name},",
+      "message": "two-factor authentication is now active on your account. From now on, you'll need an additional code when signing in.",
+      "button": "Manage settings",
+      "footer": "If this wasn't you, secure your account from your security dashboard."
+    }
+  },
+  "two_factor_disabled": {
+    "preview": "2FA was turned off on your Spybee account",
+    "heading": "Two-factor disabled",
+    "body": {
+      "greeting": "Hi {name},",
+      "message": "two-factor authentication was turned off. Only your password is now required to sign in.",
+      "button": "Re-enable 2FA",
+      "footer": "If this wasn't you, reset your password and re-enable 2FA immediately."
+    }
+  },
+  "security_activity": {
+    "detected": "Activity detected:",
+    "location": "Location:",
+    "device": "Device:"
+  }
+}

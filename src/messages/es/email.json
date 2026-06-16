@@ -1,0 +1,70 @@
+{
+  "brand": {
+    "footer": {
+      "tagline": "Acceso seguro. Control total."
+    }
+  },
+  "verify_account": {
+    "preview": "Confirma tu correo para activar tu cuenta en Spybee",
+    "heading": "Verifica tu cuenta",
+    "body": {
+      "welcome": "Hola {name}, ¡Gracias por registrarte en Spybee! Por favor, verifica tu dirección de correo electrónico para comenzar.",
+      "button": "Verificar Correo",
+      "ignore_title": "¿No te registraste?",
+      "ignore_text": "No te preocupes, puedes ignorar este correo de forma segura.",
+      "link": "Si el botón no funciona, copia y pega el enlace de abajo en tu navegador:"
+    }
+  },
+  "subjects": {
+    "verify_account": "Verifica tu cuenta",
+    "reset_password": "Restablece tu contraseña",
+    "password_changed": "Tu contraseña fue cambiada",
+    "two_factor_enabled": "Se activó la autenticación en dos pasos",
+    "two_factor_disabled": "Se desactivó la autenticación en dos pasos"
+  },
+  "reset_password": {
+    "preview": "Solicitud para restablecer tu contraseña en Spybee",
+    "heading": "Restablece tu contraseña",
+    "body": {
+      "request": "Hola {name}, recibimos una solicitud para restablecer la contraseña de la cuenta, haz clic en el siguiente enlace para crear una nueva contraseña:",
+      "button": "Restablecer contraseña",
+      "ignore_title": "¿Recibiste este correo por error?",
+      "ignore_text": "No te preocupes, puedes ignorarlo."
+    }
+  },
+  "password_changed": {
+    "preview": "Detectamos un cambio de contraseña en tu cuenta de Spybee",
+    "heading": "Contraseña actualizada",
+    "body": {
+      "greeting": "Hola {name},",
+      "message": "tu contraseña fue actualizada correctamente. Si realizaste este cambio, no necesitas hacer nada más.",
+      "button": "Revisar seguridad",
+      "footer": "Si no fuiste tú, restablece tu contraseña de inmediato."
+    }
+  },
+  "two_factor_enabled": {
+    "preview": "El 2FA ahora está activo en tu cuenta de Spybee",
+    "heading": "2FA habilitado",
+    "body": {
+      "greeting": "Hola {name},",
+      "message": "la autenticación en dos pasos está activa en tu cuenta. A partir de ahora, necesitarás un código adicional al iniciar sesión.",
+      "button": "Gestionar configuración",
+      "footer": "Si no fuiste tú, protege tu cuenta desde el panel de seguridad."
+    }
+  },
+  "two_factor_disabled": {
+    "preview": "Se desactivó el 2FA en tu cuenta de Spybee",
+    "heading": "2FA deshabilitado",
+    "body": {
+      "greeting": "Hola {name},",
+      "message": "la autenticación en dos pasos fue desactivada. Ahora solo necesitas tu contraseña para iniciar sesión.",
+      "button": "Rehabilitar 2FA",
+      "footer": "Si no fuiste tú, restablece tu contraseña y reactiva el 2FA de inmediato."
+    }
+  },
+  "security_activity": {
+    "detected": "Actividad detectada:",
+    "location": "Ubicación:",
+    "device": "Dispositivo:"
+  }
+}

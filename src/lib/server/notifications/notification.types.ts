@@ -1,0 +1,13 @@
+export const NOTIFICATION_TYPE = {
+  PASSWORD_CHANGED: "PASSWORD_CHANGED",
+  TWO_FACTOR_ENABLED: "TWO_FACTOR_ENABLED",
+  TWO_FACTOR_DISABLED: "TWO_FACTOR_DISABLED",
+} as const;
+
+export const NOTIFICATION_TOPIC = {
+  SECURITY_ALERTS: "SECURITY_ALERTS",
+} as const;
+
+export type NotificationType = (typeof NOTIFICATION_TYPE)[keyof typeof NOTIFICATION_TYPE];
+
+export type NotificationTopic = (typeof NOTIFICATION_TOPIC)[keyof typeof NOTIFICATION_TOPIC];

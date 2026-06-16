@@ -6,6 +6,8 @@ import { auth } from "@/lib/auth/auth";
 import { extractErrorCode } from "@/lib/errors/extract-error-code";
 import type { ChangePasswordState } from "../../types/form.types";
 import type { ChangePasswordInput } from "../../schemas/change-password.schema";
+import { sendNotification } from "@/lib/server/notifications/send-notification.server";
+import { NOTIFICATION_TYPE } from "@/lib/server/notifications/notification.types";
 
 interface ChangePasswordServerAction {
   data: ChangePasswordInput;
@@ -22,6 +24,8 @@ const changePasswordServerAction = async ({ data, values }: ChangePasswordServer
         revokeOtherSessions: false,
       },
     });
+
+    sendNotification({ type: NOTIFICATION_TYPE.PASSWORD_CHANGED })
 
     return createSuccessFormState(values);
   } catch (error: unknown) {

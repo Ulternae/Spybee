@@ -1,62 +1,50 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useActionState, useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "@/i18n/navigation";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { InputPassword } from "@/components/ui/input-password";
-import { extractErrorCode } from "@/lib/errors/extract-error-code";
-import { authClient } from "@/lib/auth/client";
+import { FormErrors } from "@/components/common/form-errors";
+import { FORM_STATUS } from "@/lib/forms/form-status";
+import { disableTwoFactorAction } from "@/features/settings/actions/disable-two-factor/disable-two-factor.action";
+import type { DisableTwoFactorState } from "@/features/settings/types/form.types";
 import styles from "../../two-factor-settings-panel.module.scss";
 
 interface TwoFactorDisableFormProps {
   onCompleted: () => void;
 }
 
+const INITIAL_STATE: DisableTwoFactorState = {
+  status: FORM_STATUS.IDLE,
+  values: {
+    password: "",
+  },
+};
+
 const TwoFactorDisableForm = ({ onCompleted }: TwoFactorDisableFormProps) => {
   const t = useTranslations("settings.security.two_factor");
   const tCommon = useTranslations("common");
-  const tError = useTranslations("error");
   const router = useRouter();
+
   const [password, setPassword] = useState("");
-  const [errorCode, setErrorCode] = useState<string | null>(null);
-  const [isPending, setIsPending] = useState(false);
+  const [state, action, isPending] = useActionState<DisableTwoFactorState, FormData>(disableTwoFactorAction, INITIAL_STATE);
 
-  const errorMessage = useMemo(() => {
-    if (!errorCode) {
-      return null;
+  useEffect(() => {
+    if (state.status !== FORM_STATUS.SUCCESS) {
+      return;
     }
 
-    return tError.has(errorCode) ? tError(errorCode) : tError("GENERIC_ERROR");
-  }, [errorCode, tError]);
-
-  const handleDisable = async () => {
-    setErrorCode(null);
-    setIsPending(true);
-
-    try {
-      const { error } = await authClient.twoFactor.disable({ password });
-
-      if (error) {
-        setErrorCode(extractErrorCode(error));
-        return;
-      }
-
-      toast.success(t("disabled"));
-      onCompleted();
-      router.refresh();
-    } catch (error: unknown) {
-      setErrorCode(extractErrorCode(error));
-    } finally {
-      setIsPending(false);
-    }
-  };
+    toast.success(t("disabled"));
+    onCompleted();
+    router.refresh();
+  }, [onCompleted, router, state.status, t]);
 
   return (
-    <div className={styles.flow}>
+    <form action={action} className={styles.flow}>
       <InputPassword
-        name="twoFactorPassword"
+        name="password"
         autoComplete="current-password"
         placeholder={tCommon("fields.currentPassword")}
         value={password}
@@ -64,19 +52,21 @@ const TwoFactorDisableForm = ({ onCompleted }: TwoFactorDisableFormProps) => {
         disabled={isPending}
       />
 
-      {errorMessage && <p className={styles.error}>{errorMessage}</p>}
+      <FormErrors
+        fieldErrors={state.fieldErrors}
+        formError={state.formError}
+      />
 
       <div className={styles.actions}>
         <Button
-          type="button"
+          type="submit"
           variant="destructive"
-          onClick={handleDisable}
           disabled={isPending || !password}
         >
           {isPending ? tCommon("actions.loading") : t("disable")}
         </Button>
       </div>
-    </div>
+    </form>
   );
 };
 
