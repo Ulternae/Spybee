@@ -4,11 +4,6 @@
     "toggle_theme": "Toggle theme",
     "change_language": "Change language"
   },
-  "sidebar": {
-    "navigation": "Main navigation",
-    "navigation_description": "Navigate through the Spybee workspace",
-    "toggle": "Toggle sidebar"
-  },
   "routes": {
     "auth": "Authentication",
     "password": "Password",

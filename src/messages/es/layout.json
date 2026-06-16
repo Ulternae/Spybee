@@ -1,0 +1,25 @@
+{
+  "sidebar": {
+    "navigation": "Navegación principal",
+    "navigation_description": "Navega por el espacio de trabajo de Spybee",
+    "toggle": "Alternar barra lateral"
+  },
+  "user_menu": {
+    "loading": "Cargando cuenta",
+    "sign_in": "Iniciar sesión",
+    "open_menu": "Abrir menú de cuenta",
+    "profile": "Perfil",
+    "name": "Nombre",
+    "email": "Correo electrónico",
+    "language": "Idioma",
+    "account_verification": "Verificación de cuenta",
+    "verified": "Verificado",
+    "not_verified": "No verificado",
+    "member_since": "Miembro desde",
+    "logout": "Cerrar sesión",
+    "locales": {
+      "en": "Inglés",
+      "es": "Español"
+    }
+  }
+}

@@ -1,0 +1,232 @@
+@use "styles" as *;
+
+.trigger {
+  @include focus-ring;
+  @include transition-colors($transition-fast);
+
+  display: inline-flex;
+  min-width: 0;
+  height: rem(40);
+  gap: space(1);
+  align-items: center;
+  padding: space(1) space(2);
+  color: var(--foreground);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+
+  &:hover {
+    background: var(--accent);
+  }
+}
+
+.avatarMin {
+  width: rem(26);
+  height: rem(26);
+}
+
+.triggerText {
+  display: none;
+  max-width: rem(128);
+  overflow: hidden;
+  font-size: rem(13);
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.loading {
+  display: grid;
+  width: rem(40);
+  height: rem(40);
+  place-content: center;
+  color: var(--muted-foreground);
+}
+
+.spinner {
+  width: rem(18);
+  height: rem(18);
+  animation: spin 700ms linear infinite;
+
+  @include reduced-motion {
+    animation-duration: 1400ms;
+  }
+}
+
+.content {
+  width: min(rem(450), calc(100vw - #{space(4)}));
+  padding: 0;
+  overflow: hidden;
+  color: var(--foreground);
+  background: var(--card);
+  border-color: color-mix(in srgb, var(--border) 72%, transparent);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg);
+}
+
+.cover {
+  position: relative;
+}
+
+.profileLink {
+  position: absolute;
+  top: space(4);
+  right: space(4);
+}
+
+.profile {
+  display: grid;
+  grid-template-columns: rem(90) minmax(0, 1fr);
+  gap: space(5);
+  align-items: center;
+  padding: space(7) space(4);
+}
+
+.avatar {
+  width: rem(90);
+  height: rem(90);
+
+  [data-slot="avatar-fallback"] {
+    color: var(--primary-foreground);
+    background: var(--primary);
+    font-size: rem(54);
+    font-weight: 700;
+  }
+}
+
+.details {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+
+  h2,
+  p {
+    margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  h2 {
+    font-size: rem(24);
+    font-weight: 700;
+    line-height: var(--leading-tight);
+    margin-bottom: space(1);
+  }
+
+  p {
+    color: var(--muted-foreground);
+    font-size: rem(14);
+  }
+}
+
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: space(4);
+  align-items: center;
+  justify-content: space-between;
+  padding: space(4);
+  background: color-mix(in srgb, var(--muted) 60%, transparent);
+  border-top: 1px solid var(--border);
+}
+
+.memberSince {
+  display: flex;
+  flex-wrap: wrap;
+  gap: space(2);
+  align-items: center;
+  min-width: 0;
+  font-size: rem(14);
+
+  span {
+    color: var(--muted-foreground);
+  }
+
+  p {
+    margin: 0;
+    font-weight: 400;
+  }
+}
+
+.logout {
+  color: var(--destructive);
+
+  &:hover:not(:disabled) {
+    color: var(--destructive);
+  }
+}
+
+@include until("sm") {
+  .content {
+    width: min(rem(450), calc(100vw - #{space(4)}));
+  }
+
+  .profile {
+    grid-template-columns: 1fr;
+    gap: space(2);
+    justify-items: center;
+    padding: space(4);
+    text-align: center;
+  }
+
+  .avatar {
+    width: rem(86);
+    height: rem(86);
+
+    [data-slot="avatar-fallback"] {
+      font-size: rem(40);
+    }
+  }
+
+  .details {
+    align-items: center;
+    width: 100%;
+    max-width: rem(450);
+    padding-bottom: 0;
+
+    h2 {
+      font-size: rem(20);
+    }
+
+    p {
+      font-size: rem(13);
+    }
+  }
+
+  .footer {
+    align-items: center;
+    gap: space(2);
+    padding: space(3) space(4);
+  }
+
+  .memberSince {
+    font-size: rem(13);
+  }
+
+  .profileLink {
+    top: space(3);
+    right: space(3);
+    height: rem(34);
+    padding-inline: space(3);
+  }
+}
+
+@include from("md") {
+  .triggerText {
+    display: inline;
+  }
+}
+
+@include reduced-motion {
+  .spinner {
+    animation: none;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

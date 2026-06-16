@@ -2,7 +2,7 @@
 
 import { Fragment } from "react";
 import { useTranslations } from "next-intl";
-import { AppPreferences } from "@/components/common/app-preferences";
+import { AppUserMenu } from "@/components/layout/app-user-menu";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -27,7 +27,7 @@ const formatSegmentLabel = (segment: string) => {
 const AppHeader = () => {
   const pathname = usePathname();
   const tRoutes = useTranslations("common.routes");
-  const tSidebar = useTranslations("common.sidebar");
+  const tSidebar = useTranslations("layout.sidebar");
   const segments = pathname.split("/").filter(Boolean);
   const items = [
     {
@@ -77,7 +77,9 @@ const AppHeader = () => {
           </BreadcrumbList>
         </Breadcrumb>
       </div>
-      <AppPreferences />
+      <div className={styles.actions}>
+        <AppUserMenu />
+      </div>
     </header>
   );
 }

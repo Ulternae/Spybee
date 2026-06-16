@@ -44,7 +44,7 @@ interface NavigationGroup {
 function AppSidebar() {
   const pathname = usePathname();
   const tCommon = useTranslations("common");
-  const tSidebar = useTranslations("common.sidebar");
+  const tSidebar = useTranslations("layout.sidebar");
   const tRoutes = useTranslations("common.routes");
   const { setOpenMobile } = useSidebar();
 

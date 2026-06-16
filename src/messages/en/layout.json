@@ -1,0 +1,25 @@
+{
+  "sidebar": {
+    "navigation": "Main navigation",
+    "navigation_description": "Navigate through the Spybee workspace",
+    "toggle": "Toggle sidebar"
+  },
+  "user_menu": {
+    "loading": "Loading account",
+    "sign_in": "Sign in",
+    "open_menu": "Open account menu",
+    "profile": "Profile",
+    "name": "Name",
+    "email": "Email",
+    "language": "Language",
+    "account_verification": "Account verification",
+    "verified": "Verified",
+    "not_verified": "Not verified",
+    "member_since": "Member since",
+    "logout": "Sign out",
+    "locales": {
+      "en": "English",
+      "es": "Spanish"
+    }
+  }
+}
