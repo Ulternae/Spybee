@@ -28,6 +28,16 @@
   "security": {
     "title": "Seguridad",
     "description": "Gestiona el acceso por contraseña y la autenticación de dos factores.",
+    "access": {
+      "title": "Credenciales de acceso",
+      "description": "Acceso por contraseña y estado de verificación de la cuenta.",
+      "action_label": "Acción de contraseña"
+    },
+    "status": {
+      "enabled": "Activo",
+      "disabled": "Inactivo",
+      "pending": "Pendiente"
+    },
     "password": {
       "title": "Contraseña",
       "create_description": "Crea una contraseña para esta cuenta antes de activar controles avanzados de seguridad.",
@@ -40,6 +50,10 @@
     },
     "two_factor": {
       "title": "Autenticación de dos factores",
+      "summary_description": "Segunda capa de autenticación para accesos sensibles.",
+      "method": "Método",
+      "method_totp": "App de autenticación",
+      "next_step": "Siguiente paso",
       "enabled_description": "Tu cuenta solicita un código de autenticador al iniciar sesión.",
       "disabled_description": "Agrega una app de autenticación para reducir el riesgo de acceso no autorizado.",
       "status": "Estado de 2FA",

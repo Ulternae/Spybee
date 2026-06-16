@@ -28,6 +28,16 @@
   "security": {
     "title": "Security",
     "description": "Manage password access and two-factor authentication for your account.",
+    "access": {
+      "title": "Access credentials",
+      "description": "Password access and account verification state.",
+      "action_label": "Password action"
+    },
+    "status": {
+      "enabled": "Enabled",
+      "disabled": "Disabled",
+      "pending": "Pending"
+    },
     "password": {
       "title": "Password",
       "create_description": "Create a password for this account before enabling advanced security controls.",
@@ -40,6 +50,10 @@
     },
     "two_factor": {
       "title": "Two-factor authentication",
+      "summary_description": "Second authentication layer for sensitive access.",
+      "method": "Method",
+      "method_totp": "Authenticator app",
+      "next_step": "Next step",
       "enabled_description": "Your account requires an authenticator code when signing in.",
       "disabled_description": "Add an authenticator app to reduce account takeover risk.",
       "status": "Two-factor status",

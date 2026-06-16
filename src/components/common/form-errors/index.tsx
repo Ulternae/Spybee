@@ -24,7 +24,7 @@ const FormErrors = <TField extends string>({ fieldErrors, formError }: FormError
           <span className={styles.label}>{common.has(field) ? common(String(field)) : String(field)}</span>
           <ul className={styles.messages}>
             {messages.map((message) => (
-              <li key={message}>{message}</li>
+              <li key={message}>{error.has(message) ? error(message) : message}</li>
             ))}
           </ul>
         </div>

@@ -102,7 +102,7 @@ const AppUserMenu = () => {
       <PopoverContent align="end" className={styles.content}>
         <div className={styles.cover}>
           <Button variant="secondary" size="sm" asChild className={styles.profileLink}>
-            <Link href="/settings/general">
+            <Link href="/settings">
               <MinaEdit aria-hidden="true" />
               <span>{tAccount("profile")}</span>
             </Link>
