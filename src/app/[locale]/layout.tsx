@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Urbanist } from "next/font/google";
+import { Kameron } from "next/font/google";
 import "../globals.scss";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
@@ -17,12 +17,11 @@ export const generateStaticParams = () => {
   return LOCALES.map((locale) => ({ locale }));
 }
 
-const urbanist = Urbanist({
-  variable: "--font-urbanist",
+const kameron = Kameron({
+  variable: "--font-kameron",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
 });
-
 
 export const metadata: Metadata = {
   title: "Spybee",
@@ -41,7 +40,7 @@ const RootLayout = async ({ children, params }: Readonly<RootLayoutProps>) => {
   const messages = await getMessages();
 
   return (
-    <html lang={locale} className={urbanist.variable} suppressHydrationWarning>
+    <html lang={locale} className={kameron.variable} suppressHydrationWarning>
       <body>
         <ThemeInitializationScript />
         <ReactScan />
