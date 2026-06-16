@@ -1,0 +1,57 @@
+{
+  "general": {
+    "title": "Información general",
+    "description": "Revisa tu perfil, estado de cuenta y métodos de acceso conectados.",
+    "personal": {
+      "title": "Información personal",
+      "description": "Perfil e identidad dentro del espacio.",
+      "role": "Rol",
+      "default_role": "Admin"
+    },
+    "preferences": {
+      "title": "Preferencias",
+      "description": "Controles de idioma y apariencia."
+    },
+    "security": {
+      "title": "Seguridad",
+      "description": "Estado de protección de la cuenta.",
+      "password": "Acceso por contraseña",
+      "enabled": "Activo",
+      "disabled": "Inactivo",
+      "pending": "Pendiente"
+    },
+    "providers": {
+      "title": "Proveedores conectados",
+      "description": "Proveedores de autenticación vinculados a esta cuenta."
+    }
+  },
+  "security": {
+    "title": "Seguridad",
+    "description": "Gestiona el acceso por contraseña y la autenticación de dos factores.",
+    "password": {
+      "title": "Contraseña",
+      "create_description": "Crea una contraseña para esta cuenta antes de activar controles avanzados de seguridad.",
+      "change_description": "Actualiza tu contraseña y cierra las demás sesiones activas.",
+      "hint": "Usa al menos 8 caracteres. Evita reutilizar contraseñas de otros servicios.",
+      "create": "Crear contraseña",
+      "change": "Actualizar contraseña",
+      "created": "Contraseña creada",
+      "updated": "Contraseña actualizada"
+    },
+    "two_factor": {
+      "title": "Autenticación de dos factores",
+      "enabled_description": "Tu cuenta solicita un código de autenticador al iniciar sesión.",
+      "disabled_description": "Agrega una app de autenticación para reducir el riesgo de acceso no autorizado.",
+      "status": "Estado de 2FA",
+      "password_required": "Crea una contraseña antes de activar la autenticación de dos factores.",
+      "start": "Iniciar configuración",
+      "scan": "Escanea este código QR con tu app de autenticación.",
+      "manual": "O ingresa esta URI de configuración manualmente.",
+      "backup_codes": "Guarda estos códigos de respaldo en un lugar seguro.",
+      "verify": "Verificar código",
+      "disable": "Desactivar 2FA",
+      "enabled": "Autenticación de dos factores activada",
+      "disabled": "Autenticación de dos factores desactivada"
+    }
+  }
+}

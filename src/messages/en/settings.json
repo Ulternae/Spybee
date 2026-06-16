@@ -1,0 +1,57 @@
+{
+  "general": {
+    "title": "General information",
+    "description": "Review your profile, account state and connected access methods.",
+    "personal": {
+      "title": "Personal information",
+      "description": "Profile and workspace identity.",
+      "role": "Role",
+      "default_role": "Admin"
+    },
+    "preferences": {
+      "title": "Preferences",
+      "description": "Language and appearance controls."
+    },
+    "security": {
+      "title": "Security",
+      "description": "Account protection status.",
+      "password": "Password access",
+      "enabled": "Enabled",
+      "disabled": "Disabled",
+      "pending": "Pending"
+    },
+    "providers": {
+      "title": "Connected providers",
+      "description": "Authentication providers linked to this account."
+    }
+  },
+  "security": {
+    "title": "Security",
+    "description": "Manage password access and two-factor authentication for your account.",
+    "password": {
+      "title": "Password",
+      "create_description": "Create a password for this account before enabling advanced security controls.",
+      "change_description": "Update your password and revoke other active sessions.",
+      "hint": "Use at least 8 characters. Avoid reusing passwords from other services.",
+      "create": "Create password",
+      "change": "Update password",
+      "created": "Password created",
+      "updated": "Password updated"
+    },
+    "two_factor": {
+      "title": "Two-factor authentication",
+      "enabled_description": "Your account requires an authenticator code when signing in.",
+      "disabled_description": "Add an authenticator app to reduce account takeover risk.",
+      "status": "Two-factor status",
+      "password_required": "Create a password before enabling two-factor authentication.",
+      "start": "Start setup",
+      "scan": "Scan this QR code with your authenticator app.",
+      "manual": "Or enter this setup URI manually.",
+      "backup_codes": "Save these backup codes in a safe place.",
+      "verify": "Verify code",
+      "disable": "Disable 2FA",
+      "enabled": "Two-factor authentication enabled",
+      "disabled": "Two-factor authentication disabled"
+    }
+  }
+}
