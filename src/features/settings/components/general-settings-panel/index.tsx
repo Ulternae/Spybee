@@ -6,6 +6,7 @@ import styles from "./general-settings-panel.module.scss";
 import { cn } from "@/lib/utils/cn";
 import { PasswordSettingsPanel } from "../password-settings-panel";
 import { TwoFactorSettingsPanel } from "../two-factor-settings-panel";
+import { EmailVerificationPanel } from "../email-verification-panel";
 
 interface GeneralSettingsPanelProps {
   account: SettingsAccount;
@@ -77,13 +78,19 @@ const GeneralSettingsPanel = async ({ account }: GeneralSettingsPanelProps) => {
             <p>{t("security.description")}</p>
           </div>
           <div className={styles.sectionContent}>
-            <div className={styles.dataItem}>
-              <span>{tAccount("account_verification")}</span>
-              <Badge variant={account.user.emailVerified ? "default" : "outline"}>
-                {account.user.emailVerified
-                  ? tAccount("verified")
-                  : tAccount("not_verified")}
-              </Badge>
+            <div className={styles.dataItemWithIcon}>
+              <EmailVerificationPanel
+                email={account.user.email}
+                verified={account.user.emailVerified}
+              />
+              <div className={styles.dataItem}>
+                <span>{tAccount("account_verification")}</span>
+                <Badge variant={account.user.emailVerified ? "default" : "outline"}>
+                  {account.user.emailVerified
+                    ? tAccount("verified")
+                    : tAccount("not_verified")}
+                </Badge>
+              </div>
             </div>
             <div className={cn(styles.dataItemWithIcon)}>
               <PasswordSettingsPanel hasPassword={account.hasPassword} />

@@ -1,0 +1,10 @@
+@use "styles" as *;
+
+.tooltipTrigger {
+  display: inline-flex;
+}
+
+.tooltipTrigger .verifiedIcon {
+  color: var(--success);
+  opacity: 1;
+}

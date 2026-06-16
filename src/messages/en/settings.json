@@ -38,6 +38,12 @@
       "disabled": "Disabled",
       "pending": "Pending"
     },
+    "email_verification": {
+      "send": "Send verification email",
+      "sent": "Email sent, check your inbox.",
+      "verified": "Email already verified",
+      "cooldown": "Wait {seconds}s before sending again"
+    },
     "password": {
       "title": "Password",
       "create_description": "Create a password for this account before enabling advanced security controls.",

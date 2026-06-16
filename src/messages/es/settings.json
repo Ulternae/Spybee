@@ -38,6 +38,12 @@
       "disabled": "Inactivo",
       "pending": "Pendiente"
     },
+    "email_verification": {
+      "send": "Enviar correo de verificación",
+      "sent": "Email enviado, revisa tu bandeja de entrada.",
+      "verified": "Correo ya verificado",
+      "cooldown": "Espera {seconds}s antes de volver a enviarlo"
+    },
     "password": {
       "title": "Contraseña",
       "create_description": "Crea una contraseña para esta cuenta antes de activar controles avanzados de seguridad.",
