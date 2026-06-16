@@ -1,0 +1,197 @@
+@use "styles" as *;
+
+.dialog {
+  max-width: rem(640);
+  width: auto;
+}
+
+.flow {
+  display: flex;
+  flex-direction: column;
+  gap: space(4);
+}
+
+.steps {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  justify-content: end;
+  padding: space(4) 0;
+
+  li {
+    padding: space(1.5) space(3);
+    color: var(--muted-foreground);
+    background: var(--muted);
+    border-top: 1px solid var(--border);
+    border-right: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    font-size: rem(12);
+  }
+
+  li:first-child {
+    border-top-left-radius: var(--radius-md);
+    border-bottom-left-radius: var(--radius-md);
+    border-left: 1px solid var(--border);
+  }
+
+  li:last-child {
+    border-top-right-radius: var(--radius-md);
+    border-bottom-right-radius: var(--radius-md);
+  }
+
+  li[data-active="true"] {
+    color: var(--primary-foreground);
+    background: var(--primary);
+    border-color: var(--primary);
+  }
+}
+
+.stepCard {
+  display: flex;
+  flex-direction: column;
+  gap: space(8);
+}
+
+.formRow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: space(3);
+
+  p {
+    margin: 0;
+    text-align: center;
+    color: var(--muted-foreground);
+    font-size: rem(13);
+  }
+
+}
+
+.stepText {
+  margin: 0;
+  color: var(--muted-foreground);
+  font-size: rem(13);
+}
+
+.qrRow {
+  display: grid;
+  gap: space(4);
+  align-items: center;
+
+  @include from("sm") {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+}
+
+.qr {
+  width: fit-content;
+  padding: space(3);
+  background: white;
+}
+
+.secret {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: space(2);
+
+  p {
+    margin: 0;
+    color: var(--muted-foreground);
+    font-size: rem(13);
+  }
+}
+
+.secretCode {
+  @include focus-ring;
+  @include transition-colors($transition-fast);
+
+  display: flex;
+  width: 100%;
+  min-width: 0;
+  gap: space(2);
+  align-items: center;
+  justify-content: space-between;
+  padding: space(3);
+  color: var(--foreground);
+  background: var(--background);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  transition: border-color $transition-base;
+  cursor: pointer;
+
+  span {
+    overflow: hidden;
+    font-family: var(--font-mono, monospace);
+    font-size: rem(12);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  svg {
+    width: rem(16);
+    height: rem(16);
+    flex: none;
+    color: var(--muted-foreground);
+  }
+
+  &:hover {
+    border-color: color-mix(in srgb, var(--ring) 70%, transparent);
+  }
+}
+
+.codes {
+  display: grid;
+  gap: space(2);
+  grid-template-columns: repeat(auto-fit, minmax(rem(144), 1fr));
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.backupCode {
+  padding: space(3);
+  color: var(--foreground);
+  background: var(--muted);
+  border-radius: var(--radius-md);
+  font-family: var(--font-mono, monospace);
+  font-size: rem(13);
+  font-weight: 700;
+  text-align: center;
+}
+
+.backupActions,
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: space(2);
+  justify-content: flex-end;
+}
+
+.error {
+  margin: 0;
+  color: var(--destructive);
+  font-size: rem(13);
+}
+
+@include until("sm") {
+  .dialog {
+    max-width: calc(100vw - #{space(4)});
+    width: 100%;
+  }
+
+  .qr {
+    justify-self: center;
+  }
+
+  .backupActions,
+  .actions {
+    justify-content: stretch;
+
+    button {
+      flex: 1;
+    }
+  }
+}

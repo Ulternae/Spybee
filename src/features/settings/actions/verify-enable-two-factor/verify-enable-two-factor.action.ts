@@ -1,12 +1,17 @@
 "use client";
 
-import { createValidationErrorState } from "@/lib/forms/form-action-state";
+import {
+  createFormErrorState,
+  createSuccessFormState,
+  createValidationErrorState,
+} from "@/lib/forms/form-action-state";
+import { authClient } from "@/lib/auth/client";
+import { extractErrorCode } from "@/lib/errors/extract-error-code";
 import {
   type VerifyEnableTwoFactorInput,
   verifyEnableTwoFactorSchema,
 } from "../../schemas/verify-enable-two-factor.schema";
 import type { VerifyEnableTwoFactorState } from "../../types/form.types";
-import { verifyEnableTwoFactorServerAction } from "./verify-enable-two-factor.server";
 
 const verifyEnableTwoFactorAction = async (_: VerifyEnableTwoFactorState, formData: FormData): Promise<VerifyEnableTwoFactorState> => {
 
@@ -20,10 +25,19 @@ const verifyEnableTwoFactorAction = async (_: VerifyEnableTwoFactorState, formDa
     return createValidationErrorState(values, parsed.error);
   }
 
-  return await verifyEnableTwoFactorServerAction({
-    data: parsed.data,
-    values,
-  });
+  try {
+    const { error } = await authClient.twoFactor.verifyTotp({
+      code: parsed.data.code,
+    });
+
+    if (error) {
+      return createFormErrorState(values, extractErrorCode(error));
+    }
+
+    return createSuccessFormState(values);
+  } catch (error: unknown) {
+    return createFormErrorState(values, extractErrorCode(error));
+  }
 };
 
 export { verifyEnableTwoFactorAction };

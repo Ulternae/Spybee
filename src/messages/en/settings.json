@@ -79,8 +79,7 @@
         "password": "Password",
         "qr": "QR",
         "code": "Code",
-        "backup_codes": "Backup codes",
-        "finish": "Finish"
+        "backup_codes": "Backup codes"
       },
       "password_step": {
         "title": "Confirm your password",
@@ -89,10 +88,6 @@
       "code_step": {
         "title": "Enter the authentication code",
         "description": "Use the six-digit code from your authenticator app."
-      },
-      "finish_step": {
-        "title": "2FA is ready",
-        "description": "Keep your backup codes safe before finishing."
       }
     }
   }
