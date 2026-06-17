@@ -7,6 +7,7 @@ import { prisma } from "@/lib/db/prisma";
 
 type ProjectListItem = {
   id: string;
+  organizationId: string;
   name: string;
   slug: string;
   role: string | null;
@@ -61,6 +62,7 @@ const getActiveOrganizationProjects = async (locale: string): Promise<ActiveOrga
             },
             select: {
               id: true,
+              organizationId: true,
               name: true,
               slug: true,
               createdAt: true,
@@ -99,6 +101,7 @@ const getActiveOrganizationProjects = async (locale: string): Promise<ActiveOrga
     },
     projects: membership.organization.projects.map((project) => ({
       id: project.id,
+      organizationId: project.organizationId,
       name: project.name,
       slug: project.slug,
       role: project.members[0]?.role ?? null,

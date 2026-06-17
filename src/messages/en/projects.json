@@ -4,6 +4,10 @@
     "description": "Manage the projects in {organization} and prepare the workspace for incidents.",
     "active_organization_fallback": "the active organization",
     "new_action": "New project",
+    "actions_label": "Open project options",
+    "set_active": "Select project",
+    "set_active_success": "Project selected successfully",
+    "view_detail": "View detail",
     "incidents_count": "{count, plural, =0 {No incidents} =1 {# incident} other {# incidents}}",
     "members_count": "{count, plural, =0 {No members} =1 {# member} other {# members}}"
   },

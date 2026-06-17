@@ -4,6 +4,10 @@
     "description": "Gestiona los proyectos de {organization} y prepara el espacio para sus incidencias.",
     "active_organization_fallback": "la organizacion activa",
     "new_action": "Nuevo proyecto",
+    "actions_label": "Abrir opciones de proyecto",
+    "set_active": "Seleccionar proyecto",
+    "set_active_success": "Proyecto seleccionado correctamente",
+    "view_detail": "Ver detalle",
     "incidents_count": "{count, plural, =0 {Sin incidencias} =1 {# incidencia} other {# incidencias}}",
     "members_count": "{count, plural, =0 {Sin miembros} =1 {# miembro} other {# miembros}}"
   },
