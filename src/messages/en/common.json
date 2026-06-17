@@ -20,7 +20,9 @@
     "refresh_codes": "Refresh codes",
     "dashboard": "Dashboard",
     "incidents": "Incidents",
-    "map": "Map"
+    "map": "Map",
+    "organizations": "Organizations",
+    "new": "New"
   },
   "fields": {
     "email": "Email",

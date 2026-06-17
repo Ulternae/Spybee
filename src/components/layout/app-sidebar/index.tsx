@@ -72,6 +72,11 @@ function AppSidebar() {
           href: "/map",
           icon: MinaMap,
         },
+        {
+          label: tRoutes("organizations"),
+          href: "/organizations",
+          icon: MinaBuilding,
+        },
       ],
     },
   ];

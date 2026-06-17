@@ -20,7 +20,9 @@
     "refresh_codes": "Renovar códigos",
     "dashboard": "Dashboard",
     "incidents": "Incidencias",
-    "map": "Mapa"
+    "map": "Mapa",
+    "organizations": "Organizaciones",
+    "new": "Nueva"
   },
   "fields": {
     "email": "Correo electrónico",

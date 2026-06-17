@@ -18,7 +18,7 @@
 
   p {
     color: var(--muted-foreground);
-    font-size: rem(16);
+    font-size: rem(14);
     font-weight: 400;
     line-height: var(--leading-tight);
   }
@@ -65,7 +65,7 @@
   p {
     color: var(--muted-foreground);
     line-height: 1;
-    font-size: rem(13);
+    font-size: rem(14);
   }
 
   @include from("md") {

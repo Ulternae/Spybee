@@ -1,0 +1,19 @@
+{
+  "list": {
+    "title": "Organizations",
+    "description": "Manage the workspaces where your projects, members and incidents live.",
+    "new_action": "New organization",
+    "empty_title": "Create your first organization",
+    "empty_description": "Organizations let you invite members and group the projects used by the product.",
+    "projects_count": "{count, plural, =0 {No projects} =1 {# project} other {# projects}}",
+    "members_count": "{count, plural, =0 {No members} =1 {# member} other {# members}}"
+  },
+  "new": {
+    "title": "Organization",
+    "heading": "Create organization",
+    "members_title": "Members and invitations",
+    "members_description": "Create an organization to invite members, group projects and manage incidents as a team.",
+    "name_placeholder": "Organization name",
+    "name_hint": "The chosen organization name cannot be changed once it is created."
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "list": {
+    "title": "Organizaciones",
+    "description": "Gestiona los espacios donde viven tus proyectos, miembros e incidencias.",
+    "new_action": "Nueva organizacion",
+    "empty_title": "Crea tu primera organizacion",
+    "empty_description": "Las organizaciones permiten invitar miembros y agrupar los proyectos usados por el producto.",
+    "projects_count": "{count, plural, =0 {Sin proyectos} =1 {# proyecto} other {# proyectos}}",
+    "members_count": "{count, plural, =0 {Sin miembros} =1 {# miembro} other {# miembros}}"
+  },
+  "new": {
+    "title": "Organizacion",
+    "heading": "Creacion de organizacion",
+    "members_title": "Miembros e invitaciones",
+    "members_description": "Crea una organizacion para invitar miembros, agrupar proyectos y trabajar las incidencias en equipo.",
+    "name_placeholder": "Nombre de la organizacion",
+    "name_hint": "El nombre escogido para la organizacion no podra ser modificado una vez creado."
+  }
+}
