@@ -1,5 +1,6 @@
 const COOKIE_KEYS = {
   NEXT_LOCALE: "NEXT_LOCALE",
+  ACTIVE_PROJECT_ID: "SPYBEE_ACTIVE_PROJECT_ID",
 } as const
 
 interface GetCookieParams {
