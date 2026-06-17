@@ -21,5 +21,22 @@
     "members_description": "Create an organization to invite members, group projects and manage incidents as a team.",
     "name_placeholder": "Organization name",
     "name_hint": "The chosen organization name cannot be changed once it is created."
+  },
+  "detail": {
+    "members_title": "Members",
+    "members_description": "Users who currently belong to the organization.",
+    "members_count": "{count, plural, =0 {No members} =1 {# member} other {# members}}",
+    "available_users_title": "Available users",
+    "available_users_description": "Registered users who do not belong to this organization yet.",
+    "available_users_count": "{count, plural, =0 {No users} =1 {# user} other {# users}}",
+    "available_users_empty": "There are no available users to add.",
+    "add_member": "Add",
+    "adding_member": "Adding...",
+    "add_member_success": "User added successfully",
+    "add_member_error": "Error adding user",
+    "remove_member": "Remove",
+    "removing_member": "Removing...",
+    "remove_member_success": "Member removed successfully",
+    "remove_member_error": "Error removing member"
   }
 }
