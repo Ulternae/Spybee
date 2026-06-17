@@ -1,0 +1,14 @@
+@use "styles" as *;
+
+.content {
+  min-width: rem(220);
+}
+
+.item {
+  cursor: pointer;
+}
+
+.triggerIcon {
+  min-width: rem(24);
+  min-height: rem(24);
+}

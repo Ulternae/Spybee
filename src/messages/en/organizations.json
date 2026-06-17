@@ -5,6 +5,12 @@
     "new_action": "New organization",
     "empty_title": "Create your first organization",
     "empty_description": "Organizations let you invite members and group the projects used by the product.",
+    "actions_label": "Open organization options",
+    "set_default": "Set as default",
+    "setting_default": "Setting...",
+    "set_default_success": "Organization updated successfully",
+    "set_default_error": "Error updating organization",
+    "view_detail": "View detail",
     "projects_count": "{count, plural, =0 {No projects} =1 {# project} other {# projects}}",
     "members_count": "{count, plural, =0 {No members} =1 {# member} other {# members}}"
   },

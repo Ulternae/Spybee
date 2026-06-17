@@ -5,6 +5,12 @@
     "new_action": "Nueva organizacion",
     "empty_title": "Crea tu primera organizacion",
     "empty_description": "Las organizaciones permiten invitar miembros y agrupar los proyectos usados por el producto.",
+    "actions_label": "Abrir opciones de organizacion",
+    "set_default": "Establecer como predeterminada",
+    "setting_default": "Estableciendo...",
+    "set_default_success": "Organizacion actualizada correctamente",
+    "set_default_error": "Error al actualizar la organizacion",
+    "view_detail": "Ver detalle",
     "projects_count": "{count, plural, =0 {Sin proyectos} =1 {# proyecto} other {# proyectos}}",
     "members_count": "{count, plural, =0 {Sin miembros} =1 {# miembro} other {# miembros}}"
   },

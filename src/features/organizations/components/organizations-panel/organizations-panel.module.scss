@@ -60,6 +60,7 @@
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   background: color-mix(in srgb, var(--card) 80%, transparent);
+  position: relative;
   @include transition-colors;
 
   @include from("sm") {
@@ -68,11 +69,32 @@
   }
 }
 
+.cardActive {
+  background: color-mix(in srgb, var(--primary) 8%, var(--card));
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--primary) 35%, transparent);
+
+  .cardTitle {
+    h2 {
+      color: var(--primary);
+    }
+  }
+}
+
+.cardButton {
+  position: absolute;
+  width: rem(24);
+  top: 0;
+  right: 0;
+  border-top: none;
+  border-right: none;
+  border-radius: 0 rem(8) 0 rem(16);
+  padding: 0;
+}
+
 .cardTitle {
   display: flex;
   min-width: 0;
   flex-direction: column;
-  gap: space(1);
 
   h2,
   p {
