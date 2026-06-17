@@ -1,0 +1,16 @@
+{
+  "list": {
+    "title": "Projects",
+    "description": "Manage the projects in {organization} and prepare the workspace for incidents.",
+    "new_action": "New project",
+    "incidents_count": "{count, plural, =0 {No incidents} =1 {# incident} other {# incidents}}",
+    "members_count": "{count, plural, =0 {No members} =1 {# member} other {# members}}"
+  },
+  "new": {
+    "title": "Project",
+    "heading": "Create project",
+    "description": "Create a project inside the active organization to enable the map and incident workflow.",
+    "name_placeholder": "Project name",
+    "name_hint": "The chosen project name helps identify the job site or work area."
+  }
+}
