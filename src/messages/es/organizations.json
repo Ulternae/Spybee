@@ -1,42 +1,49 @@
 {
+  "detail": {
+    "add_member": "Agregar miembro",
+    "add_member_error": "Error al agregar el usuario",
+    "add_member_success": "Usuario agregado correctamente",
+    "adding_member": "Agregando...",
+    "available_users_count": "{count, plural, =0 {Sin usuarios} =1 {# usuario} other {# usuarios}}",
+    "available_users_description": "Usuarios registrados que aun no pertenecen a esta organizacion.",
+    "available_users_empty": "No hay usuarios disponibles para agregar.",
+    "available_users_title": "Usuarios disponibles",
+    "members_count": "{count, plural, =0 {Sin miembros} =1 {# miembro} other {# miembros}}",
+    "members_description": "Usuarios que actualmente pertenecen a la organizacion.",
+    "members_title": "Miembros",
+    "remove_member": "Eliminar",
+    "remove_member_error": "Error al eliminar el miembro",
+    "remove_member_success": "Miembro eliminado correctamente",
+    "removing_member": "Eliminando...",
+    "roles": {
+      "admin": "Administrador",
+      "member": "Miembro",
+      "owner": "Propietario"
+    },
+    "update_role_error": "Error al actualizar el rol",
+    "update_role_success": "Rol actualizado correctamente"
+  },
   "list": {
-    "title": "Organizaciones",
-    "description": "Gestiona los espacios donde viven tus proyectos, miembros e incidencias.",
-    "new_action": "Nueva organizacion",
-    "empty_title": "Crea tu primera organizacion",
-    "empty_description": "Las organizaciones permiten invitar miembros y agrupar los proyectos usados por el producto.",
     "actions_label": "Abrir opciones de organizacion",
-    "set_default": "Establecer como predeterminada",
-    "setting_default": "Estableciendo...",
-    "set_default_success": "Organizacion actualizada correctamente",
-    "set_default_error": "Error al actualizar la organizacion",
-    "view_detail": "Ver detalle",
+    "description": "Gestiona los espacios donde viven tus proyectos, miembros e incidencias.",
+    "empty_description": "Las organizaciones permiten invitar miembros y agrupar los proyectos usados por el producto.",
+    "empty_title": "Crea tu primera organizacion",
+    "members_count": "{count, plural, =0 {Sin miembros} =1 {# miembro} other {# miembros}}",
+    "new_action": "Nueva organizacion",
     "projects_count": "{count, plural, =0 {Sin proyectos} =1 {# proyecto} other {# proyectos}}",
-    "members_count": "{count, plural, =0 {Sin miembros} =1 {# miembro} other {# miembros}}"
+    "set_default": "Establecer como predeterminada",
+    "set_default_error": "Error al actualizar la organizacion",
+    "set_default_success": "Organizacion actualizada correctamente",
+    "setting_default": "Estableciendo...",
+    "title": "Organizaciones",
+    "view_detail": "Ver detalle"
   },
   "new": {
-    "title": "Organizacion",
     "heading": "Creacion de organizacion",
-    "members_title": "Miembros e invitaciones",
     "members_description": "Crea una organizacion para invitar miembros, agrupar proyectos y trabajar las incidencias en equipo.",
+    "members_title": "Miembros e invitaciones",
+    "name_hint": "El nombre escogido para la organizacion no podra ser modificado una vez creado.",
     "name_placeholder": "Nombre de la organizacion",
-    "name_hint": "El nombre escogido para la organizacion no podra ser modificado una vez creado."
-  },
-  "detail": {
-    "members_title": "Miembros",
-    "members_description": "Usuarios que actualmente pertenecen a la organizacion.",
-    "members_count": "{count, plural, =0 {Sin miembros} =1 {# miembro} other {# miembros}}",
-    "available_users_title": "Usuarios disponibles",
-    "available_users_description": "Usuarios registrados que aun no pertenecen a esta organizacion.",
-    "available_users_count": "{count, plural, =0 {Sin usuarios} =1 {# usuario} other {# usuarios}}",
-    "available_users_empty": "No hay usuarios disponibles para agregar.",
-    "add_member": "Agregar",
-    "adding_member": "Agregando...",
-    "add_member_success": "Usuario agregado correctamente",
-    "add_member_error": "Error al agregar el usuario",
-    "remove_member": "Eliminar",
-    "removing_member": "Eliminando...",
-    "remove_member_success": "Miembro eliminado correctamente",
-    "remove_member_error": "Error al eliminar el miembro"
+    "title": "Organizacion"
   }
 }

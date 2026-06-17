@@ -54,5 +54,10 @@
     "see": "See",
     "create": "Create",
     "redirecting": "Redirecting"
+  },
+  "table": {
+    "columns": "Columns",
+    "filter_results": "Filter results",
+    "no_results": "No results."
   }
 }

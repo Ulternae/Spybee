@@ -1,0 +1,29 @@
+@use "styles" as *;
+
+.button {
+  width: fit-content;
+  justify-content: flex-start;
+  padding: 0;
+  color: var(--muted-foreground);
+  cursor: pointer;
+  text-transform: uppercase;
+
+  &:hover {
+    background: transparent;
+  }
+
+  &:has(> svg) {
+    padding-inline: 0;
+  }
+}
+
+.icon {
+  width: rem(16);
+  height: rem(16);
+  flex-shrink: 0;
+}
+
+:global(.dark) .button:hover {
+  background: transparent;
+  color: var(--foreground);
+}

@@ -1,42 +1,49 @@
 {
+  "detail": {
+    "add_member": "Add Member",
+    "add_member_error": "Error adding user",
+    "add_member_success": "User added successfully",
+    "adding_member": "Adding...",
+    "available_users_count": "{count, plural, =0 {No users} =1 {# user} other {# users}}",
+    "available_users_description": "Registered users who do not belong to this organization yet.",
+    "available_users_empty": "There are no available users to add.",
+    "available_users_title": "Available users",
+    "members_count": "{count, plural, =0 {No members} =1 {# member} other {# members}}",
+    "members_description": "Users who currently belong to the organization.",
+    "members_title": "Members",
+    "remove_member": "Remove",
+    "remove_member_error": "Error removing member",
+    "remove_member_success": "Member removed successfully",
+    "removing_member": "Removing...",
+    "roles": {
+      "admin": "Admin",
+      "member": "Member",
+      "owner": "Owner"
+    },
+    "update_role_error": "Error updating role",
+    "update_role_success": "Role updated successfully"
+  },
   "list": {
-    "title": "Organizations",
-    "description": "Manage the workspaces where your projects, members and incidents live.",
-    "new_action": "New organization",
-    "empty_title": "Create your first organization",
-    "empty_description": "Organizations let you invite members and group the projects used by the product.",
     "actions_label": "Open organization options",
-    "set_default": "Set as default",
-    "setting_default": "Setting...",
-    "set_default_success": "Organization updated successfully",
-    "set_default_error": "Error updating organization",
-    "view_detail": "View detail",
+    "description": "Manage the workspaces where your projects, members and incidents live.",
+    "empty_description": "Organizations let you invite members and group the projects used by the product.",
+    "empty_title": "Create your first organization",
+    "members_count": "{count, plural, =0 {No members} =1 {# member} other {# members}}",
+    "new_action": "New organization",
     "projects_count": "{count, plural, =0 {No projects} =1 {# project} other {# projects}}",
-    "members_count": "{count, plural, =0 {No members} =1 {# member} other {# members}}"
+    "set_default": "Set as default",
+    "set_default_error": "Error updating organization",
+    "set_default_success": "Organization updated successfully",
+    "setting_default": "Setting...",
+    "title": "Organizations",
+    "view_detail": "View detail"
   },
   "new": {
-    "title": "Organization",
     "heading": "Create organization",
-    "members_title": "Members and invitations",
     "members_description": "Create an organization to invite members, group projects and manage incidents as a team.",
+    "members_title": "Members and invitations",
+    "name_hint": "The chosen organization name cannot be changed once it is created.",
     "name_placeholder": "Organization name",
-    "name_hint": "The chosen organization name cannot be changed once it is created."
-  },
-  "detail": {
-    "members_title": "Members",
-    "members_description": "Users who currently belong to the organization.",
-    "members_count": "{count, plural, =0 {No members} =1 {# member} other {# members}}",
-    "available_users_title": "Available users",
-    "available_users_description": "Registered users who do not belong to this organization yet.",
-    "available_users_count": "{count, plural, =0 {No users} =1 {# user} other {# users}}",
-    "available_users_empty": "There are no available users to add.",
-    "add_member": "Add",
-    "adding_member": "Adding...",
-    "add_member_success": "User added successfully",
-    "add_member_error": "Error adding user",
-    "remove_member": "Remove",
-    "removing_member": "Removing...",
-    "remove_member_success": "Member removed successfully",
-    "remove_member_error": "Error removing member"
+    "title": "Organization"
   }
 }

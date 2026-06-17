@@ -37,3 +37,4 @@ const organizationRoles = {
 };
 
 export { ac, admin, member, organizationRoles, owner, statements };
+export type OrganizationRole = keyof typeof organizationRoles;

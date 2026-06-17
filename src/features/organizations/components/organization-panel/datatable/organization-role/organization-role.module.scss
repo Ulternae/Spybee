@@ -1,0 +1,17 @@
+@use "styles" as *;
+
+.trigger {
+  width: rem(150);
+  min-height: rem(32);
+}
+
+.content {
+  min-width: rem(150);
+}
+
+.text {
+  margin: 0;
+  color: var(--foreground);
+  font-size: rem(14);
+  line-height: var(--leading-tight);
+}
