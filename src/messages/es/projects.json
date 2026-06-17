@@ -1,0 +1,16 @@
+{
+  "list": {
+    "title": "Proyectos",
+    "description": "Gestiona los proyectos de {organization} y prepara el espacio para sus incidencias.",
+    "new_action": "Nuevo proyecto",
+    "incidents_count": "{count, plural, =0 {Sin incidencias} =1 {# incidencia} other {# incidencias}}",
+    "members_count": "{count, plural, =0 {Sin miembros} =1 {# miembro} other {# miembros}}"
+  },
+  "new": {
+    "title": "Proyecto",
+    "heading": "Creacion de proyecto",
+    "description": "Crea un proyecto dentro de la organizacion activa para habilitar el mapa y el flujo de incidencias.",
+    "name_placeholder": "Nombre del proyecto",
+    "name_hint": "El nombre escogido para el proyecto podra ayudarte a identificar la obra o frente de trabajo."
+  }
+}
