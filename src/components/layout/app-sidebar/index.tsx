@@ -3,10 +3,10 @@
 import {
   MinaBuilding,
   MinaClipboard,
+  MinaFolderKanban,
   MinaHome,
   MinaMap,
   MinaUserSettings,
-  type MinaHomeProps,
 } from "@zcorvus/icons-react";
 import { useTranslations } from "next-intl";
 import { Link, usePathname } from "@/i18n/navigation";
@@ -19,34 +19,31 @@ import {
   SidebarGroupLabel,
   SidebarHeader,
   SidebarMenu,
-  SidebarMenuBadge,
-  SidebarMenuButton,
-  SidebarMenuItem,
   SidebarRail,
   useSidebar,
 } from "@/components/ui/sidebar";
+import { useAppStore } from "@/store/app/app.provider";
 import styles from "./app-sidebar.module.scss";
+import type { NavigationGroup, NavigationItem } from "./app-sidebar.types";
+import { SidebarNavigationItem } from "./sidebar-navigation-item";
 
-type NavigationIcon = React.ComponentType<MinaHomeProps>;
-
-interface NavigationItem {
-  label: string;
-  href: string;
-  icon: NavigationIcon;
-  badge?: string;
-}
-
-interface NavigationGroup {
-  label?: string;
-  items: NavigationItem[];
-}
-
-function AppSidebar() {
+const AppSidebar = () => {
   const pathname = usePathname();
+
   const tCommon = useTranslations("common");
   const tSidebar = useTranslations("layout.sidebar");
   const tRoutes = useTranslations("common.routes");
+
   const { setOpenMobile } = useSidebar();
+
+  const isAuthenticated = useAppStore((state) => state.isAuthenticated);
+  const hasActiveOrganization = useAppStore((state) =>
+    Boolean(state.activeOrganization),
+  );
+
+  const closeMobileSidebar = () => {
+    setOpenMobile(false);
+  };
 
   const navigationGroups: NavigationGroup[] = [
     {
@@ -62,24 +59,43 @@ function AppSidebar() {
       label: tRoutes("general"),
       items: [
         {
+          label: tRoutes("projects"),
+          href: "/projects",
+          icon: MinaFolderKanban,
+          requiresAuth: true,
+          requiresOrganization: true,
+        },
+        {
           label: tRoutes("incidents"),
           href: "/incidents",
           icon: MinaClipboard,
           badge: "3",
+          requiresAuth: true,
+          requiresOrganization: true,
         },
         {
           label: tRoutes("map"),
           href: "/map",
           icon: MinaMap,
+          requiresAuth: true,
+          requiresOrganization: true,
         },
         {
           label: tRoutes("organizations"),
           href: "/organizations",
           icon: MinaBuilding,
+          requiresAuth: true,
         },
       ],
     },
   ];
+
+  const footerItem: NavigationItem = {
+    label: tRoutes("settings"),
+    href: "/settings",
+    icon: MinaUserSettings,
+    requiresAuth: true,
+  };
 
   return (
     <Sidebar
@@ -90,7 +106,7 @@ function AppSidebar() {
         <Link
           href="/"
           className={styles.brand}
-          onClick={() => setOpenMobile(false)}
+          onClick={closeMobileSidebar}
         >
           <span className={styles.brandMark}>
             <MinaBuilding aria-hidden="true" />
@@ -105,36 +121,19 @@ function AppSidebar() {
             {group.label && (
               <SidebarGroupLabel>{group.label}</SidebarGroupLabel>
             )}
+
             <SidebarGroupContent>
               <SidebarMenu>
-                {group.items.map((item) => {
-                  const Icon = item.icon;
-                  const isActive =
-                    item.href === "/"
-                      ? pathname === "/"
-                      : pathname.startsWith(item.href);
-
-                  return (
-                    <SidebarMenuItem key={item.href}>
-                      <SidebarMenuButton
-                        asChild
-                        isActive={isActive}
-                        tooltip={item.label}
-                      >
-                        <Link
-                          href={item.href}
-                          onClick={() => setOpenMobile(false)}
-                        >
-                          <Icon aria-hidden="true" />
-                          <span>{item.label}</span>
-                          {item.badge && (
-                            <SidebarMenuBadge>{item.badge}</SidebarMenuBadge>
-                          )}
-                        </Link>
-                      </SidebarMenuButton>
-                    </SidebarMenuItem>
-                  );
-                })}
+                {group.items.map((item) => (
+                  <SidebarNavigationItem
+                    key={item.href}
+                    item={item}
+                    pathname={pathname}
+                    isAuthenticated={isAuthenticated}
+                    hasActiveOrganization={hasActiveOrganization}
+                    onNavigate={closeMobileSidebar}
+                  />
+                ))}
               </SidebarMenu>
             </SidebarGroupContent>
           </SidebarGroup>
@@ -143,18 +142,19 @@ function AppSidebar() {
 
       <SidebarFooter>
         <SidebarMenu>
-          <SidebarMenuItem>
-            <SidebarMenuButton asChild tooltip={tRoutes("settings")}>
-              <Link href="/settings" onClick={() => setOpenMobile(false)}>
-                <MinaUserSettings aria-hidden="true" />
-                <span>{tRoutes("settings")}</span>
-              </Link>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
+          <SidebarNavigationItem
+            item={footerItem}
+            pathname={pathname}
+            isAuthenticated={isAuthenticated}
+            hasActiveOrganization={hasActiveOrganization}
+            onNavigate={closeMobileSidebar}
+          />
         </SidebarMenu>
       </SidebarFooter>
+
       <SidebarRail label={tSidebar("toggle")} />
     </Sidebar>
+
   );
 }
 

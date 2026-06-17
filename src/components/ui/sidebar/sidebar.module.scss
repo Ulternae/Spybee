@@ -158,6 +158,16 @@
     font-weight: 600;
   }
 
+  &[aria-disabled="true"] {
+    color: color-mix(in srgb, var(--sidebar-foreground) 45%, transparent);
+    cursor: not-allowed;
+
+    &:hover {
+      color: color-mix(in srgb, var(--sidebar-foreground) 45%, transparent);
+      background: transparent;
+    }
+  }
+
   svg {
     width: rem(18);
     height: rem(18);

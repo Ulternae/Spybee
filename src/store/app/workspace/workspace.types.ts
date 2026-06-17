@@ -16,6 +16,7 @@ type WorkspaceProject = {
 };
 
 type HydrateWorkspace = {
+  isAuthenticated?: boolean;
   activeOrganization?: WorkspaceOrganization | null;
   activeProject?: WorkspaceProject | null;
   organizations?: WorkspaceOrganization[];
@@ -32,6 +33,7 @@ type SetActiveProject = {
 };
 
 export type WorkspaceState = {
+  isAuthenticated: boolean;
   activeOrganization: WorkspaceOrganization | null;
   activeProject: WorkspaceProject | null;
   organizations: WorkspaceOrganization[];

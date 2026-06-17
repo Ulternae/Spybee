@@ -5,6 +5,7 @@ const workspaceActions = (set: Parameters<WorkspaceSliceStore>[0], _get: Paramet
   hydrateWorkspace: (p) =>
     set(
       (state) => {
+        state.isAuthenticated = p.isAuthenticated ?? state.isAuthenticated;
         state.activeOrganization = p.activeOrganization ?? state.activeOrganization;
         state.activeProject = p.activeProject ?? state.activeProject;
         state.organizations = p.organizations ?? state.organizations;

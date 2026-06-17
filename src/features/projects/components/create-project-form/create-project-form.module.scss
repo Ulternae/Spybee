@@ -1,0 +1,36 @@
+@use "styles" as *;
+
+.form {
+  display: grid;
+  width: 100%;
+  max-width: rem(720);
+  gap: space(3);
+  margin: 0 auto;
+}
+
+.fields {
+  display: flex;
+  gap: space(2);
+  align-items: flex-start;
+}
+
+.input {
+  flex: 1;
+}
+
+.hint {
+  margin: 0;
+  color: var(--muted-foreground);
+  font-size: rem(14);
+  line-height: var(--leading-tight);
+}
+
+@include until("sm") {
+  .fields {
+    flex-direction: column;
+  }
+
+  .fields [data-slot="button"] {
+    width: 100%;
+  }
+}

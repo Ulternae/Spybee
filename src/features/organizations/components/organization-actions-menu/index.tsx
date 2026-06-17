@@ -25,16 +25,12 @@ interface OrganizationActionsMenuProps {
   triggerClassName?: string;
 }
 
-const OrganizationActionsMenu = ({
-  organization,
-  isActive,
-  triggerClassName,
-}: OrganizationActionsMenuProps) => {
+const OrganizationActionsMenu = ({ organization, isActive, triggerClassName }: OrganizationActionsMenuProps) => {
+
   const t = useTranslations("organizations.list");
   const router = useRouter();
-  const setActiveOrganization = useAppStore(
-    (state) => state.setActiveOrganization,
-  );
+  const setActiveOrganization = useAppStore((state) => state.setActiveOrganization);
+
   const [open, setOpen] = useState(false);
   const [isPending, setIsPending] = useState(false);
 
