@@ -221,7 +221,7 @@
   "STATE_MISMATCH": "State mismatch",
   "STATE_INVALID": "State invalid",
   "STATE_SECURITY_MISMATCH": "State security mismatch",
-  "TOO_MANY_REQUESTS": "Too many attempts. Please try again later."
-,
-  "PROJECT_ALREADY_EXISTS": "A project with that name already exists in the active organization."
+  "TOO_MANY_REQUESTS": "Too many attempts. Please try again later.",
+  "PROJECT_ALREADY_EXISTS": "A project with that name already exists in the active organization.",
+  "PROJECT_NOT_FOUND": "Project not found"
 }

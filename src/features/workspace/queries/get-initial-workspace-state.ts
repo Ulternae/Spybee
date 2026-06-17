@@ -1,8 +1,10 @@
 import "server-only";
 
+import { cookies } from "next/headers";
 import { headers } from "next/headers";
 import { auth } from "@/lib/auth/auth";
 import { prisma } from "@/lib/db/prisma";
+import { COOKIE_KEYS } from "@/lib/http/cookies";
 import type { AppStoreState } from "@/store/app/app.store";
 
 const getInitialWorkspaceState = async (): Promise<Partial<AppStoreState>> => {
@@ -25,6 +27,9 @@ const getInitialWorkspaceState = async (): Promise<Partial<AppStoreState>> => {
       hasHydrated: true,
     };
   }
+
+  const cookieStore = await cookies();
+  const activeProjectId = cookieStore.get(COOKIE_KEYS.ACTIVE_PROJECT_ID)?.value;
 
   const membership = await prisma.member.findFirst({
     where: {
@@ -61,6 +66,12 @@ const getInitialWorkspaceState = async (): Promise<Partial<AppStoreState>> => {
     };
   }
 
+  const activeProject = activeProjectId
+    ? membership.organization.projects.find(
+        (project) => project.id === activeProjectId,
+      ) ?? null
+    : null;
+
   return {
     isAuthenticated: true,
     activeOrganization: {
@@ -69,6 +80,7 @@ const getInitialWorkspaceState = async (): Promise<Partial<AppStoreState>> => {
       slug: membership.organization.slug,
       role: membership.role,
     },
+    activeProject,
     projects: membership.organization.projects,
     hasHydrated: true,
   };

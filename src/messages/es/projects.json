@@ -6,7 +6,9 @@
     "new_action": "Nuevo proyecto",
     "actions_label": "Abrir opciones de proyecto",
     "set_active": "Seleccionar proyecto",
+    "setting_active": "Seleccionando...",
     "set_active_success": "Proyecto seleccionado correctamente",
+    "set_active_error": "Error al seleccionar el proyecto",
     "view_detail": "Ver detalle",
     "incidents_count": "{count, plural, =0 {Sin incidencias} =1 {# incidencia} other {# incidencias}}",
     "members_count": "{count, plural, =0 {Sin miembros} =1 {# miembro} other {# miembros}}"
