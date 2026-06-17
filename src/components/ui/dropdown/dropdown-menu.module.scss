@@ -1,0 +1,230 @@
+@use "styles" as *;
+
+.content {
+  z-index: layer("toast");
+  min-width: rem(160);
+  max-width: min(rem(320), calc(100vw - #{space(4)}));
+  overflow: hidden;
+  padding: space(1);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--popover);
+  color: var(--popover-foreground);
+  box-shadow: var(--shadow-md);
+  transform-origin: var(--radix-dropdown-menu-content-transform-origin);
+
+  --dropdown-menu-slide-x: 0;
+  --dropdown-menu-slide-y: 0;
+
+  &[data-state="open"] {
+    animation: dropdown-menu-show $transition-fast;
+  }
+
+  &[data-state="closed"] {
+    animation: dropdown-menu-hide $transition-fast;
+  }
+
+  &[data-side="top"] {
+    --dropdown-menu-slide-x: 0;
+    --dropdown-menu-slide-y: #{space(1)};
+  }
+
+  &[data-side="right"] {
+    --dropdown-menu-slide-x: -#{space(1)};
+    --dropdown-menu-slide-y: 0;
+  }
+
+  &[data-side="bottom"] {
+    --dropdown-menu-slide-x: 0;
+    --dropdown-menu-slide-y: -#{space(1)};
+  }
+
+  &[data-side="left"] {
+    --dropdown-menu-slide-x: #{space(1)};
+    --dropdown-menu-slide-y: 0;
+  }
+}
+
+.subContent {
+  transform-origin: var(--radix-dropdown-menu-content-transform-origin);
+}
+
+.item,
+.checkboxItem,
+.radioItem,
+.subTrigger {
+  position: relative;
+  display: flex;
+  min-height: rem(32);
+  width: 100%;
+  cursor: default;
+  user-select: none;
+  align-items: center;
+  gap: space(2);
+  border-radius: calc(var(--radius-sm) - #{rem(1)});
+  padding: space(1.5) space(2);
+  color: var(--popover-foreground);
+  font-size: rem(14);
+  line-height: var(--leading-tight);
+  outline: none;
+  @include transition-colors;
+
+  svg {
+    width: rem(16);
+    height: rem(16);
+    flex-shrink: 0;
+    color: var(--muted-foreground);
+  }
+
+  &[data-highlighted] {
+    background: var(--accent);
+    color: var(--accent-foreground);
+
+    svg {
+      color: var(--accent-foreground);
+    }
+  }
+
+  &[data-disabled] {
+    pointer-events: none;
+    opacity: 0.5;
+  }
+
+  &[data-variant="destructive"] {
+    color: var(--destructive);
+
+    svg {
+      color: var(--destructive);
+    }
+
+    &[data-highlighted] {
+      background: color-mix(in srgb, var(--destructive) 12%, transparent);
+      color: var(--destructive);
+
+      svg {
+        color: var(--destructive);
+      }
+    }
+  }
+}
+
+.checkboxItem,
+.radioItem {
+  padding-left: space(8);
+}
+
+.inset {
+  padding-left: space(8);
+}
+
+.itemIndicator {
+  position: absolute;
+  left: space(2);
+  display: flex;
+  width: rem(16);
+  height: rem(16);
+  align-items: center;
+  justify-content: center;
+}
+
+.checkIcon {
+  position: relative;
+  display: block;
+  width: rem(14);
+  height: rem(14);
+
+  &::after {
+    position: absolute;
+    top: rem(1);
+    left: rem(4);
+    width: rem(5);
+    height: rem(9);
+    border-right: rem(2) solid currentColor;
+    border-bottom: rem(2) solid currentColor;
+    content: "";
+    transform: rotate(45deg);
+  }
+}
+
+.radioIcon {
+  display: block;
+  width: rem(8);
+  height: rem(8);
+  border-radius: 999px;
+  background: currentColor;
+}
+
+.chevron {
+  position: relative;
+  margin-left: auto;
+  width: rem(16);
+  height: rem(16);
+  color: var(--muted-foreground);
+
+  &::after {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: rem(6);
+    height: rem(6);
+    border-top: rem(1.5) solid currentColor;
+    border-right: rem(1.5) solid currentColor;
+    content: "";
+    transform: translate(-60%, -50%) rotate(45deg);
+  }
+}
+
+.label {
+  padding: space(1.5) space(2);
+  color: var(--popover-foreground);
+  font-size: rem(14);
+  font-weight: 600;
+  line-height: var(--leading-tight);
+}
+
+.separator {
+  height: rem(1);
+  margin: space(1) calc(#{space(1)} * -1);
+  background: var(--border);
+}
+
+.shortcut {
+  margin-left: auto;
+  color: var(--muted-foreground);
+  font-size: rem(12);
+  letter-spacing: rem(0.4);
+}
+
+@include reduced-motion {
+  .content {
+    animation-duration: 1ms !important;
+  }
+}
+
+@keyframes dropdown-menu-show {
+  from {
+    opacity: 0;
+    transform: translate3d(var(--dropdown-menu-slide-x, 0),
+        var(--dropdown-menu-slide-y, 0),
+        0) scale(0.96);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@keyframes dropdown-menu-hide {
+  from {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+
+  to {
+    opacity: 0;
+    transform: translate3d(var(--dropdown-menu-slide-x, 0),
+        var(--dropdown-menu-slide-y, 0),
+        0) scale(0.96);
+  }
+}
