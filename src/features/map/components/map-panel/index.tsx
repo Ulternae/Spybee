@@ -8,6 +8,7 @@ import { useTranslations } from "next-intl";
 import { CreateIncidentPanel } from "@/features/incidents/components/create-incident-panel";
 import type { IncidentLocation } from "@/features/incidents/components/location-preview";
 import type { ActionsForm, DataForm } from "@/features/incidents/types/incident.types";
+import { useAppStore } from "@/store/app/app.provider";
 import { filterIncidents } from "../../lib/filter-incidents";
 import { MapFilters } from "../map-filters";
 import { MapboxMap } from "../mapbox-map";
@@ -28,6 +29,20 @@ const MapPanel = ({ data }: MapPanelProps) => {
 
   const router = useRouter();
   const t = useTranslations("map.create_incident");
+  const projectId = data.project.id;
+  const storedViewport = useAppStore((state) => state.mapViewportByProject[projectId] ?? null);
+  const incidentLocationDraft = useAppStore((state) => state.incidentLocationDraftByProject[projectId] ?? null);
+  const setMapViewport = useAppStore((state) => state.setMapViewport);
+  const setIncidentLocationDraft = useAppStore((state) => state.setIncidentLocationDraft);
+
+  const initialViewport = incidentLocationDraft
+    ? {
+      longitude: incidentLocationDraft.longitude,
+      latitude: incidentLocationDraft.latitude,
+      zoom: storedViewport?.zoom ?? 16,
+    }
+    : storedViewport;
+
   const filteredIncidents = useMemo(() => {
     return filterIncidents(data.incidents, {
       priority: priorityFilter,
@@ -42,6 +57,7 @@ const MapPanel = ({ data }: MapPanelProps) => {
   };
 
   const handleLocationSelect = (location: IncidentLocation) => {
+    setIncidentLocationDraft({ projectId, location });
     setSelectedLocation(location);
     setIsCreatePanelOpen(true);
     setIsSelectingLocation(false);
@@ -98,8 +114,11 @@ const MapPanel = ({ data }: MapPanelProps) => {
         )}
         <MapboxMap
           incidents={filteredIncidents}
+          initialViewport={initialViewport}
           selectionMode={isSelectingLocation}
+          skipAutoFit={Boolean(initialViewport)}
           onLocationSelect={handleLocationSelect}
+          onViewportChange={(viewport) => setMapViewport({ projectId, viewport })}
         />
         <CreateIncidentPanel
           open={isCreatePanelOpen}

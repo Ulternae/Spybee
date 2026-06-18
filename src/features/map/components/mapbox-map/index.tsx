@@ -23,13 +23,29 @@ import styles from "./mapbox-map.module.scss";
 const DEFAULT_CENTER: [number, number] = [-74.0721, 4.711];
 const DEFAULT_ZOOM = 13;
 
+type MapViewport = {
+  longitude: number;
+  latitude: number;
+  zoom: number;
+};
+
 interface MapboxMapProps {
   incidents: MapIncident[];
+  initialViewport?: MapViewport | null;
   selectionMode?: boolean;
+  skipAutoFit?: boolean;
   onLocationSelect?: (p: { latitude: number; longitude: number }) => void;
+  onViewportChange?: (viewport: MapViewport) => void;
 }
 
-const MapboxMap = ({ incidents, selectionMode = false, onLocationSelect }: MapboxMapProps) => {
+const MapboxMap = ({
+  incidents,
+  initialViewport,
+  selectionMode = false,
+  skipAutoFit = false,
+  onLocationSelect,
+  onViewportChange,
+}: MapboxMapProps) => {
 
   const containerRef = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<mapboxgl.Map | null>(null);
@@ -37,12 +53,14 @@ const MapboxMap = ({ incidents, selectionMode = false, onLocationSelect }: Mapbo
   const incidentsRef = useRef(incidents);
   const selectionModeRef = useRef(selectionMode);
   const onLocationSelectRef = useRef(onLocationSelect);
+  const onViewportChangeRef = useRef(onViewportChange);
 
   useEffect(() => {
     incidentsRef.current = incidents;
     selectionModeRef.current = selectionMode;
     onLocationSelectRef.current = onLocationSelect;
-  }, [incidents, onLocationSelect, selectionMode]);
+    onViewportChangeRef.current = onViewportChange;
+  }, [incidents, onLocationSelect, onViewportChange, selectionMode]);
 
   useEffect(() => {
     if (!containerRef.current || mapRef.current) {
@@ -54,8 +72,10 @@ const MapboxMap = ({ incidents, selectionMode = false, onLocationSelect }: Mapbo
     const map = new mapboxgl.Map({
       container: containerRef.current,
       style: "mapbox://styles/mapbox/streets-v12",
-      center: DEFAULT_CENTER,
-      zoom: DEFAULT_ZOOM,
+      center: initialViewport
+        ? [initialViewport.longitude, initialViewport.latitude]
+        : DEFAULT_CENTER,
+      zoom: initialViewport?.zoom ?? DEFAULT_ZOOM,
     });
 
     map.addControl(
@@ -146,7 +166,18 @@ const MapboxMap = ({ incidents, selectionMode = false, onLocationSelect }: Mapbo
       map.getCanvas().style.cursor = selectionModeRef.current ? "crosshair" : "";
     };
 
+    const handleViewportChange = () => {
+      const center = map.getCenter();
+
+      onViewportChangeRef.current?.({
+        longitude: center.lng,
+        latitude: center.lat,
+        zoom: map.getZoom(),
+      });
+    };
+
     map.on("click", handleMapClick);
+    map.on("moveend", handleViewportChange);
 
     map.on("load", async () => {
       map.addSource(INCIDENTS_SOURCE_ID, {
@@ -182,6 +213,7 @@ const MapboxMap = ({ incidents, selectionMode = false, onLocationSelect }: Mapbo
       map.off("mouseenter", INCIDENT_POINTS_LAYER_ID, setPointerCursor);
       map.off("mouseleave", CLUSTERS_LAYER_ID, resetCursor);
       map.off("mouseleave", INCIDENT_POINTS_LAYER_ID, resetCursor);
+      map.off("moveend", handleViewportChange);
       map.remove();
       mapRef.current = null;
     };
@@ -222,6 +254,10 @@ const MapboxMap = ({ incidents, selectionMode = false, onLocationSelect }: Mapbo
       map.once("load", updateSource);
     }
 
+    if (skipAutoFit) {
+      return;
+    }
+
     if (incidents.length === 0) {
       map.flyTo({
         center: DEFAULT_CENTER,
@@ -244,7 +280,7 @@ const MapboxMap = ({ incidents, selectionMode = false, onLocationSelect }: Mapbo
       maxZoom: 16,
       duration: 0,
     });
-  }, [incidents]);
+  }, [incidents, skipAutoFit]);
 
   return <div ref={containerRef} className={styles.root} />;
 };
