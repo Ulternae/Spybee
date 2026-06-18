@@ -1,0 +1,50 @@
+@use "styles" as *;
+
+.root {
+  display: grid;
+  max-width: rem(260);
+  gap: space(2);
+  color: var(--popover-foreground);
+
+  h3,
+  p {
+    margin: 0;
+  }
+
+  h3 {
+    font-size: rem(14);
+    font-weight: 700;
+    line-height: var(--leading-tight);
+  }
+
+  p {
+    color: var(--muted-foreground);
+    font-size: rem(12);
+  }
+}
+
+.sequence {
+  width: fit-content;
+  padding: rem(2) rem(8);
+  border-radius: 999px;
+  color: var(--primary-foreground);
+  background: var(--primary);
+  font-size: rem(11);
+  font-weight: 700;
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: space(1.5);
+
+  span {
+    padding: rem(2) rem(8);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    color: var(--muted-foreground);
+    font-size: rem(11);
+    font-weight: 600;
+    text-transform: lowercase;
+  }
+}

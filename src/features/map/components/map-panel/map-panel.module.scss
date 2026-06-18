@@ -2,14 +2,14 @@
 
 .root {
   overflow: hidden;
-  border-radius: var(--radius-xl);
   border: 1px solid var(--border);
   border-radius: var(--radius-xl);
 }
 
 .container {
+  position: relative;
   width: 100%;
-  height: calc(100dvh - #{rem(100)});
+  height: calc(100dvh - #{rem(102)});
   min-height: rem(420);
   margin-left: auto;
   overflow: hidden;
@@ -28,7 +28,6 @@
 
 @include until("md") {
   .container {
-    height: calc(100dvh - #{rem(84)});
     min-height: rem(360);
   }
 }
