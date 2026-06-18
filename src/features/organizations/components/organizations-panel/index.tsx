@@ -16,6 +16,7 @@ interface OrganizationsPanelProps {
 
 const OrganizationsPanel = ({ organizations, activeOrganizationId }: OrganizationsPanelProps) => {
   const t = useTranslations("organizations.list");
+  const tRole = useTranslations("organizations.detail.roles");
 
   return (
     <main className={styles.root}>
@@ -49,7 +50,7 @@ const OrganizationsPanel = ({ organizations, activeOrganizationId }: Organizatio
                 <p>{organization.slug}</p>
               </div>
               <div className={styles.meta}>
-                <Badge variant="outline">{organization.role}</Badge>
+                <Badge variant="outline">{tRole(organization.role)}</Badge>
                 <Badge variant="secondary">
                   {t("projects_count", {
                     count: organization.projectsCount,

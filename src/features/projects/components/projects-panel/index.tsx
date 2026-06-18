@@ -17,6 +17,7 @@ interface ProjectsPanelProps {
 const ProjectsPanel = ({ projects }: ProjectsPanelProps) => {
 
   const t = useTranslations("projects.list");
+  const tRole = useTranslations("projects.detail.roles");
   const organization = useAppStore((state) => state.activeOrganization)
   const activeProject = useAppStore((state) => state.activeProject)
   const organizationName = organization?.name ?? t("active_organization_fallback");
@@ -53,7 +54,7 @@ const ProjectsPanel = ({ projects }: ProjectsPanelProps) => {
                 <p>{project.slug}</p>
               </div>
               <div className={styles.meta}>
-                {project.role && <Badge variant="outline">{project.role}</Badge>}
+                {project.role && <Badge variant="outline">{tRole(project.role)}</Badge>}
                 <Badge variant="secondary">
                   {t("incidents_count", {
                     count: project.incidentsCount,
