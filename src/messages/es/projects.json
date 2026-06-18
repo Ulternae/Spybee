@@ -19,5 +19,28 @@
     "description": "Crea un proyecto dentro de la organizacion activa para habilitar el mapa y el flujo de incidencias.",
     "name_placeholder": "Nombre del proyecto",
     "name_hint": "El nombre escogido para el proyecto podra ayudarte a identificar la obra o frente de trabajo."
+  },
+  "detail": {
+    "members_description": "Miembros asignados al proyecto dentro de {organization}.",
+    "members_count": "{count, plural, =0 {Sin miembros} =1 {# miembro} other {# miembros}}",
+    "incidents_count": "{count, plural, =0 {Sin incidencias} =1 {# incidencia} other {# incidencias}}",
+    "available_users_title": "Usuarios disponibles",
+    "available_users_description": "Usuarios de la organizacion que aun no pertenecen a este proyecto.",
+    "available_users_empty": "No hay usuarios disponibles para agregar.",
+    "add_member": "Agregar",
+    "adding_member": "Agregando...",
+    "add_member_success": "Usuario agregado correctamente",
+    "add_member_error": "Error al agregar el usuario",
+    "remove_member": "Eliminar",
+    "removing_member": "Eliminando...",
+    "remove_member_success": "Miembro eliminado correctamente",
+    "remove_member_error": "Error al eliminar el miembro",
+    "update_role_success": "Rol actualizado correctamente",
+    "update_role_error": "Error al actualizar el rol",
+    "roles": {
+      "PROJECT_ADMIN": "Administrador",
+      "EDITOR": "Editor",
+      "VIEWER": "Lector"
+    }
   }
 }

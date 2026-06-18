@@ -42,7 +42,7 @@ const OrganizationPanel = ({ data }: OrganizationPanelProps) => {
         <Datatable
           columns={columns}
           data={data.members}
-          searchableColumns={["user.email"]}
+          searchableColumns={["user.email", "user.name"]}
         />
       </section>
     </main>

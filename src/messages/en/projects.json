@@ -19,5 +19,28 @@
     "description": "Create a project inside the active organization to enable the map and incident workflow.",
     "name_placeholder": "Project name",
     "name_hint": "The chosen project name helps identify the job site or work area."
+  },
+  "detail": {
+    "members_description": "Members assigned to the project inside {organization}.",
+    "members_count": "{count, plural, =0 {No members} =1 {# member} other {# members}}",
+    "incidents_count": "{count, plural, =0 {No incidents} =1 {# incident} other {# incidents}}",
+    "available_users_title": "Available users",
+    "available_users_description": "Organization users who do not belong to this project yet.",
+    "available_users_empty": "There are no available users to add.",
+    "add_member": "Add",
+    "adding_member": "Adding...",
+    "add_member_success": "User added successfully",
+    "add_member_error": "Error adding user",
+    "remove_member": "Remove",
+    "removing_member": "Removing...",
+    "remove_member_success": "Member removed successfully",
+    "remove_member_error": "Error removing member",
+    "update_role_success": "Role updated successfully",
+    "update_role_error": "Error updating role",
+    "roles": {
+      "PROJECT_ADMIN": "Project admin",
+      "EDITOR": "Editor",
+      "VIEWER": "Viewer"
+    }
   }
 }

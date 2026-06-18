@@ -1,0 +1,37 @@
+@use "styles" as *;
+
+.root {
+  display: flex;
+  align-items: center;
+  gap: space(2);
+  min-width: 0;
+}
+
+.content {
+  min-width: 0;
+}
+
+.name,
+.email {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.avatar {
+  height: rem(26);
+  width: rem(26);
+}
+
+.name {
+  color: var(--foreground);
+  font-size: rem(14);
+  line-height: var(--leading-tight);
+  font-weight: 600;
+}
+
+.email {
+  color: var(--muted-foreground);
+  line-height: var(--leading-tight);
+  font-size: rem(12);
+}
