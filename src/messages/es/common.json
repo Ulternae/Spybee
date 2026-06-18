@@ -45,6 +45,7 @@
     "category": "Categoría",
     "priority": "Prioridad",
     "location": "Ubicación",
+    "due_date": "Fecha límite",
     "location_description": "Detalles de localización",
     "tags": "Etiquetas",
     "assignees": "Asignados",

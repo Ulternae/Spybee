@@ -16,14 +16,6 @@ interface CreateIncidentServerActionInput {
   values: Partial<IncidentFormInput>;
 }
 
-const getDueDate = () => {
-  const dueDate = new Date();
-  dueDate.setDate(dueDate.getDate() + 7);
-  dueDate.setHours(0, 0, 0, 0);
-
-  return dueDate;
-};
-
 const createIncidentServerAction = async ({ data, values }: CreateIncidentServerActionInput): Promise<IncidentFormState> => {
   try {
     const session = await auth.api.getSession({
@@ -130,7 +122,7 @@ const createIncidentServerAction = async ({ data, values }: CreateIncidentServer
           latitude: data.latitude,
           longitude: data.longitude,
           locationDescription: data.locationDescription || null,
-          dueDate: getDueDate(),
+          dueDate: data.dueDate,
         },
         select: {
           id: true,

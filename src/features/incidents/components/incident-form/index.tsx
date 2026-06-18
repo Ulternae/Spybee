@@ -3,6 +3,11 @@
 import { useActionState, useEffect, useState } from "react";
 import { IncidentPriority } from "@/generated/prisma/enums";
 import { FormErrors } from "@/components/common/form-errors";
+import {
+  Calendar,
+  type HandleDateChange,
+  type HourOption,
+} from "@/components/common/calendar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -23,11 +28,30 @@ import { IncidentTagsCombobox } from "./components/incident-tags-combobox";
 import { IncidentUsersCombobox } from "./components/incident-users-combobox";
 import styles from "./incident-form.module.scss";
 import type { ActionsForm, ReadyDataForm } from "../../types/incident.types";
+import { HOURS } from "@/components/common/calendar/constants";
 
 interface IncidentFormProps {
   data: ReadyDataForm;
   actions: ActionsForm;
 }
+
+const getDefaultDueDate = () => {
+  const dueDate = new Date();
+  dueDate.setDate(dueDate.getDate() + 7);
+  dueDate.setHours(0, 0, 0, 0);
+
+  return dueDate;
+};
+
+const getHourFromDate = (date: Date): HourOption => {
+  const value = [
+    String(date.getHours()).padStart(2, "0"),
+    String(date.getMinutes()).padStart(2, "0"),
+    "00",
+  ].join(":");
+
+  return HOURS.find((hour) => hour.value === value) ?? HOURS[0];
+};
 
 const getInitialState = (location: IncidentLocation): IncidentFormState => ({
   status: FORM_STATUS.IDLE,
@@ -42,6 +66,7 @@ const getInitialState = (location: IncidentLocation): IncidentFormState => ({
     latitude: location.latitude,
     longitude: location.longitude,
     locationDescription: "",
+    dueDate: getDefaultDueDate(),
   },
 });
 
@@ -56,12 +81,24 @@ const IncidentForm = ({ data, actions }: IncidentFormProps) => {
   const [tagIds, setTagIds] = useState<string[]>(state.values.tagIds ?? []);
   const [assigneeIds, setAssigneeIds] = useState<string[]>(state.values.assigneeIds ?? []);
   const [observerIds, setObserverIds] = useState<string[]>(state.values.observerIds ?? []);
+  const [dueDate, setDueDate] = useState<Date>(() => {
+    return state.values.dueDate ? new Date(state.values.dueDate) : getDefaultDueDate();
+  });
+  const [dueHour, setDueHour] = useState<HourOption>(() => getHourFromDate(dueDate));
 
   const t = useTranslations("common");
   const locale = useLocale();
   const isCompleted = state.status === FORM_STATUS.SUCCESS;
   const isDisabled = isPending || isCompleted;
   const categoryNameKey = locale === "en" ? "nameEn" : "nameEs";
+  const handleDueDateChange = ({ newDate, newHour }: HandleDateChange) => {
+    const [hours, minutes, seconds] = newHour.value.split(":").map(Number);
+    const nextDate = new Date(newDate);
+
+    nextDate.setHours(hours, minutes, seconds, 0);
+    setDueDate(nextDate);
+    setDueHour(newHour);
+  };
 
   useEffect(() => {
     if (state.status !== FORM_STATUS.SUCCESS) {
@@ -71,11 +108,11 @@ const IncidentForm = ({ data, actions }: IncidentFormProps) => {
     onSuccess();
   }, [onSuccess, state.status]);
 
-
   return (
     <form action={action} className={styles.form}>
       <input type="hidden" name="latitude" value={location.latitude} />
       <input type="hidden" name="longitude" value={location.longitude} />
+      <input type="hidden" name="dueDate" value={dueDate.toISOString()} />
 
       <IncidentFormSection
         title={t("fields.groups.general")}
@@ -130,6 +167,20 @@ const IncidentForm = ({ data, actions }: IncidentFormProps) => {
               ))}
             </SelectContent>
           </Select>
+
+          <Calendar
+            date={dueDate}
+            hour={dueHour}
+            onDateChange={handleDueDateChange}
+          >
+            <Input
+              readOnly
+              placeholder={t("fields.due_date")}
+              value={dueDate.toLocaleString(locale)}
+              isInvalid={Boolean(state.fieldErrors?.dueDate)}
+              disabled={isDisabled}
+            />
+          </Calendar>
         </div>
       </IncidentFormSection>
 

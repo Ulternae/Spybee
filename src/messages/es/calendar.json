@@ -1,0 +1,15 @@
+{
+  "picker": {
+    "select_date": "Seleccionar fecha",
+    "quick_dates": {
+      "today": "Hoy",
+      "later_today": "Más tarde",
+      "tomorrow": "Mañana",
+      "this_weekend": "Este fin de semana",
+      "next_week": "La próxima semana",
+      "next_weekend": "El próximo fin de semana",
+      "two_weeks": "En dos semanas",
+      "four_weeks": "En cuatro semanas"
+    }
+  }
+}

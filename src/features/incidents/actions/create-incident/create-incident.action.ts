@@ -17,6 +17,7 @@ const getValues = (formData: FormData): Partial<IncidentFormInput> => ({
   latitude: Number(formData.get("latitude") ?? 0),
   longitude: Number(formData.get("longitude") ?? 0),
   locationDescription: String(formData.get("locationDescription") ?? ""),
+  dueDate: new Date(String(formData.get("dueDate") ?? "")),
 });
 
 const createIncidentAction = async (_: IncidentFormState, formData: FormData): Promise<IncidentFormState> => {

@@ -45,6 +45,7 @@
     "category": "Category",
     "priority": "Priority",
     "location": "Location",
+    "due_date": "Due date",
     "location_description": "Location details",
     "tags": "Tags",
     "assignees": "Assignees",
