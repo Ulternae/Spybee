@@ -10,9 +10,15 @@
 
 .preferences {
   position: absolute;
-  right: space(4);
-  bottom: space(4);
+  right: 11px;
+  bottom: 11px;
+  border-radius: var(--radius-lg) 0 var(--radius-lg) 0;
+  border: 2px solid var(--border);
   z-index: layer("sticky");
+  padding: space(2);
+  background: color-mix(in srgb, var(--foreground) 80%, transparent);
+  backdrop-filter: blur(rem(16));
+  -webkit-backdrop-filter: blur(rem(16));
 }
 
 @include from("md") {

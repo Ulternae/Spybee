@@ -1,5 +1,7 @@
+import { MapPanel } from "@/features/map/components/map-panel";
+
 const MapPage = () => {
-  return <p>MapPage</p>;
+  return <MapPanel />;
 };
 
 export default MapPage;

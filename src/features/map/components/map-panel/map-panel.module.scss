@@ -1,0 +1,34 @@
+@use "styles" as *;
+
+.root {
+  overflow: hidden;
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+}
+
+.container {
+  width: 100%;
+  height: calc(100dvh - #{rem(100)});
+  min-height: rem(420);
+  margin-left: auto;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  background: var(--card);
+  box-shadow: var(--shadow-sm);
+  @include transition-colors;
+}
+
+@include from("md") {
+  .container {
+    width: calc(100vw - var(--sidebar-width-icon) - #{space(7)});
+  }
+}
+
+@include until("md") {
+  .container {
+    height: calc(100dvh - #{rem(84)});
+    min-height: rem(360);
+  }
+}

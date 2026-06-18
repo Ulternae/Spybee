@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Kameron } from "next/font/google";
+import "mapbox-gl/dist/mapbox-gl.css";
 import "../globals.scss";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
