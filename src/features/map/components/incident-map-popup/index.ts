@@ -1,12 +1,7 @@
 import type { MapIncident } from "../../queries/get-active-project-map";
 import styles from "./incident-map-popup.module.scss";
 
-const getCategoryName = (incident: MapIncident, locale: string) => {
-  return locale === "en" ? incident.category.nameEn : incident.category.nameEs;
-};
-
-const createIncidentMapPopup = (incident: MapIncident, locale: string) => {
-  const categoryName = getCategoryName(incident, locale);
+const createIncidentMapPopup = (incident: MapIncident) => {
   const popup = document.createElement("article");
   const sequence = document.createElement("span");
   const title = document.createElement("h3");
@@ -21,7 +16,7 @@ const createIncidentMapPopup = (incident: MapIncident, locale: string) => {
 
   sequence.textContent = `#${incident.sequenceNo}`;
   title.textContent = incident.title;
-  description.textContent = incident.locationDescription ?? categoryName;
+  description.textContent = incident.locationDescription;
   status.textContent = incident.status;
   priority.textContent = incident.priority;
 

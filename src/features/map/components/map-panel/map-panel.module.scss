@@ -1,13 +1,13 @@
 @use "styles" as *;
 
 .root {
+  position: relative;
   overflow: hidden;
   border: 1px solid var(--border);
   border-radius: var(--radius-xl);
 }
 
 .container {
-  position: relative;
   width: 100%;
   height: calc(100dvh - #{rem(102)});
   min-height: rem(420);
@@ -20,6 +20,29 @@
   @include transition-colors;
 }
 
+.createControls {
+  position: absolute;
+  right: space(4);
+  top: space(4);
+  z-index: 2;
+  display: flex;
+  align-items: start;
+  gap: space(2);
+}
+
+.selectionHint {
+  max-width: rem(240);
+  padding: space(2) space(3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  color: var(--popover-foreground);
+  background: color-mix(in srgb, var(--popover) 88%, transparent);
+  box-shadow: var(--shadow-sm);
+  backdrop-filter: blur(12px);
+  font-size: rem(13);
+  font-weight: 600;
+}
+
 @include from("md") {
   .container {
     width: calc(100vw - var(--sidebar-width-icon) - #{space(7)});
@@ -29,5 +52,12 @@
 @include until("md") {
   .container {
     min-height: rem(360);
+  }
+
+  .createControls {
+    right: space(3);
+    bottom: space(3);
+    left: space(3);
+    justify-content: flex-end;
   }
 }

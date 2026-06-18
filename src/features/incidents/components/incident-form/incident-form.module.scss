@@ -1,0 +1,67 @@
+@use "styles" as *;
+
+.form {
+  display: flex;
+  flex-direction: column;
+  padding: space(4);
+  gap: space(4);
+}
+
+.grid {
+  display: grid;
+  gap: space(3);
+}
+
+.select {
+  width: 100%;
+}
+
+.fieldset {
+  display: grid;
+  gap: space(2);
+  padding: 0;
+  border: 0;
+  margin: 0;
+
+  legend {
+    padding: 0;
+    color: var(--muted-foreground);
+    font-size: rem(12);
+    font-weight: 700;
+  }
+}
+
+.options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: space(2);
+}
+
+.option {
+  display: inline-flex;
+  align-items: center;
+  gap: space(1.5);
+  padding: space(1.5) space(2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  color: var(--foreground);
+  background: var(--input);
+  font-size: rem(13);
+  cursor: pointer;
+  // @include transition-colors($with-opacity: true);
+
+  input {
+    accent-color: var(--primary);
+  }
+}
+
+.empty {
+  color: var(--muted-foreground);
+  font-size: rem(13);
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: space(2);
+}

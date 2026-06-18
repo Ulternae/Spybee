@@ -25,28 +25,24 @@ const DEFAULT_ZOOM = 13;
 
 interface MapboxMapProps {
   incidents: MapIncident[];
-  locale: string;
-  selectedLocation?: { latitude: number; longitude: number } | null;
   selectionMode?: boolean;
   onLocationSelect?: (p: { latitude: number; longitude: number }) => void;
 }
 
-const MapboxMap = ({ incidents, locale, selectedLocation = null, selectionMode = false, onLocationSelect }: MapboxMapProps) => {
+const MapboxMap = ({ incidents, selectionMode = false, onLocationSelect }: MapboxMapProps) => {
 
   const containerRef = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<mapboxgl.Map | null>(null);
   const selectedMarkerRef = useRef<mapboxgl.Marker | null>(null);
   const incidentsRef = useRef(incidents);
-  const localeRef = useRef(locale);
   const selectionModeRef = useRef(selectionMode);
   const onLocationSelectRef = useRef(onLocationSelect);
 
   useEffect(() => {
     incidentsRef.current = incidents;
-    localeRef.current = locale;
     selectionModeRef.current = selectionMode;
     onLocationSelectRef.current = onLocationSelect;
-  }, [incidents, locale, onLocationSelect, selectionMode]);
+  }, [incidents, onLocationSelect, selectionMode]);
 
   useEffect(() => {
     if (!containerRef.current || mapRef.current) {
@@ -138,7 +134,7 @@ const MapboxMap = ({ incidents, locale, selectedLocation = null, selectionMode =
         offset: 16,
       })
         .setLngLat(feature.geometry.coordinates)
-        .setDOMContent(createIncidentMapPopup(incident, localeRef.current))
+        .setDOMContent(createIncidentMapPopup(incident))
         .addTo(map);
     };
 
@@ -204,31 +200,6 @@ const MapboxMap = ({ incidents, locale, selectedLocation = null, selectionMode =
       map.getCanvas().style.cursor = "";
     }
   }, [selectionMode]);
-
-  useEffect(() => {
-    const map = mapRef.current;
-
-    if (!map) {
-      return;
-    }
-
-    selectedMarkerRef.current?.remove();
-    selectedMarkerRef.current = null;
-
-    if (!selectedLocation) {
-      return;
-    }
-
-    const element = document.createElement("div");
-    element.className = styles.selectionMarker;
-
-    selectedMarkerRef.current = new mapboxgl.Marker({
-      element,
-      anchor: "center",
-    })
-      .setLngLat([selectedLocation.longitude, selectedLocation.latitude])
-      .addTo(map);
-  }, [selectedLocation]);
 
   useEffect(() => {
     const map = mapRef.current;

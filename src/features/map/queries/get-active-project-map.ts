@@ -1,10 +1,16 @@
 import "server-only";
 
 import { cookies } from "next/headers";
+import { getLocale } from "next-intl/server";
 import { redirect } from "@/i18n/navigation";
+import {
+  DEFAULT_INCIDENT_FORM_OPTIONS,
+  getIncidentFormOptions,
+} from "@/features/incidents/queries/get-incident-form-options";
 import { getProjectAccess } from "@/lib/auth/access/get-project-access";
 import { prisma } from "@/lib/db/prisma";
 import { COOKIE_KEYS } from "@/lib/http/cookies";
+import type { IncidentFormOptions } from "@/features/incidents/queries/get-incident-form-options";
 import type {
   IncidentPriority,
   IncidentStatus,
@@ -36,10 +42,12 @@ type ActiveProjectMap = {
   access: {
     canCreateIncidents: boolean;
   };
+  incidentFormOptions: IncidentFormOptions;
   incidents: MapIncident[];
 };
 
-const getActiveProjectMap = async (locale: string): Promise<ActiveProjectMap> => {
+const getActiveProjectMap = async (): Promise<ActiveProjectMap> => {
+  const locale = await getLocale();
   const cookieStore = await cookies();
   const activeProjectId = cookieStore.get(COOKIE_KEYS.ACTIVE_PROJECT_ID)?.value;
 
@@ -106,6 +114,9 @@ const getActiveProjectMap = async (locale: string): Promise<ActiveProjectMap> =>
     access: {
       canCreateIncidents: access.canCreateIncidents,
     },
+    incidentFormOptions: access.canCreateIncidents
+      ? await getIncidentFormOptions({ projectId: activeProjectId })
+      : DEFAULT_INCIDENT_FORM_OPTIONS,
     incidents: project.incidents.map((incident) => ({
       ...incident,
       createdAt: incident.createdAt.toISOString(),

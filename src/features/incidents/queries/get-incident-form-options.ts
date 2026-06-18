@@ -30,18 +30,22 @@ type IncidentFormOptions = {
   members: IncidentFormUserOption[];
 };
 
-const EMPTY_OPTIONS: IncidentFormOptions = {
+interface GetIncidentFormOptions {
+  projectId?: string;
+}
+
+const DEFAULT_INCIDENT_FORM_OPTIONS: IncidentFormOptions = {
   categories: [],
   tags: [],
   members: [],
 };
 
-const getIncidentFormOptions = async (): Promise<IncidentFormOptions> => {
-  const cookieStore = await cookies();
-  const activeProjectId = cookieStore.get(COOKIE_KEYS.ACTIVE_PROJECT_ID)?.value;
+const getIncidentFormOptions = async ({ projectId }: GetIncidentFormOptions): Promise<IncidentFormOptions> => {
+
+  const activeProjectId = projectId ?? (await cookies()).get(COOKIE_KEYS.ACTIVE_PROJECT_ID)?.value;
 
   if (!activeProjectId) {
-    return EMPTY_OPTIONS;
+    return DEFAULT_INCIDENT_FORM_OPTIONS;
   }
 
   const project = await prisma.project.findUnique({
@@ -69,7 +73,7 @@ const getIncidentFormOptions = async (): Promise<IncidentFormOptions> => {
   });
 
   if (!project) {
-    return EMPTY_OPTIONS;
+    return DEFAULT_INCIDENT_FORM_OPTIONS;
   }
 
   const [categories, tags] = await Promise.all([
@@ -106,7 +110,7 @@ const getIncidentFormOptions = async (): Promise<IncidentFormOptions> => {
   };
 };
 
-export { getIncidentFormOptions };
+export { DEFAULT_INCIDENT_FORM_OPTIONS, getIncidentFormOptions };
 export type {
   IncidentFormCategoryOption,
   IncidentFormOptions,
