@@ -7,6 +7,25 @@
   overflow: hidden;
 }
 
+.selectionMarker {
+  position: relative;
+  width: rem(24);
+  height: rem(24);
+  border: rem(4) solid var(--background);
+  border-radius: 999px;
+  background: var(--primary);
+  box-shadow: 0 rem(10) rem(28) hsl(0 0% 0% / 0.35);
+
+  &::after {
+    position: absolute;
+    inset: rem(-10);
+    border: 1px solid var(--primary);
+    border-radius: inherit;
+    opacity: 0.35;
+    content: "";
+  }
+}
+
 .root :global(.mapboxgl-popup-content) {
   padding: space(3);
   border: 1px solid var(--border);

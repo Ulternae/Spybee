@@ -26,18 +26,27 @@ const DEFAULT_ZOOM = 13;
 interface MapboxMapProps {
   incidents: MapIncident[];
   locale: string;
+  selectedLocation?: { latitude: number; longitude: number } | null;
+  selectionMode?: boolean;
+  onLocationSelect?: (p: { latitude: number; longitude: number }) => void;
 }
 
-const MapboxMap = ({ incidents, locale }: MapboxMapProps) => {
+const MapboxMap = ({ incidents, locale, selectedLocation = null, selectionMode = false, onLocationSelect }: MapboxMapProps) => {
+
   const containerRef = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<mapboxgl.Map | null>(null);
+  const selectedMarkerRef = useRef<mapboxgl.Marker | null>(null);
   const incidentsRef = useRef(incidents);
   const localeRef = useRef(locale);
+  const selectionModeRef = useRef(selectionMode);
+  const onLocationSelectRef = useRef(onLocationSelect);
 
   useEffect(() => {
     incidentsRef.current = incidents;
     localeRef.current = locale;
-  }, [incidents, locale]);
+    selectionModeRef.current = selectionMode;
+    onLocationSelectRef.current = onLocationSelect;
+  }, [incidents, locale, onLocationSelect, selectionMode]);
 
   useEffect(() => {
     if (!containerRef.current || mapRef.current) {
@@ -60,7 +69,22 @@ const MapboxMap = ({ incidents, locale }: MapboxMapProps) => {
       "bottom-left",
     );
 
+    const handleMapClick = (event: mapboxgl.MapMouseEvent) => {
+      if (!selectionModeRef.current) {
+        return;
+      }
+
+      onLocationSelectRef.current?.({
+        latitude: event.lngLat.lat,
+        longitude: event.lngLat.lng,
+      });
+    };
+
     const handleClusterClick = (event: mapboxgl.MapMouseEvent) => {
+      if (selectionModeRef.current) {
+        return;
+      }
+
       const feature = map.queryRenderedFeatures(event.point, {
         layers: [CLUSTERS_LAYER_ID],
       })[0];
@@ -90,6 +114,10 @@ const MapboxMap = ({ incidents, locale }: MapboxMapProps) => {
     };
 
     const handlePointClick = (event: mapboxgl.MapMouseEvent) => {
+      if (selectionModeRef.current) {
+        return;
+      }
+
       const feature = map.queryRenderedFeatures(event.point, {
         layers: [INCIDENT_POINTS_LAYER_ID],
       })[0];
@@ -119,8 +147,10 @@ const MapboxMap = ({ incidents, locale }: MapboxMapProps) => {
     };
 
     const resetCursor = () => {
-      map.getCanvas().style.cursor = "";
+      map.getCanvas().style.cursor = selectionModeRef.current ? "crosshair" : "";
     };
+
+    map.on("click", handleMapClick);
 
     map.on("load", async () => {
       map.addSource(INCIDENTS_SOURCE_ID, {
@@ -148,6 +178,8 @@ const MapboxMap = ({ incidents, locale }: MapboxMapProps) => {
     mapRef.current = map;
 
     return () => {
+      selectedMarkerRef.current?.remove();
+      map.off("click", handleMapClick);
       map.off("click", CLUSTERS_LAYER_ID, handleClusterClick);
       map.off("click", INCIDENT_POINTS_LAYER_ID, handlePointClick);
       map.off("mouseenter", CLUSTERS_LAYER_ID, setPointerCursor);
@@ -158,6 +190,45 @@ const MapboxMap = ({ incidents, locale }: MapboxMapProps) => {
       mapRef.current = null;
     };
   }, []);
+
+  useEffect(() => {
+    const map = mapRef.current;
+
+    if (!map) {
+      return;
+    }
+
+    if (selectionMode) {
+      map.getCanvas().style.cursor = "crosshair";
+    } else {
+      map.getCanvas().style.cursor = "";
+    }
+  }, [selectionMode]);
+
+  useEffect(() => {
+    const map = mapRef.current;
+
+    if (!map) {
+      return;
+    }
+
+    selectedMarkerRef.current?.remove();
+    selectedMarkerRef.current = null;
+
+    if (!selectedLocation) {
+      return;
+    }
+
+    const element = document.createElement("div");
+    element.className = styles.selectionMarker;
+
+    selectedMarkerRef.current = new mapboxgl.Marker({
+      element,
+      anchor: "center",
+    })
+      .setLngLat([selectedLocation.longitude, selectedLocation.latitude])
+      .addTo(map);
+  }, [selectedLocation]);
 
   useEffect(() => {
     const map = mapRef.current;
