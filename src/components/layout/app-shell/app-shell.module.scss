@@ -10,13 +10,12 @@
 
 .preferences {
   position: absolute;
-  right: 11px;
-  bottom: 11px;
+  right: space(3);
+  bottom: space(3);
   border-radius: var(--radius-lg) 0 var(--radius-lg) 0;
-  border: 2px solid var(--border);
   z-index: layer("sticky");
   padding: space(2);
-  background: color-mix(in srgb, var(--foreground) 80%, transparent);
+  background: color-mix(in srgb, var(--background) 80%, transparent);
   backdrop-filter: blur(rem(16));
   -webkit-backdrop-filter: blur(rem(16));
 }
