@@ -1,7 +1,18 @@
 @use "styles" as *;
 
+.inset {
+  position: relative;
+}
+
 .content {
   padding: 0 space(3) space(3);
+}
+
+.preferences {
+  position: absolute;
+  right: space(4);
+  bottom: space(4);
+  z-index: layer("sticky");
 }
 
 @include from("md") {

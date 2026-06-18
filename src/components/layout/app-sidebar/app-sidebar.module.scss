@@ -19,10 +19,14 @@
   flex: none;
   align-items: center;
   justify-content: center;
-  color: var(--sidebar-primary);
-  background: var(--sidebar-primary-foreground);
+  background: var(--sidebar-primary);
   border-radius: var(--radius-lg);
   border: 1px solid color-mix(in srgb, var(--sidebar-primary) 40%, transparent);
+
+}
+
+.brandMark .logo {
+  fill: var(--sidebar-primary-foreground);
 }
 
 .brandText {

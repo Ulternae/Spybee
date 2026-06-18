@@ -26,7 +26,7 @@ import { useAppStore } from "@/store/app/app.provider";
 import styles from "./app-sidebar.module.scss";
 import type { NavigationGroup, NavigationItem } from "./app-sidebar.types";
 import { SidebarNavigationItem } from "./sidebar-navigation-item";
-import Image from "next/image";
+import { Logo } from "@/components/common/logo";
 
 const AppSidebar = () => {
   const pathname = usePathname();
@@ -110,7 +110,7 @@ const AppSidebar = () => {
           onClick={closeMobileSidebar}
         >
           <span className={styles.brandMark}>
-            <Image src="/brand/logo.svg" width={20} height={20} alt={tCommon("brand")} />
+            <Logo className={styles.logo} />
           </span>
           <div className={styles.brandText}>
             <span>{activeProject?.name ? activeProject.name : tCommon("brand")}</span>
