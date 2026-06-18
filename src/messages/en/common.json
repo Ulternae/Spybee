@@ -59,5 +59,36 @@
     "columns": "Columns",
     "filter_results": "Filter results",
     "no_results": "No results."
+  },
+  "enums": {
+    "project_role": {
+      "PROJECT_ADMIN": "Project admin",
+      "EDITOR": "Editor",
+      "VIEWER": "Viewer"
+    },
+    "incident_priority": {
+      "LOW": "Low",
+      "MEDIUM": "Medium",
+      "HIGH": "High"
+    },
+    "incident_status": {
+      "OPEN": "Open",
+      "ON_PAUSE": "On pause",
+      "CLOSED": "Closed"
+    },
+    "participant_role": {
+      "ASSIGNEE": "Assignee",
+      "OBSERVER": "Observer"
+    },
+    "incident_media_type": {
+      "IMAGE": "Image",
+      "VIDEO": "Video",
+      "DOCUMENT": "Document"
+    },
+    "upload_status": {
+      "PENDING": "Pending",
+      "UPLOADED": "Uploaded",
+      "FAILED": "Failed"
+    }
   }
 }

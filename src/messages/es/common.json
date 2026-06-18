@@ -59,5 +59,36 @@
     "columns": "Columnas",
     "filter_results": "Filtrar resultados",
     "no_results": "No hay resultados."
+  },
+  "enums": {
+    "project_role": {
+      "PROJECT_ADMIN": "Administrador",
+      "EDITOR": "Editor",
+      "VIEWER": "Lector"
+    },
+    "incident_priority": {
+      "LOW": "Baja",
+      "MEDIUM": "Media",
+      "HIGH": "Alta"
+    },
+    "incident_status": {
+      "OPEN": "Abierta",
+      "ON_PAUSE": "En pausa",
+      "CLOSED": "Cerrada"
+    },
+    "participant_role": {
+      "ASSIGNEE": "Asignado",
+      "OBSERVER": "Observador"
+    },
+    "incident_media_type": {
+      "IMAGE": "Imagen",
+      "VIDEO": "Video",
+      "DOCUMENT": "Documento"
+    },
+    "upload_status": {
+      "PENDING": "Pendiente",
+      "UPLOADED": "Subido",
+      "FAILED": "Fallido"
+    }
   }
 }
