@@ -39,7 +39,18 @@
     "code": "Code",
     "currentPassword": "Current password",
     "revokeOtherSessions": "Sign out other sessions",
-    "confirmNewPassword": "Confirm new password"
+    "confirmNewPassword": "Confirm new password",
+    "title": "Title",
+    "description": "Description",
+    "category": "Category",
+    "priority": "Priority",
+    "location_description": "Location details",
+    "tags": "Tags",
+    "assignees": "Assignees",
+    "observers": "Observers",
+    "empty": {
+      "tags": "No tags available."
+    }
   },
   "actions": {
     "confirm": "Confirm",

@@ -3,5 +3,9 @@
     "all": "Todos",
     "status": "Estado",
     "priority": "Prioridad"
+  },
+  "create_incident": {
+    "button": "Crear incidencia",
+    "selection_hint": "Haz click en el mapa para seleccionar la ubicación."
   }
 }

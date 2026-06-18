@@ -223,5 +223,9 @@
   "STATE_SECURITY_MISMATCH": "State security mismatch",
   "TOO_MANY_REQUESTS": "Too many attempts. Please try again later.",
   "PROJECT_ALREADY_EXISTS": "A project with that name already exists in the active organization.",
-  "PROJECT_NOT_FOUND": "Project not found"
+  "PROJECT_NOT_FOUND": "Project not found",
+  "NO_ACTIVE_PROJECT": "No active project",
+  "INCIDENT_CATEGORY_NOT_FOUND": "Incident category not found",
+  "INCIDENT_PARTICIPANT_NOT_FOUND": "One participant does not belong to the project",
+  "INCIDENT_TAG_NOT_FOUND": "One tag does not belong to the organization"
 }

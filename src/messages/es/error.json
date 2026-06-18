@@ -223,5 +223,9 @@
   "STATE_SECURITY_MISMATCH": "Error de seguridad en el estado",
   "TOO_MANY_REQUESTS": "Demasiados intentos. Inténtalo más tarde.",
   "PROJECT_ALREADY_EXISTS": "Ya existe un proyecto con ese nombre en la organizacion activa.",
-  "PROJECT_NOT_FOUND": "Proyecto no encontrado"
+  "PROJECT_NOT_FOUND": "Proyecto no encontrado",
+  "NO_ACTIVE_PROJECT": "No hay un proyecto activo",
+  "INCIDENT_CATEGORY_NOT_FOUND": "Categoría de incidencia no encontrada",
+  "INCIDENT_PARTICIPANT_NOT_FOUND": "Uno de los participantes no pertenece al proyecto",
+  "INCIDENT_TAG_NOT_FOUND": "Una de las etiquetas no pertenece a la organización"
 }

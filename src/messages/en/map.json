@@ -3,5 +3,9 @@
     "all": "All",
     "status": "Status",
     "priority": "Priority"
+  },
+  "create_incident": {
+    "button": "Create incident",
+    "selection_hint": "Click on the map to select the location."
   }
 }

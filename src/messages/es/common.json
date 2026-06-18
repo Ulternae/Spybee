@@ -39,7 +39,20 @@
     "code": "Código",
     "currentPassword": "Contraseña actual",
     "revokeOtherSessions": "Cerrar todas las demás sesiones activas",
-    "confirmNewPassword": "Confirma tu nueva contraseña"
+    "confirmNewPassword": "Confirma tu nueva contraseña",
+    "fields": {
+      "title": "Título",
+      "description": "Descripción",
+      "category": "Categoría",
+      "priority": "Prioridad",
+      "location_description": "Detalles de localización",
+      "tags": "Etiquetas",
+      "assignees": "Asignados",
+      "observers": "Observadores"
+    },
+    "empty": {
+      "tags": "No hay etiquetas disponibles."
+    }
   },
   "actions": {
     "confirm": "Confirmar",
