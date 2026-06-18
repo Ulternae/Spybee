@@ -26,6 +26,7 @@ import { useAppStore } from "@/store/app/app.provider";
 import styles from "./app-sidebar.module.scss";
 import type { NavigationGroup, NavigationItem } from "./app-sidebar.types";
 import { SidebarNavigationItem } from "./sidebar-navigation-item";
+import Image from "next/image";
 
 const AppSidebar = () => {
   const pathname = usePathname();
@@ -37,9 +38,9 @@ const AppSidebar = () => {
   const { setOpenMobile } = useSidebar();
 
   const isAuthenticated = useAppStore((state) => state.isAuthenticated);
-  const hasActiveOrganization = useAppStore((state) =>
-    Boolean(state.activeOrganization),
-  );
+  const hasActiveOrganization = useAppStore((state) => Boolean(state.activeOrganization),);
+  const activeProject = useAppStore((state) => state.activeProject);
+  const activeOrganization = useAppStore((state) => state.activeOrganization);
 
   const closeMobileSidebar = () => {
     setOpenMobile(false);
@@ -109,9 +110,12 @@ const AppSidebar = () => {
           onClick={closeMobileSidebar}
         >
           <span className={styles.brandMark}>
-            <MinaBuilding aria-hidden="true" />
+            <Image src="/brand/logo.svg" width={20} height={20} alt={tCommon("brand")} />
           </span>
-          <span className={styles.brandText}>{tCommon("brand")}</span>
+          <div className={styles.brandText}>
+            <span>{activeProject?.name ? activeProject.name : tCommon("brand")}</span>
+            <p>{activeOrganization?.name ? activeOrganization.name : tCommon("brand")}</p>
+          </div>
         </Link>
       </SidebarHeader>
 

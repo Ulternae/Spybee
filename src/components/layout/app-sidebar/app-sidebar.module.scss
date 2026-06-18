@@ -19,25 +19,31 @@
   flex: none;
   align-items: center;
   justify-content: center;
-  color: var(--sidebar-primary-foreground);
-  background: var(--sidebar-primary);
+  color: var(--sidebar-primary);
+  background: var(--sidebar-primary-foreground);
   border-radius: var(--radius-lg);
-
-  svg {
-    width: rem(20);
-    height: rem(20);
-  }
+  border: 1px solid color-mix(in srgb, var(--sidebar-primary) 40%, transparent);
 }
 
 .brandText {
   overflow: hidden;
-  font-size: rem(18);
-  font-weight: 700;
   text-overflow: ellipsis;
   white-space: nowrap;
+  width: 100%;
   transition:
     width $transition-slow,
     opacity $transition-fast;
+
+  span {
+    font-weight: 700;
+    font-size: rem(18);
+
+  }
+
+  p {
+    font-size: rem(14);
+    color: var(--muted-foreground);
+  }
 }
 
 [data-state="collapsed"] .brand {
