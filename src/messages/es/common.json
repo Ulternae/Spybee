@@ -44,12 +44,30 @@
     "description": "Descripción",
     "category": "Categoría",
     "priority": "Prioridad",
+    "location": "Ubicación",
     "location_description": "Detalles de localización",
     "tags": "Etiquetas",
     "assignees": "Asignados",
     "observers": "Observadores",
+    "groups": {
+      "general": "Información general",
+      "general_description": "Nombra la incidencia y define su categoría y prioridad.",
+      "description": "Descripción y ubicación",
+      "description_description": "Explica lo ocurrido y agrega detalles útiles de localización.",
+      "location": "Vista del mapa",
+      "location_description": "Revisa el punto seleccionado en el mapa.",
+      "classification": "Etiquetas",
+      "classification_description": "Agrega etiquetas que ayuden a organizar la incidencia.",
+      "people": "Personas",
+      "people_description": "Selecciona asignados y observadores para esta incidencia."
+    },
+    "search": {
+      "tags": "Buscar etiquetas...",
+      "users": "Buscar usuarios..."
+    },
     "empty": {
-      "tags": "No hay etiquetas disponibles."
+      "tags": "No hay etiquetas disponibles.",
+      "users": "No hay usuarios disponibles."
     }
   },
   "actions": {

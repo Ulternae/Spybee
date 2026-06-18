@@ -1,0 +1,39 @@
+@use "styles" as *;
+
+.root {
+  position: relative;
+  min-height: rem(160);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--input);
+  box-shadow: var(--shadow-xs);
+  @include transition-colors;
+}
+
+.map {
+  position: absolute;
+  inset: 0;
+}
+
+.marker {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: rem(18);
+  height: rem(18);
+  border: rem(3) solid var(--background);
+  border-radius: 999px;
+  background: var(--primary);
+  box-shadow: var(--shadow-md);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+
+  &::after {
+    position: absolute;
+    inset: rem(-8);
+    content: "";
+    border: 1px solid color-mix(in srgb, var(--primary) 55%, transparent);
+    border-radius: inherit;
+  }
+}

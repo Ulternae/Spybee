@@ -44,12 +44,30 @@
     "description": "Description",
     "category": "Category",
     "priority": "Priority",
+    "location": "Location",
     "location_description": "Location details",
     "tags": "Tags",
     "assignees": "Assignees",
     "observers": "Observers",
+    "groups": {
+      "general": "General information",
+      "general_description": "Name the incident and define its category and priority.",
+      "description": "Description and location",
+      "description_description": "Explain what happened and add useful location details.",
+      "location": "Map preview",
+      "location_description": "Review the point selected on the map.",
+      "classification": "Tags",
+      "classification_description": "Add labels that help organize the incident.",
+      "people": "People",
+      "people_description": "Select assignees and observers for this incident."
+    },
+    "search": {
+      "tags": "Search tags...",
+      "users": "Search users..."
+    },
     "empty": {
-      "tags": "No tags available."
+      "tags": "No tags available.",
+      "users": "No users available."
     }
   },
   "actions": {

@@ -1,0 +1,45 @@
+@use "styles" as *;
+
+.root {
+  display: grid;
+  gap: space(3);
+  padding: space(3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--input);
+  @include transition-colors;
+}
+
+.content {
+  display: flex;
+  align-items: center;
+  gap: space(3);
+}
+
+.marker {
+  width: rem(34);
+  height: rem(34);
+  flex: 0 0 auto;
+  border: rem(3) solid var(--background);
+  border-radius: 999px;
+  background: var(--primary);
+  box-shadow: var(--shadow-sm);
+}
+
+.label,
+.coordinates {
+  margin: 0;
+}
+
+.label {
+  color: var(--muted-foreground);
+  font-size: rem(11);
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.coordinates {
+  color: var(--foreground);
+  font-size: rem(13);
+  font-weight: 600;
+}

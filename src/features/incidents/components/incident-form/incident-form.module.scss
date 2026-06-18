@@ -4,10 +4,38 @@
   display: flex;
   flex-direction: column;
   padding: space(4);
-  gap: space(4);
+  gap: space(5);
 }
 
 .grid {
+  display: grid;
+  gap: space(3);
+}
+
+.section {
+  display: grid;
+  gap: space(3);
+}
+
+.sectionHeader {
+  display: grid;
+  gap: space(0.5);
+
+  h3 {
+    margin: 0;
+    color: var(--foreground);
+    font-size: rem(14);
+    font-weight: 700;
+  }
+
+  p {
+    margin: 0;
+    color: var(--muted-foreground);
+    font-size: rem(12);
+  }
+}
+
+.sectionContent {
   display: grid;
   gap: space(3);
 }
@@ -16,48 +44,70 @@
   width: 100%;
 }
 
-.fieldset {
-  display: grid;
-  gap: space(2);
-  padding: 0;
-  border: 0;
-  margin: 0;
-
-  legend {
-    padding: 0;
-    color: var(--muted-foreground);
-    font-size: rem(12);
-    font-weight: 700;
-  }
+.combobox {
+  width: 100%;
 }
 
-.options {
-  display: flex;
-  flex-wrap: wrap;
-  gap: space(2);
+.comboboxTrigger {
+  width: 100%;
+  min-width: 0;
+  justify-content: space-between;
 }
 
-.option {
+.tagOption {
   display: inline-flex;
+  min-width: 0;
   align-items: center;
   gap: space(1.5);
-  padding: space(1.5) space(2);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
-  color: var(--foreground);
-  background: var(--input);
-  font-size: rem(13);
-  cursor: pointer;
-  // @include transition-colors($with-opacity: true);
+}
 
-  input {
-    accent-color: var(--primary);
+.tagDot {
+  width: rem(8);
+  height: rem(8);
+  flex-shrink: 0;
+  border-radius: 999px;
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--background) 70%, transparent);
+}
+
+.userOption {
+  display: inline-flex;
+  min-width: 0;
+  align-items: center;
+  gap: space(2);
+}
+
+.userAvatar {
+  width: rem(28);
+  height: rem(28);
+}
+
+.userContent {
+  display: grid;
+  min-width: 0;
+
+  span,
+  small {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  small {
+    color: var(--muted-foreground);
+    font-size: rem(11);
   }
 }
 
-.empty {
-  color: var(--muted-foreground);
-  font-size: rem(13);
+.userChip {
+  display: inline-flex;
+  min-width: 0;
+  align-items: center;
+  gap: space(1);
+}
+
+.userChipAvatar {
+  width: rem(16);
+  height: rem(16);
 }
 
 .actions {
