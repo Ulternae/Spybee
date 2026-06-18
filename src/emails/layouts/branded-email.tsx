@@ -31,7 +31,7 @@ const BrandedEmail = async ({ children, locale, title, preview }: BrandedEmailPr
             <Row>
               <Column className="w-[26px]">
                 <Img
-                  src="https://spybee.zcorvus.com/logo.png"
+                  src="https://spybee.zcorvus.com/brand/logo.png"
                   width="26"
                   height="26"
                   alt="SPYBEE"
