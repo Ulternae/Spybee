@@ -92,12 +92,12 @@
     "empty": "No activity for this period.",
     "resolvers": {
       "title": "Who resolves more",
-      "description": "Closed incidents in the last 30 days.",
+      "description": "Closed incidents in the selected period.",
       "average_resolution": "{days}d average resolution"
     },
     "reporters": {
       "title": "Who reports more",
-      "description": "Created incidents in the last 30 days."
+      "description": "Created incidents in the selected period."
     },
     "workload": {
       "title": "Current workload",

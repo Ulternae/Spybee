@@ -1,12 +1,13 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef, useState, useTransition } from "react";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Link } from "@/i18n/navigation";
-import { useAppStoreApi } from "@/store/app/app.provider";
+import { useAppStore, useAppStoreApi } from "@/store/app/app.provider";
 import { DEFAULT_INCIDENTS_FILTERS_VALUE } from "../../types/incidents-filters.types";
+import { getIncidentsDashboardAction } from "../../actions/get-incidents-dashboard/get-incidents-dashboard.action";
 import { IncidentsActivityPanel } from "../incidents-activity-panel";
 import { IncidentsFilters } from "../incidents-filters";
 import { IncidentsOverview } from "../incidents-overview";
@@ -28,6 +29,13 @@ interface IncidentsPanelProps {
 const IncidentsPanel = ({ activity, data, incidents, teamPerformance }: IncidentsPanelProps) => {
   const t = useTranslations("incidents.dashboard");
   const appStore = useAppStoreApi();
+  const filters = useAppStore((state) => state.incidentsDashboardFilters);
+  const [overviewData, setOverviewData] = useState(data);
+  const [activityData, setActivityData] = useState(activity);
+  const [teamPerformanceData, setTeamPerformanceData] = useState(teamPerformance);
+  const [, startTransition] = useTransition();
+  const requestIdRef = useRef(0);
+  const didMountRef = useRef(false);
 
   useEffect(() => {
     const state = appStore.getState();
@@ -51,18 +59,42 @@ const IncidentsPanel = ({ activity, data, incidents, teamPerformance }: Incident
     }
   }, [appStore, data.filters.defaultDateRange]);
 
+  useEffect(() => {
+    if (!didMountRef.current) {
+      didMountRef.current = true;
+      return;
+    }
+
+    const requestId = requestIdRef.current + 1;
+    requestIdRef.current = requestId;
+
+    void getIncidentsDashboardAction({ filters })
+      .then((nextData) => {
+        if (requestIdRef.current !== requestId) {
+          return;
+        }
+
+        startTransition(() => {
+          setOverviewData(nextData.overview);
+          setActivityData(nextData.activity);
+          setTeamPerformanceData(nextData.teamPerformance);
+        });
+      })
+      .catch(() => undefined);
+  }, [filters, startTransition]);
+
   return (
     <main className={styles.root}>
       <header className={styles.header}>
         <div className={styles.headerContent}>
           <span>
             <h1>{t("title")}</h1>
-            <p className={styles.eyebrow}>{data.project.name}</p>
+            <p className={styles.eyebrow}>{overviewData.project.name}</p>
           </span>
           <p>{t("description")}</p>
         </div>
 
-        {data.access.canCreateIncidents && (
+        {overviewData.access.canCreateIncidents && (
           <Button asChild>
             <Link href="/map">{t("create_action")}</Link>
           </Button>
@@ -70,10 +102,10 @@ const IncidentsPanel = ({ activity, data, incidents, teamPerformance }: Incident
       </header>
 
       <section className={styles.toolbar}>
-        <IncidentsFilters options={data.filters.options} />
+        <IncidentsFilters options={overviewData.filters.options} />
       </section>
 
-      <IncidentsOverview metrics={data.metrics} />
+      <IncidentsOverview metrics={overviewData.metrics} />
 
       <Tabs defaultValue="activity" className={styles.tabs}>
         <TabsList>
@@ -83,19 +115,19 @@ const IncidentsPanel = ({ activity, data, incidents, teamPerformance }: Incident
         </TabsList>
 
         <TabsContent value="activity">
-          <IncidentsActivityPanel activity={activity} />
+          <IncidentsActivityPanel activity={activityData} />
         </TabsContent>
 
         <TabsContent value="incidents">
           <IncidentsTable
             data={incidents}
-            options={data.filters.options}
-            riskIndicators={data.riskIndicators}
+            options={overviewData.filters.options}
+            riskIndicators={overviewData.riskIndicators}
           />
         </TabsContent>
 
         <TabsContent value="team">
-          <IncidentsTeamPerformancePanel performance={teamPerformance} />
+          <IncidentsTeamPerformancePanel performance={teamPerformanceData} />
         </TabsContent>
       </Tabs>
     </main>

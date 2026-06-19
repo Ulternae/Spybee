@@ -7,10 +7,10 @@ import { DEFAULT_INCIDENTS_FILTERS_VALUE } from "@/features/incidents/types/inci
 
 const IncidentsPage = async () => {
   const [overview, activity, incidents, teamPerformance] = await Promise.all([
-    getIncidentsOverview(),
-    getIncidentsActivity(),
+    getIncidentsOverview({ filters: DEFAULT_INCIDENTS_FILTERS_VALUE }),
+    getIncidentsActivity({ filters: DEFAULT_INCIDENTS_FILTERS_VALUE }),
     getIncidentsTable({ filters: DEFAULT_INCIDENTS_FILTERS_VALUE }),
-    getIncidentsTeamPerformance(),
+    getIncidentsTeamPerformance({ filters: DEFAULT_INCIDENTS_FILTERS_VALUE }),
   ]);
 
   return (

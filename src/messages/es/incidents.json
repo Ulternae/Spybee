@@ -92,12 +92,12 @@
     "empty": "No hay actividad para este período.",
     "resolvers": {
       "title": "Quién resuelve más",
-      "description": "Incidencias cerradas en los últimos 30 días.",
+      "description": "Incidencias cerradas en el período seleccionado.",
       "average_resolution": "{days}d promedio de resolución"
     },
     "reporters": {
       "title": "Quién reporta más",
-      "description": "Incidencias creadas en los últimos 30 días."
+      "description": "Incidencias creadas en el período seleccionado."
     },
     "workload": {
       "title": "Carga actual de trabajo",

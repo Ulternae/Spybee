@@ -9,9 +9,14 @@ import { prisma } from "@/lib/db/prisma";
 import { COOKIE_KEYS } from "@/lib/http/cookies";
 import { getIncidentFormOptions } from "./get-incident-form-options";
 import { getRelativeDayBoundaries } from "../lib/dates";
+import {
+  getIncidentDateRangeStart,
+  getProjectIncidentWhere,
+} from "../lib/incident-filter-where";
 import type { IncidentFormOptions } from "./get-incident-form-options";
 import type {
   IncidentDateRangeKey,
+  IncidentsFiltersValue,
   RiskIndicatorKey,
 } from "../types/incidents-filters.types";
 import type { Prisma } from "@/generated/prisma/client";
@@ -50,6 +55,10 @@ type IncidentsOverview = {
   riskIndicators: IncidentsRiskIndicator[];
 };
 
+type GetIncidentsOverviewInput = {
+  filters?: IncidentsFiltersValue;
+};
+
 const getClosureRate = (closedCount: number, createdCount: number) => {
   if (createdCount === 0) {
     return "0%";
@@ -58,7 +67,7 @@ const getClosureRate = (closedCount: number, createdCount: number) => {
   return `${Math.round((closedCount / createdCount) * 100)}%`;
 };
 
-const getIncidentsOverview = async (): Promise<IncidentsOverview> => {
+const getIncidentsOverview = async ({ filters }: GetIncidentsOverviewInput = {}): Promise<IncidentsOverview> => {
   const locale = await getLocale();
   const cookieStore = await cookies();
   const activeProjectId = cookieStore.get(COOKIE_KEYS.ACTIVE_PROJECT_ID)?.value;
@@ -75,8 +84,11 @@ const getIncidentsOverview = async (): Promise<IncidentsOverview> => {
     throw new Error("User cannot read active project");
   }
 
-  const { now, todayStart, sevenDaysAgoStart, lastYearStart, next7DaysEnd } = getRelativeDayBoundaries();
-  const periodStart = lastYearStart;
+  const { now, todayStart, sevenDaysAgoStart, next7DaysEnd } =
+    getRelativeDayBoundaries();
+  const periodStart = getIncidentDateRangeStart({
+    dateRange: filters?.dateRange ?? "last_year",
+  });
 
   const project = await prisma.project.findUnique({
     where: {
@@ -114,72 +126,112 @@ const getIncidentsOverview = async (): Promise<IncidentsOverview> => {
     formOptions,
   ] = await Promise.all([
     prisma.incident.count({
-      where: {
+      where: getProjectIncidentWhere({
         projectId: activeProjectId,
-        deletedAt: null,
-        status: IncidentStatus.OPEN,
-      },
+        filters,
+        conditions: [
+          {
+            status: IncidentStatus.OPEN,
+          },
+        ],
+      }),
     }),
     prisma.incident.count({
-      where: {
+      where: getProjectIncidentWhere({
         projectId: activeProjectId,
-        deletedAt: null,
-        createdAt: {
-          gte: periodStart,
-          lte: now,
-        },
-      },
+        filters,
+        conditions: [
+          {
+            createdAt: {
+              gte: periodStart,
+              lte: now,
+            },
+          },
+        ],
+      }),
     }),
     prisma.incident.count({
-      where: {
+      where: getProjectIncidentWhere({
         projectId: activeProjectId,
-        deletedAt: null,
-        closedAt: {
-          gte: periodStart,
-          lte: now,
-        },
-      },
+        filters,
+        conditions: [
+          {
+            closedAt: {
+              gte: periodStart,
+              lte: now,
+            },
+          },
+        ],
+      }),
     }),
     prisma.incident.count({
-      where: {
-        ...activeIncidentWhere,
-        dueDate: {
-          lt: todayStart,
-        },
-      },
-    }),
-    prisma.incident.count({
-      where: {
-        ...activeIncidentWhere,
-        dueDate: {
-          lte: todayStart,
-        },
-      },
-    }),
-    prisma.incident.count({
-      where: {
-        ...activeIncidentWhere,
-        updatedAt: {
-          lte: sevenDaysAgoStart,
-        },
-      },
-    }),
-    prisma.incident.count({
-      where: {
+      where: getProjectIncidentWhere({
         projectId: activeProjectId,
-        deletedAt: null,
-        status: IncidentStatus.OPEN,
-        priority: IncidentPriority.HIGH,
-      },
+        filters,
+        conditions: [
+          activeIncidentWhere,
+          {
+            dueDate: {
+              lt: todayStart,
+            },
+          },
+        ],
+      }),
     }),
     prisma.incident.count({
-      where: {
-        ...activeIncidentWhere,
-        dueDate: {
-          gte: todayStart,
-          lte: next7DaysEnd,
-        },
-      },
+      where: getProjectIncidentWhere({
+        projectId: activeProjectId,
+        filters,
+        conditions: [
+          activeIncidentWhere,
+          {
+            dueDate: {
+              lte: todayStart,
+            },
+          },
+        ],
+      }),
+    }),
+    prisma.incident.count({
+      where: getProjectIncidentWhere({
+        projectId: activeProjectId,
+        filters,
+        conditions: [
+          activeIncidentWhere,
+          {
+            updatedAt: {
+              lte: sevenDaysAgoStart,
+            },
+          },
+        ],
+      }),
+    }),
+    prisma.incident.count({
+      where: getProjectIncidentWhere({
+        projectId: activeProjectId,
+        filters,
+        conditions: [
+          {
+            status: IncidentStatus.OPEN,
+            priority: IncidentPriority.HIGH,
+          },
+        ],
+      }),
+    }),
+    prisma.incident.count({
+      where: getProjectIncidentWhere({
+        projectId: activeProjectId,
+        filters,
+        conditions: [
+          activeIncidentWhere,
+          {
+            dueDate: {
+              gte: todayStart,
+              lte: next7DaysEnd,
+            },
+          },
+        ],
+      }),
     }),
     getIncidentFormOptions({ projectId: activeProjectId }),
   ]);

@@ -12,8 +12,8 @@ import { getProjectAccess } from "@/lib/auth/access/get-project-access";
 import { prisma } from "@/lib/db/prisma";
 import { COOKIE_KEYS } from "@/lib/http/cookies";
 import { getRelativeDayBoundaries } from "../lib/dates";
+import { getProjectIncidentWhere } from "../lib/incident-filter-where";
 import type {
-  IncidentDateRangeKey,
   IncidentsFiltersValue,
   RiskIndicatorKey,
 } from "../types/incidents-filters.types";
@@ -87,10 +87,6 @@ type GetRiskIndicator = {
   riskIndicator: RiskIndicatorKey | null | undefined;
 };
 
-type GetFiltersWhere = {
-  filters: IncidentsFiltersValue | undefined;
-};
-
 const DEFAULT_PAGE = 1;
 const DEFAULT_PAGE_SIZE = 10;
 
@@ -107,62 +103,6 @@ const getParticipantsByRole = ({
   role,
 }: GetParticipantsByRoleInput) => {
   return participants.filter((participant) => participant.role === role);
-};
-
-const getDateRangeStart = (dateRange: IncidentDateRangeKey | undefined) => {
-  const { last30DaysStart, lastYearStart, sevenDaysAgoStart } =
-    getRelativeDayBoundaries();
-
-  if (dateRange === "last_7_days") {
-    return sevenDaysAgoStart;
-  }
-
-  if (dateRange === "last_year") {
-    return lastYearStart;
-  }
-
-  return last30DaysStart;
-};
-
-const getFiltersWhere = ({
-  filters,
-}: GetFiltersWhere): Prisma.IncidentWhereInput => {
-  if (!filters) {
-    return {};
-  }
-
-  const dateRangeStart = getDateRangeStart(filters.dateRange);
-
-  return {
-    createdAt: {
-      gte: dateRangeStart,
-    },
-    ...(filters.status
-      ? {
-          status: filters.status,
-        }
-      : {}),
-    ...(filters.priority
-      ? {
-          priority: filters.priority,
-        }
-      : {}),
-    ...(filters.categoryId
-      ? {
-          categoryId: filters.categoryId,
-        }
-      : {}),
-    ...(filters.assigneeId
-      ? {
-          participants: {
-            some: {
-              role: ParticipantRole.ASSIGNEE,
-              userId: filters.assigneeId,
-            },
-          },
-        }
-      : {}),
-  };
 };
 
 const getRiskIndicatorWhere = ({
@@ -238,19 +178,11 @@ const getIncidentsTable = async ({
 
   const normalizedPage = normalizePage(page);
   const normalizedPageSize = Math.max(1, Math.floor(pageSize));
-  const conditions = [
-    getFiltersWhere({ filters }),
-    getRiskIndicatorWhere({ riskIndicator }),
-  ].filter((condition) => Object.keys(condition).length > 0);
-  const where = {
+  const where = getProjectIncidentWhere({
     projectId: activeProjectId,
-    deletedAt: null,
-    ...(conditions.length > 0
-      ? {
-          AND: conditions,
-        }
-      : {}),
-  } satisfies Prisma.IncidentWhereInput;
+    filters,
+    conditions: [getRiskIndicatorWhere({ riskIndicator })],
+  });
 
   const totalItems = await prisma.incident.count({ where });
   const totalPages = Math.max(1, Math.ceil(totalItems / normalizedPageSize));

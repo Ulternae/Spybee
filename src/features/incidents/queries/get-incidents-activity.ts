@@ -8,6 +8,8 @@ import { getProjectAccess } from "@/lib/auth/access/get-project-access";
 import { prisma } from "@/lib/db/prisma";
 import { COOKIE_KEYS } from "@/lib/http/cookies";
 import { getMonthBoundaries } from "../lib/dates";
+import { getProjectIncidentWhere } from "../lib/incident-filter-where";
+import type { IncidentsFiltersValue } from "../types/incidents-filters.types";
 import type {
   IncidentPriority,
   IncidentStatus,
@@ -39,9 +41,13 @@ type IncidentsActivity = {
   heatmapPoints: IncidentHeatmapPoint[];
 };
 
+type GetIncidentsActivityInput = {
+  filters?: IncidentsFiltersValue;
+};
+
 const getDateKey = (date: Date) => format(date, "yyyy-MM-dd");
 
-const getIncidentsActivity = async (): Promise<IncidentsActivity> => {
+const getIncidentsActivity = async ({ filters }: GetIncidentsActivityInput = {}): Promise<IncidentsActivity> => {
   const locale = await getLocale();
   const cookieStore = await cookies();
   const activeProjectId = cookieStore.get(COOKIE_KEYS.ACTIVE_PROJECT_ID)?.value;
@@ -60,14 +66,18 @@ const getIncidentsActivity = async (): Promise<IncidentsActivity> => {
 
   const { monthStart, monthEnd } = getMonthBoundaries();
   const incidents = await prisma.incident.findMany({
-    where: {
+    where: getProjectIncidentWhere({
       projectId: activeProjectId,
-      deletedAt: null,
-      createdAt: {
-        gte: monthStart,
-        lte: monthEnd,
-      },
-    },
+      filters,
+      conditions: [
+        {
+          createdAt: {
+            gte: monthStart,
+            lte: monthEnd,
+          },
+        },
+      ],
+    }),
     orderBy: {
       createdAt: "asc",
     },
