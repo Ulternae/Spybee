@@ -2,42 +2,7 @@
 
 .root {
   display: grid;
-  gap: space(12);
-  padding-top: space(4);
-}
-
-.header {
-  display: flex;
   gap: space(2);
-  align-items: center;
-}
-
-.headerIcon {
-  width: rem(24);
-  height: rem(24);
-  flex: none;
-  margin-top: rem(1);
-  color: var(--warning);
-}
-
-.headerContent {
-  display: grid;
-
-  h2,
-  p {
-    margin: 0;
-  }
-
-  h2 {
-    color: var(--foreground);
-    font-size: rem(16);
-    font-weight: 700;
-  }
-
-  p {
-    color: var(--muted-foreground);
-    font-size: rem(14);
-  }
 }
 
 .list {
@@ -77,4 +42,26 @@
     flex: none;
     font-size: rem(14);
   }
+}
+
+.notice {
+  display: flex;
+  gap: space(1);
+  align-items: center;
+  justify-content: end;
+
+  p {
+    margin: 0;
+    text-align: end;
+    color: var(--muted-foreground);
+    opacity: .85;
+    font-size: rem(14);
+  }
+}
+
+.noticeIcon {
+  width: rem(16);
+  height: rem(16);
+  flex: none;
+  color: var(--warning);
 }

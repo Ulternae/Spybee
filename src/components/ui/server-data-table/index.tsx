@@ -6,9 +6,7 @@ import {
   useReactTable,
   type ColumnDef,
 } from "@tanstack/react-table";
-import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Table,
@@ -18,10 +16,14 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Link, usePathname } from "@/i18n/navigation";
 import { cn } from "@/lib/utils/cn";
 import styles from "./server-data-table.module.scss";
-import { MinaChevronLeft, MinaChevronRight, MinaChevronDoubleLeft, MinaChevronDoubleRight } from "@zcorvus/icons-react";
+import {
+  MinaChevronDoubleLeft,
+  MinaChevronDoubleRight,
+  MinaChevronLeft,
+  MinaChevronRight,
+} from "@zcorvus/icons-react";
 
 type ServerDataTablePagination = {
   page: number;
@@ -34,22 +36,20 @@ interface ServerDataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   pagination: ServerDataTablePagination;
-  pageParamName?: string;
+  isLoading?: boolean;
+  onPageChange: (page: number) => void;
   stickyEndColumnId?: string;
-  persistentSearchParams?: Record<string, string>;
 }
 
 const ServerDataTable = <TData, TValue>({
   columns,
   data,
   pagination,
-  pageParamName = "page",
+  isLoading = false,
+  onPageChange,
   stickyEndColumnId = "actions",
-  persistentSearchParams,
 }: ServerDataTableProps<TData, TValue>) => {
   const tTable = useTranslations("common.table");
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
 
   // eslint-disable-next-line react-hooks/incompatible-library
   const table = useReactTable({
@@ -66,26 +66,6 @@ const ServerDataTable = <TData, TValue>({
     },
   });
 
-  const createPageHref = useMemo(() => {
-    return (page: number) => {
-      const params = new URLSearchParams(searchParams.toString());
-
-      if (page <= 1) {
-        params.delete(pageParamName);
-      } else {
-        params.set(pageParamName, String(page));
-      }
-
-      Object.entries(persistentSearchParams ?? {}).forEach(([key, value]) => {
-        params.set(key, value);
-      });
-
-      const query = params.toString();
-
-      return query ? `${pathname}?${query}` : pathname;
-    };
-  }, [pageParamName, pathname, persistentSearchParams, searchParams]);
-
   const getStickyEndColumnClassName = (columnId: string, isHeader = false) => {
     if (columnId !== stickyEndColumnId) {
       return undefined;
@@ -101,7 +81,7 @@ const ServerDataTable = <TData, TValue>({
   const isNextDisabled = pagination.page >= pagination.totalPages;
 
   return (
-    <div className={styles.root}>
+    <div className={styles.root} data-loading={isLoading || undefined}>
       <Table style={{ minWidth: table.getTotalSize() }}>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
@@ -170,34 +150,36 @@ const ServerDataTable = <TData, TValue>({
         <Button
           variant="outline"
           size="sm"
+          aria-label={tTable("first_page")}
+          disabled={isLoading || isPreviousDisabled}
+          onClick={() => onPageChange(1)}
         >
           <MinaChevronDoubleLeft />
         </Button>
         <Button
           variant="outline"
           size="sm"
-          asChild
-          className={cn(isPreviousDisabled && styles.disabledLink)}
-          aria-disabled={isPreviousDisabled}
+          aria-label={tTable("previous_page")}
+          disabled={isLoading || isPreviousDisabled}
+          onClick={() => onPageChange(pagination.page - 1)}
         >
-          <Link href={createPageHref(pagination.page - 1)}>
-            <MinaChevronLeft />
-          </Link>
+          <MinaChevronLeft />
         </Button>
         <Button
           variant="outline"
           size="sm"
-          asChild
-          className={cn(isNextDisabled && styles.disabledLink)}
-          aria-disabled={isNextDisabled}
+          aria-label={tTable("next_page")}
+          disabled={isLoading || isNextDisabled}
+          onClick={() => onPageChange(pagination.page + 1)}
         >
-          <Link href={createPageHref(pagination.page + 1)}>
-            <MinaChevronRight />
-          </Link>
+          <MinaChevronRight />
         </Button>
         <Button
           variant="outline"
           size="sm"
+          aria-label={tTable("last_page")}
+          disabled={isLoading || isNextDisabled}
+          onClick={() => onPageChange(pagination.totalPages)}
         >
           <MinaChevronDoubleRight />
         </Button>

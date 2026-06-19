@@ -20,13 +20,6 @@ const RiskIndicators = ({ indicators, selectedIndicator, onIndicatorChange }: Ri
 
   return (
     <section className={styles.root}>
-      <div className={styles.header}>
-        <MinaDangerTriangle className={styles.headerIcon} />
-        <div className={styles.headerContent}>
-          <h2>{t("title")}</h2>
-          <p>{t("description")}</p>
-        </div>
-      </div>
 
       <div className={styles.list}>
         {indicators.map((indicator) => {
@@ -49,6 +42,11 @@ const RiskIndicators = ({ indicators, selectedIndicator, onIndicatorChange }: Ri
             </Button>
           );
         })}
+      </div>
+
+      <div className={styles.notice}>
+        <p>{t("description")}</p>
+        <MinaDangerTriangle className={styles.noticeIcon} />
       </div>
     </section>
   );

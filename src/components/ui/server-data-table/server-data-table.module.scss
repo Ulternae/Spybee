@@ -2,6 +2,11 @@
 
 .root {
   width: 100%;
+  @include transition-colors;
+
+  &[data-loading] {
+    opacity: 0.65;
+  }
 }
 
 .head {
@@ -63,10 +68,6 @@
 .paginationInfo {
   color: var(--muted-foreground);
   font-size: rem(12);
-}
-
-.disabledLink {
-  @include disabled;
 }
 
 @include until("sm") {

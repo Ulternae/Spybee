@@ -9,20 +9,19 @@ import { IncidentsActivityPanel } from "../incidents-activity-panel";
 import { IncidentsFilters } from "../incidents-filters";
 import type { IncidentsFiltersValue } from "../incidents-filters";
 import { IncidentsOverview } from "../incidents-overview";
-import { RiskIndicators } from "../risk-indicators";
+import { IncidentsTable } from "../incidents-table";
 import type { IncidentsActivity } from "../../queries/get-incidents-activity";
-import type {
-  IncidentsOverview as IncidentsOverviewData,
-  RiskIndicatorKey,
-} from "../../queries/get-incidents-overview";
+import type { IncidentsTableData } from "../../queries/get-incidents-table";
+import type { IncidentsOverview as IncidentsOverviewData } from "../../queries/get-incidents-overview";
 import styles from "./incidents-panel.module.scss";
 
 interface IncidentsPanelProps {
   activity: IncidentsActivity;
   data: IncidentsOverviewData;
+  incidents: IncidentsTableData;
 }
 
-const IncidentsPanel = ({ activity, data }: IncidentsPanelProps) => {
+const IncidentsPanel = ({ activity, data, incidents }: IncidentsPanelProps) => {
   const t = useTranslations("incidents.dashboard");
   const [filters, setFilters] = useState<IncidentsFiltersValue>({
     dateRange: data.filters.defaultDateRange,
@@ -31,8 +30,6 @@ const IncidentsPanel = ({ activity, data }: IncidentsPanelProps) => {
     categoryId: null,
     assigneeId: null,
   });
-  const [selectedRiskIndicator, setSelectedRiskIndicator] =
-    useState<RiskIndicatorKey | null>(null);
 
   return (
     <main className={styles.root}>
@@ -62,18 +59,10 @@ const IncidentsPanel = ({ activity, data }: IncidentsPanelProps) => {
 
       <IncidentsOverview metrics={data.metrics} />
 
-      <RiskIndicators
-        indicators={data.riskIndicators}
-        selectedIndicator={selectedRiskIndicator}
-        onIndicatorChange={setSelectedRiskIndicator}
-      />
-
       <Tabs defaultValue="activity" className={styles.tabs}>
         <TabsList>
           <TabsTrigger value="activity">{t("tabs.activity")}</TabsTrigger>
-          <TabsTrigger value="incidents" disabled>
-            {t("tabs.incidents")}
-          </TabsTrigger>
+          <TabsTrigger value="incidents">{t("tabs.incidents")}</TabsTrigger>
           <TabsTrigger value="team" disabled>
             {t("tabs.team")}
           </TabsTrigger>
@@ -81,6 +70,14 @@ const IncidentsPanel = ({ activity, data }: IncidentsPanelProps) => {
 
         <TabsContent value="activity">
           <IncidentsActivityPanel activity={activity} />
+        </TabsContent>
+
+        <TabsContent value="incidents">
+          <IncidentsTable
+            data={incidents}
+            options={data.filters.options}
+            riskIndicators={data.riskIndicators}
+          />
         </TabsContent>
       </Tabs>
     </main>
