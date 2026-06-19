@@ -4,7 +4,13 @@
   width: 100%;
   min-width: 0;
   max-width: 100%;
+  @include transition-colors;
+
+  &[data-loading] {
+    opacity: 0.65;
+  }
 }
+
 
 .toolbar {
   display: flex;
@@ -68,4 +74,23 @@
   height: rem(96);
   color: var(--muted-foreground);
   text-align: center;
+}
+
+.pagination {
+  display: flex;
+  gap: space(3);
+  align-items: center;
+  justify-content: flex-end;
+  padding-block-start: space(4);
+}
+
+.paginationInfo {
+  color: var(--muted-foreground);
+  font-size: rem(12);
+}
+
+@include until("sm") {
+  .pagination {
+    justify-content: start;
+  }
 }

@@ -4,7 +4,7 @@ import { useTranslations } from "next-intl";
 import { Badge } from "@/components/ui/badge";
 import type { OrganizationDetail } from "../../queries/get-organization-detail";
 import styles from "./organization-panel.module.scss";
-import { Datatable } from "@/components/ui/data-table";
+import { DataTable } from "@/components/ui/data-table";
 import { getOrganizationPanelColumns } from "./datatable/organization-panel.columns";
 import { OrganizationAddMemberPopover } from "./organization-add-member-popover";
 
@@ -39,7 +39,7 @@ const OrganizationPanel = ({ data }: OrganizationPanelProps) => {
         )}
       </header>
       <section className={styles.section}>
-        <Datatable
+        <DataTable
           columns={columns}
           data={data.members}
           searchableColumns={["user.email", "user.name"]}

@@ -2,7 +2,7 @@
 
 import { useTranslations } from "next-intl";
 import { Badge } from "@/components/ui/badge";
-import { Datatable } from "@/components/ui/data-table";
+import { DataTable } from "@/components/ui/data-table";
 import type { ProjectDetail } from "../../queries/get-project-detail";
 import { getProjectPanelColumns } from "./datatable/project-panel.columns";
 import { ProjectAddMemberPopover } from "./project-add-member-popover";
@@ -47,7 +47,7 @@ const ProjectPanel = ({ data }: ProjectPanelProps) => {
       </header>
 
       <section className={styles.section}>
-        <Datatable
+        <DataTable
           columns={columns}
           data={data.members}
           searchableColumns={["user.email", "user.name"]}

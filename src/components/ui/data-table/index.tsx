@@ -7,15 +7,24 @@ import {
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
+  getPaginationRowModel,
   getSortedRowModel,
+  PaginationState,
   Row,
   SortingState,
   useReactTable,
   VisibilityState,
 } from "@tanstack/react-table";
+import {
+  MinaChevronDoubleLeft,
+  MinaChevronDoubleRight,
+  MinaChevronLeft,
+  MinaChevronRight,
+} from "@zcorvus/icons-react";
 import { useTranslations } from "next-intl";
 import { useMemo, useState } from "react";
 
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
 import { cn } from "@/lib/utils/cn";
@@ -47,6 +56,8 @@ interface DataTableProps<TData, TValue> {
   data: TData[];
   searchableColumns: SearchableColumnKey<TData>[];
   stickyEndColumnId?: string;
+  isLoading?: boolean;
+  pageSize?: number;
 }
 
 const getValueByPath = <TData,>(
@@ -64,11 +75,13 @@ const getValueByPath = <TData,>(
     }, data);
 };
 
-const Datatable = <TData, TValue>({
+const DataTable = <TData, TValue>({
   columns,
   data,
   searchableColumns,
   stickyEndColumnId = "actions",
+  isLoading = false,
+  pageSize = 10,
 }: DataTableProps<TData, TValue>) => {
   const tTable = useTranslations("common.table");
   const tFields = useTranslations("common.fields");
@@ -77,6 +90,10 @@ const Datatable = <TData, TValue>({
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [globalFilter, setGlobalFilter] = useState("");
+  const [pagination, setPagination] = useState<PaginationState>({
+    pageIndex: 0,
+    pageSize,
+  });
 
   const globalFilterFn = useMemo<FilterFn<TData>>(() => {
     return (row: Row<TData>, _columnId: string, filterValue: unknown) => {
@@ -117,17 +134,25 @@ const Datatable = <TData, TValue>({
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     onColumnVisibilityChange: setColumnVisibility,
     onGlobalFilterChange: setGlobalFilter,
+    onPaginationChange: setPagination,
     state: {
       sorting,
       columnFilters,
       columnVisibility,
       globalFilter,
+      pagination,
     },
   });
+
+  const totalPages = Math.max(table.getPageCount(), 1);
+  const currentPage = Math.min(table.getState().pagination.pageIndex + 1, totalPages);
+  const isPreviousDisabled = !table.getCanPreviousPage();
+  const isNextDisabled = !table.getCanNextPage();
 
   return (
     <div className={styles.root}>
@@ -183,11 +208,9 @@ const Datatable = <TData, TValue>({
                       width: cell.column.getSize(),
                       minWidth: cell.column.columnDef.minSize,
                       maxWidth: cell.column.columnDef.maxSize,
-                    }}                  >
-                    {flexRender(
-                      cell.column.columnDef.cell,
-                      cell.getContext(),
-                    )}
+                    }}
+                  >
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </TableCell>
                 ))}
               </TableRow>
@@ -201,8 +224,61 @@ const Datatable = <TData, TValue>({
           )}
         </TableBody>
       </Table>
+
+      <footer className={styles.pagination}>
+        <span className={styles.paginationInfo}>
+          {tTable("page", {
+            page: currentPage,
+            totalPages,
+          })}
+        </span>
+
+        <Button
+          type="button"
+          variant="outline"
+          size="sm"
+          aria-label={tTable("first_page")}
+          disabled={isLoading || isPreviousDisabled}
+          onClick={() => table.setPageIndex(0)}
+        >
+          <MinaChevronDoubleLeft />
+        </Button>
+
+        <Button
+          type="button"
+          variant="outline"
+          size="sm"
+          aria-label={tTable("previous_page")}
+          disabled={isLoading || isPreviousDisabled}
+          onClick={() => table.previousPage()}
+        >
+          <MinaChevronLeft />
+        </Button>
+
+        <Button
+          type="button"
+          variant="outline"
+          size="sm"
+          aria-label={tTable("next_page")}
+          disabled={isLoading || isNextDisabled}
+          onClick={() => table.nextPage()}
+        >
+          <MinaChevronRight />
+        </Button>
+
+        <Button
+          type="button"
+          variant="outline"
+          size="sm"
+          aria-label={tTable("last_page")}
+          disabled={isLoading || isNextDisabled}
+          onClick={() => table.setPageIndex(totalPages - 1)}
+        >
+          <MinaChevronDoubleRight />
+        </Button>
+      </footer>
     </div>
   );
 };
 
-export { Datatable };
+export { DataTable };
