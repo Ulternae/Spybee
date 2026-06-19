@@ -1,0 +1,75 @@
+@use "styles" as *;
+
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: space(2);
+}
+
+.list {
+  display: inline-flex;
+  width: fit-content;
+  height: rem(36);
+  align-items: center;
+  justify-content: center;
+  gap: space(1);
+  padding: rem(3);
+  color: var(--muted-foreground);
+  background: var(--muted);
+  border-radius: var(--radius-lg);
+}
+
+.trigger {
+  @include focus-ring;
+  @include transition-colors;
+
+  display: inline-flex;
+  height: calc(100% - 1px);
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  gap: space(1.5);
+  padding: space(1) space(2);
+  color: var(--foreground);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  outline: none;
+  box-shadow: none;
+  font-size: rem(14);
+  font-weight: 500;
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
+
+  &[data-state="active"] {
+    color: var(--foreground);
+    background: var(--background);
+    box-shadow: var(--shadow-xs);
+  }
+
+  &:disabled,
+  &[data-disabled] {
+    @include disabled;
+
+    pointer-events: none;
+  }
+
+  svg {
+    width: rem(16);
+    height: rem(16);
+    flex-shrink: 0;
+    pointer-events: none;
+  }
+}
+
+.content {
+  flex: 1;
+  outline: none;
+
+  &:focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+}
