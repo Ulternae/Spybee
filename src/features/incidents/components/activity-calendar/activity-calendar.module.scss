@@ -1,0 +1,102 @@
+@use "styles" as *;
+
+.root {
+  display: grid;
+  gap: space(4);
+  padding: space(4);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: color-mix(in srgb, var(--card) 86%, transparent);
+  @include transition-colors;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  gap: space(0.5);
+
+  h2,
+  p {
+    margin: 0;
+  }
+
+  h2 {
+    color: var(--foreground);
+    font-size: rem(16);
+    font-weight: 700;
+  }
+
+  p {
+    color: var(--muted-foreground);
+    font-size: rem(13);
+  }
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: space(1);
+}
+
+.day {
+  @include focus-ring;
+  @include transition-colors($transition-fast);
+
+  position: relative;
+  display: grid;
+  min-height: rem(42);
+  place-items: center;
+  padding: space(1);
+  color: var(--muted-foreground);
+  background: var(--input);
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+
+  &[data-intensity="low"] {
+    color: var(--warning-foreground);
+    background: color-mix(in srgb, var(--warning) 35%, var(--input));
+  }
+
+  &[data-intensity="medium"] {
+    color: var(--destructive-foreground);
+    background: color-mix(in srgb, var(--destructive) 62%, var(--input));
+  }
+
+  &[data-intensity="high"] {
+    color: var(--destructive-foreground);
+    background: color-mix(in srgb, var(--destructive) 82%, var(--input));
+  }
+
+  &[data-selected] {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--primary) 35%, transparent);
+  }
+
+  span {
+    font-size: rem(13);
+    font-weight: 700;
+  }
+
+  strong {
+    position: absolute;
+    right: rem(4);
+    bottom: rem(3);
+    font-size: rem(10);
+  }
+}
+
+.weekday,
+.emptyDay {
+  min-height: rem(24);
+}
+
+.weekday {
+  display: grid;
+  place-items: center;
+  color: var(--muted-foreground);
+  font-size: rem(11);
+  font-weight: 700;
+  text-transform: lowercase;
+}

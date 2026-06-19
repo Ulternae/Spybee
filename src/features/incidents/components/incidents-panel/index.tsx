@@ -3,11 +3,14 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Link } from "@/i18n/navigation";
+import { IncidentsActivityPanel } from "../incidents-activity-panel";
 import { IncidentsFilters } from "../incidents-filters";
 import type { IncidentsFiltersValue } from "../incidents-filters";
 import { IncidentsOverview } from "../incidents-overview";
 import { RiskIndicators } from "../risk-indicators";
+import type { IncidentsActivity } from "../../queries/get-incidents-activity";
 import type {
   IncidentsOverview as IncidentsOverviewData,
   RiskIndicatorKey,
@@ -15,10 +18,11 @@ import type {
 import styles from "./incidents-panel.module.scss";
 
 interface IncidentsPanelProps {
+  activity: IncidentsActivity;
   data: IncidentsOverviewData;
 }
 
-const IncidentsPanel = ({ data }: IncidentsPanelProps) => {
+const IncidentsPanel = ({ activity, data }: IncidentsPanelProps) => {
   const t = useTranslations("incidents.dashboard");
   const [filters, setFilters] = useState<IncidentsFiltersValue>({
     dateRange: data.filters.defaultDateRange,
@@ -63,6 +67,22 @@ const IncidentsPanel = ({ data }: IncidentsPanelProps) => {
         selectedIndicator={selectedRiskIndicator}
         onIndicatorChange={setSelectedRiskIndicator}
       />
+
+      <Tabs defaultValue="activity" className={styles.tabs}>
+        <TabsList>
+          <TabsTrigger value="activity">{t("tabs.activity")}</TabsTrigger>
+          <TabsTrigger value="incidents" disabled>
+            {t("tabs.incidents")}
+          </TabsTrigger>
+          <TabsTrigger value="team" disabled>
+            {t("tabs.team")}
+          </TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="activity">
+          <IncidentsActivityPanel activity={activity} />
+        </TabsContent>
+      </Tabs>
     </main>
   );
 };

@@ -1,4 +1,4 @@
-import { addDays, startOfDay, subDays } from "date-fns";
+import { addDays, endOfMonth, startOfDay, startOfMonth, subDays } from "date-fns";
 
 const getRelativeDayBoundaries = (now = new Date()) => {
   const todayStart = startOfDay(now);
@@ -13,4 +13,14 @@ const getRelativeDayBoundaries = (now = new Date()) => {
   };
 };
 
-export { getRelativeDayBoundaries };
+const getMonthBoundaries = (date = new Date()) => {
+  const monthStart = startOfMonth(date);
+  const monthEnd = endOfMonth(date);
+
+  return {
+    monthStart,
+    monthEnd,
+  };
+};
+
+export { getMonthBoundaries, getRelativeDayBoundaries };

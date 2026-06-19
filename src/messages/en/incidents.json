@@ -6,7 +6,12 @@
   "dashboard": {
     "title": "Incidents",
     "description": "Review project activity, risk indicators and operational status.",
-    "create_action": "Create incident"
+    "create_action": "Create incident",
+    "tabs": {
+      "activity": "Activity",
+      "incidents": "Incidents",
+      "team": "Team"
+    }
   },
   "filters": {
     "title": "Incident filters",
@@ -57,6 +62,23 @@
       "stale_7_days": "Not updated 7+ days",
       "high_priority_open": "High priority open",
       "due_soon_7_days": "Due soon (7d)"
+    }
+  },
+  "activity": {
+    "title": "Incident map",
+    "description": "Geographic and daily distribution of created incidents.",
+    "calendar": {
+      "title": "Activity calendar",
+      "description": "Incidents created per day.",
+      "weekdays": {
+        "monday": "mon",
+        "tuesday": "tue",
+        "wednesday": "wed",
+        "thursday": "thu",
+        "friday": "fri",
+        "saturday": "sat",
+        "sunday": "sun"
+      }
     }
   }
 }

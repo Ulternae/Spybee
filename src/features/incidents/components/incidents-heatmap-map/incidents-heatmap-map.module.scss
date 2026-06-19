@@ -1,0 +1,15 @@
+@use "styles" as *;
+
+.root {
+  width: 100%;
+  min-height: rem(420);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--input);
+  box-shadow: var(--shadow-xs);
+
+  @include until("md") {
+    min-height: rem(320);
+  }
+}

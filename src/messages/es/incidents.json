@@ -6,7 +6,12 @@
   "dashboard": {
     "title": "Incidencias",
     "description": "Revisa la actividad del proyecto, indicadores de riesgo y estado operativo.",
-    "create_action": "Crear incidencia"
+    "create_action": "Crear incidencia",
+    "tabs": {
+      "activity": "Actividad",
+      "incidents": "Incidencias",
+      "team": "Equipo"
+    }
   },
   "filters": {
     "title": "Filtros de incidencias",
@@ -57,6 +62,23 @@
       "stale_7_days": "Sin actualizar 7+ días",
       "high_priority_open": "Alta prioridad abiertas",
       "due_soon_7_days": "Próximas a vencer (7d)"
+    }
+  },
+  "activity": {
+    "title": "Mapa de incidencias",
+    "description": "Distribución geográfica y diaria de las incidencias creadas.",
+    "calendar": {
+      "title": "Calendario de actividad",
+      "description": "Incidencias creadas por día.",
+      "weekdays": {
+        "monday": "lun",
+        "tuesday": "mar",
+        "wednesday": "mié",
+        "thursday": "jue",
+        "friday": "vie",
+        "saturday": "sáb",
+        "sunday": "dom"
+      }
     }
   }
 }

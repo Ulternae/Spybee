@@ -1,10 +1,14 @@
 import { IncidentsPanel } from "@/features/incidents/components/incidents-panel";
+import { getIncidentsActivity } from "@/features/incidents/queries/get-incidents-activity";
 import { getIncidentsOverview } from "@/features/incidents/queries/get-incidents-overview";
 
 const IncidentsPage = async () => {
-  const data = await getIncidentsOverview();
+  const [overview, activity] = await Promise.all([
+    getIncidentsOverview(),
+    getIncidentsActivity(),
+  ]);
 
-  return <IncidentsPanel data={data} />;
+  return <IncidentsPanel activity={activity} data={overview} />;
 };
 
 export default IncidentsPage;

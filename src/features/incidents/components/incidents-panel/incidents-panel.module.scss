@@ -60,6 +60,10 @@
   @include transition-colors;
 }
 
+.tabs {
+  gap: space(12);
+}
+
 @include until("sm") {
   .root {
     padding-block: space(8);
