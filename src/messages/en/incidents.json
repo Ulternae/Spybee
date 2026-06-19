@@ -80,5 +80,14 @@
         "sunday": "sun"
       }
     }
+  },
+  "table": {
+    "title": "Critical",
+    "description": "{count} incidents in total.",
+    "no_due_date": "No date",
+    "columns": {
+      "id": "ID",
+      "created_by": "Created by"
+    }
   }
 }

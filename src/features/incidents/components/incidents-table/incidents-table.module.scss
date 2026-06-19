@@ -1,0 +1,154 @@
+@use "styles" as *;
+
+.root {
+  display: grid;
+  gap: space(4);
+}
+
+.header {
+  display: flex;
+  gap: space(2);
+  align-items: center;
+}
+
+.headerIcon {
+  width: rem(24);
+  height: rem(24);
+  flex: none;
+  color: var(--foreground);
+}
+
+.headerContent {
+  display: grid;
+
+  h2,
+  p {
+    margin: 0;
+  }
+
+  h2 {
+    color: var(--foreground);
+    font-size: rem(16);
+    font-weight: 700;
+  }
+
+  p {
+    color: var(--muted-foreground);
+    font-size: rem(14);
+  }
+}
+
+.titleCell {
+  display: grid;
+
+  strong {
+    color: var(--foreground);
+    font-size: rem(13);
+    line-height: var(--leading-tight);
+  }
+
+  span {
+    color: var(--muted-foreground);
+    font-size: rem(12);
+  }
+}
+
+.sequence {
+  color: var(--muted-foreground);
+  font-weight: 700;
+}
+
+.participants {
+  display: flex;
+  align-items: center;
+  padding-left: space(1);
+}
+
+.avatar {
+  margin-left: calc(#{space(1)} * -1);
+  border: 2px solid var(--card);
+}
+
+.moreUsers {
+  display: inline-grid;
+  width: rem(28);
+  height: rem(28);
+  margin-left: calc(#{space(1)} * -1);
+  place-items: center;
+  color: var(--muted-foreground);
+  background: var(--muted);
+  border: 2px solid var(--card);
+  border-radius: 999px;
+  font-size: rem(11);
+  font-weight: 700;
+}
+
+.badge {
+
+  &[data-tone="high"],
+  &[data-tone="open"] {
+    color: var(--success);
+    background: color-mix(in srgb, var(--success) 14%, transparent);
+    border-color: color-mix(in srgb, var(--success) 26%, transparent);
+  }
+
+  &[data-tone="medium"],
+  &[data-tone="on_pause"] {
+    color: var(--warning);
+    background: color-mix(in srgb, var(--warning) 14%, transparent);
+    border-color: color-mix(in srgb, var(--warning) 28%, transparent);
+  }
+
+  &[data-tone="low"],
+  &[data-tone="closed"] {
+    color: var(--muted-foreground);
+    background: color-mix(in srgb, var(--muted) 70%, transparent);
+    border-color: var(--border);
+  }
+}
+
+.emptyValue {
+  color: var(--muted-foreground);
+}
+
+.actionButton {
+  min-width: auto;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.triggerIcon {
+  min-width: rem(24);
+  min-height: rem(28);
+}
+
+.pagination {
+  display: flex;
+  gap: space(3);
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.paginationInfo {
+  color: var(--muted-foreground);
+  font-size: rem(12);
+}
+
+.table {
+  width: 100%;
+  max-width: rem(1180);
+}
+
+@include until("sm") {
+  .header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .pagination {
+    justify-content: space-between;
+    width: 100%;
+  }
+}

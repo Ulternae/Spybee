@@ -80,5 +80,14 @@
         "sunday": "dom"
       }
     }
+  },
+  "table": {
+    "title": "Críticas",
+    "description": "{count} incidencias en total.",
+    "no_due_date": "Sin fecha",
+    "columns": {
+      "created_by": "Creado por",
+      "id": "ID"
+    }
   }
 }

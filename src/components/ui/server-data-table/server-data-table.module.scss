@@ -1,0 +1,76 @@
+@use "styles" as *;
+
+.root {
+  width: 100%;
+}
+
+.head {
+  color: var(--muted-foreground);
+  text-transform: uppercase;
+}
+
+.row {
+  --sticky-column-background: var(--background);
+
+  &:hover {
+    --sticky-column-background: color-mix(in srgb, var(--muted) 50%, transparent);
+  }
+
+  &[data-state="selected"] {
+    --sticky-column-background: var(--muted);
+  }
+}
+
+.stickyEndColumn {
+  position: sticky;
+  right: 0;
+  background: var(--sticky-column-background, var(--background));
+
+  &::before {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: rem(-1);
+    width: rem(1);
+    background: var(--border);
+    content: "";
+  }
+}
+
+.stickyEndHeader {
+  z-index: 20;
+  --sticky-column-background: var(--background);
+}
+
+.stickyEndCell {
+  z-index: 10;
+}
+
+.emptyCell {
+  height: rem(96);
+  color: var(--muted-foreground);
+  text-align: center;
+}
+
+.pagination {
+  display: flex;
+  gap: space(3);
+  align-items: center;
+  justify-content: flex-end;
+  padding-block-start: space(4);
+}
+
+.paginationInfo {
+  color: var(--muted-foreground);
+  font-size: rem(12);
+}
+
+.disabledLink {
+  @include disabled;
+}
+
+@include until("sm") {
+  .pagination {
+    justify-content: space-between;
+  }
+}

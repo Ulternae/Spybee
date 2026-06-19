@@ -88,7 +88,14 @@
   "table": {
     "columns": "Columnas",
     "filter_results": "Filtrar resultados",
-    "no_results": "No hay resultados."
+    "no_results": "No hay resultados.",
+    "previous": "Anterior",
+    "next": "Siguiente",
+    "page": "Página {page} de {totalPages}",
+    "first_page": "Primera página",
+    "previous_page": "Página anterior",
+    "next_page": "Página siguiente",
+    "last_page": "Última página"
   },
   "enums": {
     "project_role": {
