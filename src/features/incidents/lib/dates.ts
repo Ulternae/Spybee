@@ -1,4 +1,4 @@
-import { addDays, endOfMonth, startOfDay, startOfMonth, subDays } from "date-fns";
+import { addDays, endOfMonth, startOfDay, startOfMonth, subDays, subYears } from "date-fns";
 
 const getRelativeDayBoundaries = (now = new Date()) => {
   const todayStart = startOfDay(now);
@@ -9,6 +9,7 @@ const getRelativeDayBoundaries = (now = new Date()) => {
     tomorrowStart: addDays(todayStart, 1),
     sevenDaysAgoStart: subDays(todayStart, 7),
     last30DaysStart: subDays(todayStart, 29),
+    lastYearStart: subYears(todayStart, 1),
     next7DaysEnd: addDays(todayStart, 7),
   };
 };

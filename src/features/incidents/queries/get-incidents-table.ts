@@ -110,10 +110,15 @@ const getParticipantsByRole = ({
 };
 
 const getDateRangeStart = (dateRange: IncidentDateRangeKey | undefined) => {
-  const { last30DaysStart, sevenDaysAgoStart } = getRelativeDayBoundaries();
+  const { last30DaysStart, lastYearStart, sevenDaysAgoStart } =
+    getRelativeDayBoundaries();
 
   if (dateRange === "last_7_days") {
     return sevenDaysAgoStart;
+  }
+
+  if (dateRange === "last_year") {
+    return lastYearStart;
   }
 
   return last30DaysStart;

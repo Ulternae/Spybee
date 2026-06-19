@@ -75,8 +75,8 @@ const getIncidentsOverview = async (): Promise<IncidentsOverview> => {
     throw new Error("User cannot read active project");
   }
 
-  const { now, todayStart, sevenDaysAgoStart, last30DaysStart, next7DaysEnd, } = getRelativeDayBoundaries();
-  const periodStart = last30DaysStart;
+  const { now, todayStart, sevenDaysAgoStart, lastYearStart, next7DaysEnd } = getRelativeDayBoundaries();
+  const periodStart = lastYearStart;
 
   const project = await prisma.project.findUnique({
     where: {
@@ -191,7 +191,7 @@ const getIncidentsOverview = async (): Promise<IncidentsOverview> => {
       canUpdateIncidents: access.canUpdateIncidents,
     },
     filters: {
-      defaultDateRange: "last_30_days",
+      defaultDateRange: "last_year",
       options: formOptions,
     },
     period: {

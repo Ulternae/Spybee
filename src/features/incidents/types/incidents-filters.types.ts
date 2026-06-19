@@ -3,7 +3,7 @@ import type {
   IncidentStatus,
 } from "@/generated/prisma/enums";
 
-type IncidentDateRangeKey = "last_7_days" | "last_30_days";
+type IncidentDateRangeKey = "last_7_days" | "last_30_days" | "last_year";
 type RiskIndicatorKey =
   | "overdue_today"
   | "stale_7_days"
@@ -19,7 +19,7 @@ type IncidentsFiltersValue = {
 };
 
 const DEFAULT_INCIDENTS_FILTERS_VALUE = {
-  dateRange: "last_30_days",
+  dateRange: "last_year",
   status: null,
   priority: null,
   categoryId: null,

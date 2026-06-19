@@ -29,6 +29,7 @@
     "all_categories": "Todas las categorías",
     "all_assignees": "Todos los asignados",
     "ranges": {
+      "last_year": "Último año",
       "last_7_days": "Últimos 7 días",
       "last_30_days": "Últimos 30 días"
     }

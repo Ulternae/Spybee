@@ -53,6 +53,7 @@ const IncidentsFilters = ({ options }: IncidentsFiltersProps) => {
           <SelectValue placeholder={t("date_range")} />
         </SelectTrigger>
         <SelectContent>
+          <SelectItem value="last_year">{t("ranges.last_year")}</SelectItem>
           <SelectItem value="last_7_days">{t("ranges.last_7_days")}</SelectItem>
           <SelectItem value="last_30_days">{t("ranges.last_30_days")}</SelectItem>
         </SelectContent>
