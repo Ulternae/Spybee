@@ -59,6 +59,27 @@
       }
     }
   },
+  "analytics": {
+    "title": "Distribución detallada",
+    "description": "Por tipo de incidencia, etiquetas y tendencia de actividad.",
+    "series": {
+      "incidents": "Incidencias"
+    },
+    "category": {
+      "title": "Por categoría de incidencia"
+    },
+    "tags": {
+      "title": "Por etiqueta"
+    },
+    "trend": {
+      "title": "Tendencia de actividad",
+      "series": {
+        "backlog": "Backlog acumulado",
+        "created": "Creadas",
+        "closed": "Cerradas"
+      }
+    }
+  },
   "risk": {
     "title": "Indicadores de riesgo",
     "description": "Click en cada chip para preparar el filtro relacionado de la tabla.",

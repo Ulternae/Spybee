@@ -59,6 +59,27 @@
       }
     }
   },
+  "analytics": {
+    "title": "Detailed distribution",
+    "description": "By incident type, tags and activity trend.",
+    "series": {
+      "incidents": "Incidents"
+    },
+    "category": {
+      "title": "By incident category"
+    },
+    "tags": {
+      "title": "By tag"
+    },
+    "trend": {
+      "title": "Activity trend",
+      "series": {
+        "backlog": "Accumulated backlog",
+        "created": "Created",
+        "closed": "Closed"
+      }
+    }
+  },
   "risk": {
     "title": "Risk indicators",
     "description": "Click a chip to prepare the related table filter.",

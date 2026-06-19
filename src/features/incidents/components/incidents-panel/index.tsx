@@ -8,29 +8,34 @@ import { Link } from "@/i18n/navigation";
 import { useAppStore, useAppStoreApi } from "@/store/app/app.provider";
 import { DEFAULT_INCIDENTS_FILTERS_VALUE } from "../../types/incidents-filters.types";
 import { getIncidentsDashboardAction } from "../../actions/get-incidents-dashboard/get-incidents-dashboard.action";
+import { IncidentsAnalyticsPanel } from "../incidents-analytics-panel";
 import { IncidentsActivityPanel } from "../incidents-activity-panel";
 import { IncidentsFilters } from "../incidents-filters";
 import { IncidentsOverview } from "../incidents-overview";
 import { IncidentsTable } from "../incidents-table";
 import { IncidentsTeamPerformancePanel } from "../incidents-team-performance-panel";
 import type { IncidentsActivity } from "../../queries/get-incidents-activity";
+import type { IncidentsAnalytics } from "../../queries/get-incidents-analytics";
 import type { IncidentsTableData } from "../../queries/get-incidents-table";
 import type { IncidentsOverview as IncidentsOverviewData } from "../../queries/get-incidents-overview";
 import type { IncidentsTeamPerformance } from "../../queries/get-incidents-team-performance";
 import styles from "./incidents-panel.module.scss";
 
 interface IncidentsPanelProps {
+  analytics: IncidentsAnalytics;
   activity: IncidentsActivity;
   data: IncidentsOverviewData;
   incidents: IncidentsTableData;
   teamPerformance: IncidentsTeamPerformance;
 }
 
-const IncidentsPanel = ({ activity, data, incidents, teamPerformance }: IncidentsPanelProps) => {
+const IncidentsPanel = ({ analytics, activity, data, incidents, teamPerformance }: IncidentsPanelProps) => {
+
   const t = useTranslations("incidents.dashboard");
   const appStore = useAppStoreApi();
   const filters = useAppStore((state) => state.incidentsDashboardFilters);
   const [overviewData, setOverviewData] = useState(data);
+  const [analyticsData, setAnalyticsData] = useState(analytics);
   const [activityData, setActivityData] = useState(activity);
   const [teamPerformanceData, setTeamPerformanceData] = useState(teamPerformance);
   const [, startTransition] = useTransition();
@@ -76,6 +81,7 @@ const IncidentsPanel = ({ activity, data, incidents, teamPerformance }: Incident
 
         startTransition(() => {
           setOverviewData(nextData.overview);
+          setAnalyticsData(nextData.analytics);
           setActivityData(nextData.activity);
           setTeamPerformanceData(nextData.teamPerformance);
         });
@@ -106,6 +112,8 @@ const IncidentsPanel = ({ activity, data, incidents, teamPerformance }: Incident
       </section>
 
       <IncidentsOverview metrics={overviewData.metrics} />
+
+      <IncidentsAnalyticsPanel analytics={analyticsData} />
 
       <Tabs defaultValue="activity" className={styles.tabs}>
         <TabsList>
