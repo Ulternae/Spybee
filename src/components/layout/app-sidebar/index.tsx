@@ -71,7 +71,6 @@ const AppSidebar = () => {
           label: tRoutes("incidents"),
           href: "/incidents",
           icon: MinaClipboard,
-          badge: "3",
           requiresAuth: true,
           requiresOrganization: true,
           requiresProject: true,

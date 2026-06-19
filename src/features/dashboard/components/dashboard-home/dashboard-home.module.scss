@@ -57,7 +57,7 @@
   border-color: color-mix(in srgb, var(--border) 80%, transparent);
   background: color-mix(in srgb, var(--card) 88%, transparent);
   padding: space(3) 0;
-  // @include transition-colors($with-opacity: true);
+  @include transition-colors($with-opacity: true);
 
   &:hover {
     border-color: color-mix(in srgb, var(--primary) 60%, var(--border));

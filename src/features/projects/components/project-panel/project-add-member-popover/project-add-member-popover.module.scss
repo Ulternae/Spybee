@@ -49,7 +49,7 @@
   color: inherit;
   cursor: pointer;
   text-align: left;
-  // @include transition-colors($with-opacity: true);
+  @include transition-colors($with-opacity: true);
 
   &:hover:not(:disabled) {
     border-color: var(--border);

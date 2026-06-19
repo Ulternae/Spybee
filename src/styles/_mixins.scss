@@ -16,18 +16,30 @@
   pointer-events: none;
 }
 
-@mixin transition-colors($duration: $transition-base) {
-  transition:
-    color $duration,
-    background-color $duration,
-    border-color $duration,
-    box-shadow $duration,
-    opacity $duration;
-
-  &::placeholder {
+@mixin transition-colors($duration: $transition-base, $with-opacity: true) {
+  @if $with-opacity {
     transition:
       color $duration,
+      background-color $duration,
+      border-color $duration,
+      box-shadow $duration,
       opacity $duration;
+  } @else {
+    transition:
+      color $duration,
+      background-color $duration,
+      border-color $duration,
+      box-shadow $duration;
+  }
+
+  &::placeholder {
+    @if $with-opacity {
+      transition:
+        color $duration,
+        opacity $duration;
+    } @else {
+      transition: color $duration;
+    }
   }
 }
 

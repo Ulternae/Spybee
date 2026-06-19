@@ -33,7 +33,7 @@
   color: var(--popover-foreground);
   background: var(--popover);
   box-shadow: var(--shadow-md);
-  // @include transition-colors($with-opacity: true);
+  @include transition-colors($with-opacity: true);
 }
 
 .root :global(.mapboxgl-popup-tip) {
