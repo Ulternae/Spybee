@@ -2,6 +2,7 @@
 
 import { IncidentPriority, IncidentStatus } from "@/generated/prisma/enums";
 import { useLocale, useTranslations } from "next-intl";
+import { useAppStore } from "@/store/app/app.provider";
 import {
   Select,
   SelectContent,
@@ -9,41 +10,41 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import type { IncidentsOverview } from "../../queries/get-incidents-overview";
 import type {
   IncidentDateRangeKey,
-  IncidentsOverview,
-} from "../../queries/get-incidents-overview";
+  IncidentsFiltersValue,
+} from "../../types/incidents-filters.types";
 import styles from "./incidents-filters.module.scss";
 
 const ALL_FILTER_VALUE = "all";
 
-type IncidentsFiltersValue = {
-  dateRange: IncidentDateRangeKey;
-  status: IncidentStatus | null;
-  priority: IncidentPriority | null;
-  categoryId: string | null;
-  assigneeId: string | null;
-};
-
 interface IncidentsFiltersProps {
-  value: IncidentsFiltersValue;
   options: IncidentsOverview["filters"]["options"];
-  onChange: (value: IncidentsFiltersValue) => void;
 }
 
-const IncidentsFilters = ({ value, options, onChange }: IncidentsFiltersProps) => {
+const IncidentsFilters = ({ options }: IncidentsFiltersProps) => {
   const locale = useLocale();
   const t = useTranslations("incidents.filters");
   const tCommon = useTranslations("common");
+  const filters = useAppStore((state) => state.incidentsDashboardFilters);
+  const setFilters = useAppStore((state) => state.setIncidentsDashboardFilters);
   const categoryNameKey = locale === "en" ? "nameEn" : "nameEs";
+  const updateFilters = (nextFilters: Partial<IncidentsFiltersValue>) => {
+    setFilters({
+      filters: {
+        ...filters,
+        ...nextFilters,
+      },
+    });
+  };
 
   return (
     <section className={styles.root} aria-label={t("title")}>
       <Select
-        value={value.dateRange}
+        value={filters.dateRange}
         onValueChange={(dateRange) =>
-          onChange({
-            ...value,
+          updateFilters({
             dateRange: dateRange as IncidentDateRangeKey,
           })
         }
@@ -58,10 +59,9 @@ const IncidentsFilters = ({ value, options, onChange }: IncidentsFiltersProps) =
       </Select>
 
       <Select
-        value={value.status ?? ALL_FILTER_VALUE}
+        value={filters.status ?? ALL_FILTER_VALUE}
         onValueChange={(status) =>
-          onChange({
-            ...value,
+          updateFilters({
             status:
               status === ALL_FILTER_VALUE ? null : (status as IncidentStatus),
           })
@@ -81,10 +81,9 @@ const IncidentsFilters = ({ value, options, onChange }: IncidentsFiltersProps) =
       </Select>
 
       <Select
-        value={value.priority ?? ALL_FILTER_VALUE}
+        value={filters.priority ?? ALL_FILTER_VALUE}
         onValueChange={(priority) =>
-          onChange({
-            ...value,
+          updateFilters({
             priority:
               priority === ALL_FILTER_VALUE
                 ? null
@@ -106,10 +105,9 @@ const IncidentsFilters = ({ value, options, onChange }: IncidentsFiltersProps) =
       </Select>
 
       <Select
-        value={value.categoryId ?? ALL_FILTER_VALUE}
+        value={filters.categoryId ?? ALL_FILTER_VALUE}
         onValueChange={(categoryId) =>
-          onChange({
-            ...value,
+          updateFilters({
             categoryId: categoryId === ALL_FILTER_VALUE ? null : categoryId,
           })
         }
@@ -128,10 +126,9 @@ const IncidentsFilters = ({ value, options, onChange }: IncidentsFiltersProps) =
       </Select>
 
       <Select
-        value={value.assigneeId ?? ALL_FILTER_VALUE}
+        value={filters.assigneeId ?? ALL_FILTER_VALUE}
         onValueChange={(assigneeId) =>
-          onChange({
-            ...value,
+          updateFilters({
             assigneeId: assigneeId === ALL_FILTER_VALUE ? null : assigneeId,
           })
         }
@@ -153,4 +150,4 @@ const IncidentsFilters = ({ value, options, onChange }: IncidentsFiltersProps) =
 };
 
 export { IncidentsFilters };
-export type { IncidentsFiltersProps, IncidentsFiltersValue };
+export type { IncidentsFiltersProps };

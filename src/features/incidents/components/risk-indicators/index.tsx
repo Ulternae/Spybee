@@ -2,21 +2,21 @@
 
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
+import { useAppStore } from "@/store/app/app.provider";
 import type {
   IncidentsRiskIndicator,
-  RiskIndicatorKey,
 } from "../../queries/get-incidents-overview";
 import styles from "./risk-indicators.module.scss";
 import { MinaDangerTriangle } from "@zcorvus/icons-react";
 
 interface RiskIndicatorsProps {
   indicators: IncidentsRiskIndicator[];
-  selectedIndicator: RiskIndicatorKey | null;
-  onIndicatorChange: (indicator: RiskIndicatorKey | null) => void;
 }
 
-const RiskIndicators = ({ indicators, selectedIndicator, onIndicatorChange }: RiskIndicatorsProps) => {
+const RiskIndicators = ({ indicators }: RiskIndicatorsProps) => {
   const t = useTranslations("incidents.risk");
+  const selectedIndicator = useAppStore((state) => state.incidentsDashboardRiskIndicator);
+  const setSelectedIndicator = useAppStore((state) => state.setIncidentsDashboardRiskIndicator);
 
   return (
     <section className={styles.root}>
@@ -34,7 +34,9 @@ const RiskIndicators = ({ indicators, selectedIndicator, onIndicatorChange }: Ri
               data-tone={indicator.tone}
               data-selected={isSelected || undefined}
               onClick={() =>
-                onIndicatorChange(isSelected ? null : indicator.key)
+                setSelectedIndicator({
+                  riskIndicator: isSelected ? null : indicator.key,
+                })
               }
             >
               <span>{t(`items.${indicator.key}`)}</span>

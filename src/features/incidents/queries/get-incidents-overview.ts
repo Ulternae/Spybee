@@ -10,14 +10,11 @@ import { COOKIE_KEYS } from "@/lib/http/cookies";
 import { getIncidentFormOptions } from "./get-incident-form-options";
 import { getRelativeDayBoundaries } from "../lib/dates";
 import type { IncidentFormOptions } from "./get-incident-form-options";
+import type {
+  IncidentDateRangeKey,
+  RiskIndicatorKey,
+} from "../types/incidents-filters.types";
 import type { Prisma } from "@/generated/prisma/client";
-
-type IncidentDateRangeKey = "last_7_days" | "last_30_days";
-type RiskIndicatorKey =
-  | "overdue_today"
-  | "stale_7_days"
-  | "high_priority_open"
-  | "due_soon_7_days";
 
 type IncidentsOverviewMetric = {
   key: "open" | "created" | "closed" | "closure_rate" | "overdue";

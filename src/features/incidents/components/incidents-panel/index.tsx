@@ -1,13 +1,14 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect } from "react";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Link } from "@/i18n/navigation";
+import { useAppStoreApi } from "@/store/app/app.provider";
+import { DEFAULT_INCIDENTS_FILTERS_VALUE } from "../../types/incidents-filters.types";
 import { IncidentsActivityPanel } from "../incidents-activity-panel";
 import { IncidentsFilters } from "../incidents-filters";
-import type { IncidentsFiltersValue } from "../incidents-filters";
 import { IncidentsOverview } from "../incidents-overview";
 import { IncidentsTable } from "../incidents-table";
 import { IncidentsTeamPerformancePanel } from "../incidents-team-performance-panel";
@@ -26,13 +27,29 @@ interface IncidentsPanelProps {
 
 const IncidentsPanel = ({ activity, data, incidents, teamPerformance }: IncidentsPanelProps) => {
   const t = useTranslations("incidents.dashboard");
-  const [filters, setFilters] = useState<IncidentsFiltersValue>({
-    dateRange: data.filters.defaultDateRange,
-    status: null,
-    priority: null,
-    categoryId: null,
-    assigneeId: null,
-  });
+  const appStore = useAppStoreApi();
+
+  useEffect(() => {
+    const state = appStore.getState();
+    const nextFilters = {
+      ...DEFAULT_INCIDENTS_FILTERS_VALUE,
+      dateRange: data.filters.defaultDateRange,
+    };
+    const currentFilters = state.incidentsDashboardFilters;
+    const shouldReset =
+      state.incidentsDashboardRiskIndicator !== null ||
+      currentFilters.dateRange !== nextFilters.dateRange ||
+      currentFilters.status !== nextFilters.status ||
+      currentFilters.priority !== nextFilters.priority ||
+      currentFilters.categoryId !== nextFilters.categoryId ||
+      currentFilters.assigneeId !== nextFilters.assigneeId;
+
+    if (shouldReset) {
+      state.resetIncidentsDashboard({
+        filters: nextFilters,
+      });
+    }
+  }, [appStore, data.filters.defaultDateRange]);
 
   return (
     <main className={styles.root}>
@@ -53,11 +70,7 @@ const IncidentsPanel = ({ activity, data, incidents, teamPerformance }: Incident
       </header>
 
       <section className={styles.toolbar}>
-        <IncidentsFilters
-          value={filters}
-          options={data.filters.options}
-          onChange={setFilters}
-        />
+        <IncidentsFilters options={data.filters.options} />
       </section>
 
       <IncidentsOverview metrics={data.metrics} />

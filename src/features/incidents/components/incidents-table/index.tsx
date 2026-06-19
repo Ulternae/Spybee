@@ -1,16 +1,20 @@
 "use client";
 
-import { useRef, useState, useTransition } from "react";
+import { useCallback, useEffect, useRef, useState, useTransition } from "react";
 import { useTranslations } from "next-intl";
 import { ServerDataTable } from "@/components/ui/server-data-table";
+import { useAppStore } from "@/store/app/app.provider";
 import { getIncidentsTableAction } from "../../actions/get-incidents-table/get-incidents-table.action";
 import type { IncidentFormOptions } from "../../queries/get-incident-form-options";
 import type { IncidentsTableData } from "../../queries/get-incidents-table";
 import type {
   IncidentsRiskIndicator,
-  RiskIndicatorKey,
 } from "../../queries/get-incidents-overview";
 import { RiskIndicators } from "../risk-indicators";
+import type {
+  IncidentsFiltersValue,
+  RiskIndicatorKey,
+} from "../../types/incidents-filters.types";
 import { useIncidentsTableColumns } from "./datatable/incidents-table.columns";
 import styles from "./incidents-table.module.scss";
 import { MinaTable } from "@zcorvus/icons-react";
@@ -24,49 +28,56 @@ interface IncidentsTableProps {
 const IncidentsTable = ({ data, options, riskIndicators }: IncidentsTableProps) => {
   const t = useTranslations("incidents.table");
   const [tableData, setTableData] = useState(data);
-  const [selectedRiskIndicator, setSelectedRiskIndicator] = useState<RiskIndicatorKey | null>(null);
+  const filters = useAppStore((state) => state.incidentsDashboardFilters);
+  const selectedRiskIndicator = useAppStore(
+    (state) => state.incidentsDashboardRiskIndicator,
+  );
   const [isLoading, setIsLoading] = useState(false);
   const [isPending, startTransition] = useTransition();
   const requestIdRef = useRef(0);
+  const didMountRef = useRef(false);
   const { totalItems } = tableData.pagination;
 
-  const fetchTablePage = (page: number, riskIndicator: RiskIndicatorKey | null) => {
-    const requestId = requestIdRef.current + 1;
-    requestIdRef.current = requestId;
-    setIsLoading(true);
+  const fetchTablePage = useCallback(
+    (
+      page: number,
+      nextFilters: IncidentsFiltersValue,
+      riskIndicator: RiskIndicatorKey | null,
+    ) => {
+      const requestId = requestIdRef.current + 1;
+      requestIdRef.current = requestId;
+      setIsLoading(true);
 
-    void getIncidentsTableAction({
-      page,
-      riskIndicator,
-    })
-      .then((nextData) => {
-        if (requestIdRef.current !== requestId) {
-          return;
-        }
-
-        startTransition(() => {
-          setTableData(nextData);
-        });
+      void getIncidentsTableAction({
+        page,
+        filters: nextFilters,
+        riskIndicator,
       })
-      .catch(() => undefined)
-      .finally(() => {
-        if (requestIdRef.current === requestId) {
-          setIsLoading(false);
-        }
-      });
-  };
+        .then((nextData) => {
+          if (requestIdRef.current !== requestId) {
+            return;
+          }
+
+          startTransition(() => {
+            setTableData(nextData);
+          });
+        })
+        .catch(() => undefined)
+        .finally(() => {
+          if (requestIdRef.current === requestId) {
+            setIsLoading(false);
+          }
+        });
+    },
+    [startTransition],
+  );
 
   const handlePageChange = (page: number) => {
-    fetchTablePage(page, selectedRiskIndicator);
-  };
-
-  const handleRiskIndicatorChange = (riskIndicator: RiskIndicatorKey | null) => {
-    setSelectedRiskIndicator(riskIndicator);
-    fetchTablePage(1, riskIndicator);
+    fetchTablePage(page, filters, selectedRiskIndicator);
   };
 
   const handleEditSuccess = () => {
-    fetchTablePage(tableData.pagination.page, selectedRiskIndicator);
+    fetchTablePage(tableData.pagination.page, filters, selectedRiskIndicator);
   };
 
   const columns = useIncidentsTableColumns({
@@ -75,13 +86,20 @@ const IncidentsTable = ({ data, options, riskIndicators }: IncidentsTableProps) 
     onEditSuccess: handleEditSuccess,
   });
 
+  useEffect(() => {
+    if (!didMountRef.current) {
+      didMountRef.current = true;
+      return;
+    }
+
+    fetchTablePage(1, filters, selectedRiskIndicator);
+  }, [fetchTablePage, filters, selectedRiskIndicator]);
+
   return (
     <section className={styles.root}>
 
       <RiskIndicators
         indicators={riskIndicators}
-        selectedIndicator={selectedRiskIndicator}
-        onIndicatorChange={handleRiskIndicatorChange}
       />
 
       <header className={styles.header}>

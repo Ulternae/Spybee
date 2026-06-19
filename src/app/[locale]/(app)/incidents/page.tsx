@@ -3,12 +3,13 @@ import { getIncidentsActivity } from "@/features/incidents/queries/get-incidents
 import { getIncidentsOverview } from "@/features/incidents/queries/get-incidents-overview";
 import { getIncidentsTable } from "@/features/incidents/queries/get-incidents-table";
 import { getIncidentsTeamPerformance } from "@/features/incidents/queries/get-incidents-team-performance";
+import { DEFAULT_INCIDENTS_FILTERS_VALUE } from "@/features/incidents/types/incidents-filters.types";
 
 const IncidentsPage = async () => {
   const [overview, activity, incidents, teamPerformance] = await Promise.all([
     getIncidentsOverview(),
     getIncidentsActivity(),
-    getIncidentsTable(),
+    getIncidentsTable({ filters: DEFAULT_INCIDENTS_FILTERS_VALUE }),
     getIncidentsTeamPerformance(),
   ]);
 
