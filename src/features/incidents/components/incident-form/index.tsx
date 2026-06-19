@@ -21,6 +21,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { useLocale, useTranslations } from "next-intl";
 import { FORM_STATUS } from "@/lib/forms/form-status";
 import { createIncidentAction } from "../../actions/create-incident/create-incident.action";
+import { updateIncidentAction } from "../../actions/update-incident/update-incident.action";
+import type { IncidentFormInput } from "../../schemas/incident.schema";
 import type { IncidentFormState } from "../../types/form.types";
 import { LocationPreview, type IncidentLocation } from "../location-preview";
 import { IncidentFormSection } from "./components/incident-form-section";
@@ -33,6 +35,9 @@ import { HOURS } from "@/components/common/calendar/constants";
 interface IncidentFormProps {
   data: ReadyDataForm;
   actions: ActionsForm;
+  incidentId?: string;
+  initialValues?: Partial<IncidentFormInput>;
+  mode?: "create" | "edit";
 }
 
 const getDefaultDueDate = () => {
@@ -53,7 +58,10 @@ const getHourFromDate = (date: Date): HourOption => {
   return HOURS.find((hour) => hour.value === value) ?? HOURS[0];
 };
 
-const getInitialState = (location: IncidentLocation): IncidentFormState => ({
+const getInitialState = (
+  location: IncidentLocation,
+  initialValues?: Partial<IncidentFormInput>,
+): IncidentFormState => ({
   status: FORM_STATUS.IDLE,
   values: {
     title: "",
@@ -67,16 +75,21 @@ const getInitialState = (location: IncidentLocation): IncidentFormState => ({
     longitude: location.longitude,
     locationDescription: "",
     dueDate: getDefaultDueDate(),
+    ...initialValues,
   },
 });
 
-const IncidentForm = ({ data, actions }: IncidentFormProps) => {
+const IncidentForm = ({ data, actions, incidentId, initialValues, mode = "create" }: IncidentFormProps) => {
   const { location, options } = data;
   const { onSuccess, onChangeState } = actions;
 
+  const formAction =
+    mode === "edit" && incidentId
+      ? updateIncidentAction.bind(null, incidentId)
+      : createIncidentAction;
   const [state, action, isPending] = useActionState<IncidentFormState, FormData>(
-    createIncidentAction,
-    getInitialState(location),
+    formAction,
+    getInitialState(location, initialValues),
   );
   const [tagIds, setTagIds] = useState<string[]>(state.values.tagIds ?? []);
   const [assigneeIds, setAssigneeIds] = useState<string[]>(state.values.assigneeIds ?? []);
@@ -279,7 +292,7 @@ const IncidentForm = ({ data, actions }: IncidentFormProps) => {
         <Button type="submit" disabled={isDisabled}>
           {isPending || isCompleted
             ? t("actions.loading")
-            : t("actions.create")}
+            : t(`actions.${mode === "edit" ? "update" : "create"}`)}
         </Button>
       </div>
     </form>

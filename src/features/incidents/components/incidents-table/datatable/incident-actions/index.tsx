@@ -1,32 +1,25 @@
-import { useTranslations } from "next-intl";
-import { Button } from "@/components/ui/button";
+import type { IncidentFormOptions } from "@/features/incidents/queries/get-incident-form-options";
 import type { IncidentTableItem } from "@/features/incidents/queries/get-incidents-table";
-import styles from "../../incidents-table.module.scss";
-import { MinaDotsVertical } from "@zcorvus/icons-react";
+import { IncidentEditAction } from "../incident-edit-action";
 
 interface IncidentActionsCellProps {
   incident: IncidentTableItem;
   canUpdateIncidents: boolean;
+  options: IncidentFormOptions;
+  onEditSuccess: () => void;
 }
 
-const IncidentActionsCell = ({ incident, canUpdateIncidents }: IncidentActionsCellProps) => {
-  const t = useTranslations("common.actions");
-
+const IncidentActionsCell = ({ incident, canUpdateIncidents, options, onEditSuccess }: IncidentActionsCellProps) => {
   if (!canUpdateIncidents) {
     return null;
   }
 
   return (
-    <Button
-      type="button"
-      variant="ghost"
-      size="sm"
-      className={styles.actionButton}
-      aria-label={t("edit")}
-      data-incident-id={incident.id}
-    >
-      <MinaDotsVertical className={styles.triggerIcon} aria-hidden="true" />
-    </Button>
+    <IncidentEditAction
+      incident={incident}
+      options={options}
+      onSuccess={onEditSuccess}
+    />
   );
 };
 

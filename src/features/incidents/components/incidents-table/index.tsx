@@ -4,6 +4,7 @@ import { useRef, useState, useTransition } from "react";
 import { useTranslations } from "next-intl";
 import { ServerDataTable } from "@/components/ui/server-data-table";
 import { getIncidentsTableAction } from "../../actions/get-incidents-table/get-incidents-table.action";
+import type { IncidentFormOptions } from "../../queries/get-incident-form-options";
 import type { IncidentsTableData } from "../../queries/get-incidents-table";
 import type {
   IncidentsRiskIndicator,
@@ -16,20 +17,17 @@ import { MinaTable } from "@zcorvus/icons-react";
 
 interface IncidentsTableProps {
   data: IncidentsTableData;
+  options: IncidentFormOptions;
   riskIndicators: IncidentsRiskIndicator[];
 }
 
-const IncidentsTable = ({ data, riskIndicators }: IncidentsTableProps) => {
+const IncidentsTable = ({ data, options, riskIndicators }: IncidentsTableProps) => {
   const t = useTranslations("incidents.table");
   const [tableData, setTableData] = useState(data);
-  const [selectedRiskIndicator, setSelectedRiskIndicator] =
-    useState<RiskIndicatorKey | null>(null);
+  const [selectedRiskIndicator, setSelectedRiskIndicator] = useState<RiskIndicatorKey | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isPending, startTransition] = useTransition();
   const requestIdRef = useRef(0);
-  const columns = useIncidentsTableColumns({
-    canUpdateIncidents: tableData.access.canUpdateIncidents,
-  });
   const { totalItems } = tableData.pagination;
 
   const fetchTablePage = (page: number, riskIndicator: RiskIndicatorKey | null) => {
@@ -67,8 +65,19 @@ const IncidentsTable = ({ data, riskIndicators }: IncidentsTableProps) => {
     fetchTablePage(1, riskIndicator);
   };
 
+  const handleEditSuccess = () => {
+    fetchTablePage(tableData.pagination.page, selectedRiskIndicator);
+  };
+
+  const columns = useIncidentsTableColumns({
+    canUpdateIncidents: tableData.access.canUpdateIncidents,
+    options,
+    onEditSuccess: handleEditSuccess,
+  });
+
   return (
     <section className={styles.root}>
+
       <RiskIndicators
         indicators={riskIndicators}
         selectedIndicator={selectedRiskIndicator}

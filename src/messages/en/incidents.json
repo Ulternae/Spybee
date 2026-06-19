@@ -3,6 +3,10 @@
     "title": "Create incident",
     "description": "Complete the incident information for the active project."
   },
+  "edit": {
+    "title": "Edit incident",
+    "description": "Update the incident information without leaving the dashboard."
+  },
   "dashboard": {
     "title": "Incidents",
     "description": "Review project activity, risk indicators and operational status.",

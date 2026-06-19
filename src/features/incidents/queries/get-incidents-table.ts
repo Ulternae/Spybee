@@ -3,14 +3,21 @@ import "server-only";
 import { cookies } from "next/headers";
 import { getLocale } from "next-intl/server";
 import { redirect } from "@/i18n/navigation";
-import { ParticipantRole } from "@/generated/prisma/enums";
+import {
+  IncidentPriority,
+  IncidentStatus,
+  ParticipantRole,
+} from "@/generated/prisma/enums";
 import { getProjectAccess } from "@/lib/auth/access/get-project-access";
 import { prisma } from "@/lib/db/prisma";
 import { COOKIE_KEYS } from "@/lib/http/cookies";
+import { getRelativeDayBoundaries } from "../lib/dates";
+import type { RiskIndicatorKey } from "./get-incidents-overview";
 import type {
-  IncidentPriority,
-  IncidentStatus,
+  IncidentPriority as IncidentPriorityType,
+  IncidentStatus as IncidentStatusType,
 } from "@/generated/prisma/enums";
+import type { Prisma } from "@/generated/prisma/client";
 
 type IncidentTableUser = {
   id: string;
@@ -23,16 +30,23 @@ type IncidentTableItem = {
   id: string;
   sequenceNo: number;
   title: string;
+  description: string;
   category: {
     id: string;
     name: string;
   };
-  priority: IncidentPriority;
-  status: IncidentStatus;
+  priority: IncidentPriorityType;
+  status: IncidentStatusType;
+  latitude: number;
+  longitude: number;
+  locationDescription: string | null;
   dueDate: string | null;
   createdAt: string;
   createdBy: IncidentTableUser | null;
   assignees: IncidentTableUser[];
+  assigneeIds: string[];
+  observerIds: string[];
+  tagIds: string[];
 };
 
 type IncidentsTableData = {
@@ -51,7 +65,22 @@ type IncidentsTableData = {
 type GetIncidentsTableInput = {
   page?: number;
   pageSize?: number;
+  riskIndicator?: RiskIndicatorKey | null;
 };
+
+type IncidentParticipant = {
+  role: ParticipantRole;
+  user: IncidentTableUser;
+};
+
+type GetParticipantsByRoleInput = {
+  participants: IncidentParticipant[];
+  role: ParticipantRole;
+};
+
+type GetRiskIndicator = {
+  riskIndicator: RiskIndicatorKey | null | undefined;
+}
 
 const DEFAULT_PAGE = 1;
 const DEFAULT_PAGE_SIZE = 10;
@@ -64,7 +93,62 @@ const normalizePage = (page?: number) => {
   return Math.floor(page);
 };
 
-const getIncidentsTable = async ({ page, pageSize = DEFAULT_PAGE_SIZE }: GetIncidentsTableInput = {}): Promise<IncidentsTableData> => {
+const getParticipantsByRole = ({ participants, role }: GetParticipantsByRoleInput) => {
+  return participants.filter((participant) => participant.role === role);
+};
+
+const getRiskIndicatorWhere = ({ riskIndicator }: GetRiskIndicator): Prisma.IncidentWhereInput => {
+  if (!riskIndicator) {
+    return {};
+  }
+
+  const { todayStart, sevenDaysAgoStart, next7DaysEnd } =
+    getRelativeDayBoundaries();
+  const activeIncidentWhere = {
+    status: {
+      not: IncidentStatus.CLOSED,
+    },
+  } satisfies Prisma.IncidentWhereInput;
+
+  if (riskIndicator === "overdue_today") {
+    return {
+      ...activeIncidentWhere,
+      dueDate: {
+        lte: todayStart,
+      },
+    };
+  }
+
+  if (riskIndicator === "stale_7_days") {
+    return {
+      ...activeIncidentWhere,
+      updatedAt: {
+        lte: sevenDaysAgoStart,
+      },
+    };
+  }
+
+  if (riskIndicator === "high_priority_open") {
+    return {
+      priority: IncidentPriority.HIGH,
+      status: IncidentStatus.OPEN,
+    };
+  }
+
+  return {
+    ...activeIncidentWhere,
+    dueDate: {
+      gte: todayStart,
+      lte: next7DaysEnd,
+    },
+  };
+};
+
+const getIncidentsTable = async ({
+  page,
+  pageSize = DEFAULT_PAGE_SIZE,
+  riskIndicator,
+}: GetIncidentsTableInput = {}): Promise<IncidentsTableData> => {
   const locale = await getLocale();
   const cookieStore = await cookies();
   const activeProjectId = cookieStore.get(COOKIE_KEYS.ACTIVE_PROJECT_ID)?.value;
@@ -84,9 +168,10 @@ const getIncidentsTable = async ({ page, pageSize = DEFAULT_PAGE_SIZE }: GetInci
   const normalizedPage = normalizePage(page);
   const normalizedPageSize = Math.max(1, Math.floor(pageSize));
   const where = {
+    ...getRiskIndicatorWhere({ riskIndicator }),
     projectId: activeProjectId,
     deletedAt: null,
-  };
+  } satisfies Prisma.IncidentWhereInput;
 
   const totalItems = await prisma.incident.count({ where });
   const totalPages = Math.max(1, Math.ceil(totalItems / normalizedPageSize));
@@ -109,8 +194,12 @@ const getIncidentsTable = async ({ page, pageSize = DEFAULT_PAGE_SIZE }: GetInci
       id: true,
       sequenceNo: true,
       title: true,
+      description: true,
       priority: true,
       status: true,
+      latitude: true,
+      longitude: true,
+      locationDescription: true,
       dueDate: true,
       createdAt: true,
       category: {
@@ -129,10 +218,8 @@ const getIncidentsTable = async ({ page, pageSize = DEFAULT_PAGE_SIZE }: GetInci
         },
       },
       participants: {
-        where: {
-          role: ParticipantRole.ASSIGNEE,
-        },
         select: {
+          role: true,
           user: {
             select: {
               id: true,
@@ -143,25 +230,53 @@ const getIncidentsTable = async ({ page, pageSize = DEFAULT_PAGE_SIZE }: GetInci
           },
         },
       },
+      tags: {
+        select: {
+          tagId: true,
+        },
+      },
     },
   });
 
+
+
   return {
-    items: incidents.map((incident) => ({
-      id: incident.id,
-      sequenceNo: incident.sequenceNo,
-      title: incident.title,
-      priority: incident.priority,
-      status: incident.status,
-      dueDate: incident.dueDate?.toISOString() ?? null,
-      createdAt: incident.createdAt.toISOString(),
-      category: {
-        id: incident.category.id,
-        name: locale === "es" ? incident.category.nameEs : incident.category.nameEn,
-      },
-      createdBy: incident.createdBy,
-      assignees: incident.participants.map((participant) => participant.user),
-    })),
+    items: incidents.map((incident) => {
+
+      const assigneeParticipants = getParticipantsByRole({
+        participants: incident.participants,
+        role: ParticipantRole.ASSIGNEE,
+      });
+
+      const observerParticipants = getParticipantsByRole({
+        participants: incident.participants,
+        role: ParticipantRole.OBSERVER,
+      });
+
+      return ({
+        id: incident.id,
+        sequenceNo: incident.sequenceNo,
+        title: incident.title,
+        description: incident.description,
+        priority: incident.priority,
+        status: incident.status,
+        latitude: incident.latitude,
+        longitude: incident.longitude,
+        locationDescription: incident.locationDescription,
+        dueDate: incident.dueDate?.toISOString() ?? null,
+        createdAt: incident.createdAt.toISOString(),
+        category: {
+          id: incident.category.id,
+          name: locale === "es" ? incident.category.nameEs : incident.category.nameEn,
+        },
+        createdBy: incident.createdBy,
+        assignees: assigneeParticipants.map((participant) => participant.user),
+        assigneeIds: assigneeParticipants.map((participant) => participant.user.id),
+        observerIds: observerParticipants.map((participant) => participant.user.id),
+        tagIds: incident.tags.map((tag) => tag.tagId),
+      }
+      )
+    }),
     pagination: {
       page: currentPage,
       pageSize: normalizedPageSize,

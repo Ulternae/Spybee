@@ -2,7 +2,7 @@
 
 .root {
   display: grid;
-  gap: space(4);
+  gap: space(8);
 }
 
 .header {
@@ -19,7 +19,9 @@
 }
 
 .headerContent {
-  display: grid;
+  display: flex;
+  align-items: center;
+  gap: space(2);
 
   h2,
   p {
@@ -122,6 +124,14 @@
 .triggerIcon {
   min-width: rem(24);
   min-height: rem(28);
+}
+
+.actionsContent {
+  min-width: rem(160);
+}
+
+.actionItem {
+  cursor: pointer;
 }
 
 .pagination {

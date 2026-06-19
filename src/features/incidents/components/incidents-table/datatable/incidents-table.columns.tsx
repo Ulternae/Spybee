@@ -1,6 +1,7 @@
 import { useLocale, useTranslations } from "next-intl";
 import type { ColumnDef } from "@tanstack/react-table";
 import { Badge } from "@/components/ui/badge";
+import type { IncidentFormOptions } from "@/features/incidents/queries/get-incident-form-options";
 import type { IncidentTableItem } from "@/features/incidents/queries/get-incidents-table";
 import { IncidentActionsCell } from "./incident-actions";
 import { IncidentParticipantsCell } from "./incident-participants";
@@ -9,15 +10,15 @@ import styles from "../incidents-table.module.scss";
 
 interface UseIncidentsTableColumnsInput {
   canUpdateIncidents: boolean;
+  options: IncidentFormOptions;
+  onEditSuccess: () => void;
 }
 
 const formatSequenceNo = (sequenceNo: number) => {
   return `#${String(sequenceNo).padStart(4, "0")}`;
 };
 
-const useIncidentsTableColumns = ({
-  canUpdateIncidents,
-}: UseIncidentsTableColumnsInput): ColumnDef<IncidentTableItem>[] => {
+const useIncidentsTableColumns = ({ canUpdateIncidents, options, onEditSuccess }: UseIncidentsTableColumnsInput): ColumnDef<IncidentTableItem>[] => {
   const locale = useLocale();
   const tCommon = useTranslations("common");
   const tIncidents = useTranslations("incidents.table");
@@ -118,6 +119,8 @@ const useIncidentsTableColumns = ({
         <IncidentActionsCell
           incident={row.original}
           canUpdateIncidents={canUpdateIncidents}
+          options={options}
+          onEditSuccess={onEditSuccess}
         />
       ),
     },

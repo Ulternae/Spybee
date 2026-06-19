@@ -3,6 +3,10 @@
     "title": "Crear incidencia",
     "description": "Completa la información de la incidencia para el proyecto activo."
   },
+  "edit": {
+    "title": "Editar incidencia",
+    "description": "Actualiza la información de la incidencia sin salir del dashboard."
+  },
   "dashboard": {
     "title": "Incidencias",
     "description": "Revisa la actividad del proyecto, indicadores de riesgo y estado operativo.",
