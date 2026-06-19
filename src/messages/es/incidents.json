@@ -2,5 +2,61 @@
   "create": {
     "title": "Crear incidencia",
     "description": "Completa la información de la incidencia para el proyecto activo."
+  },
+  "dashboard": {
+    "title": "Incidencias",
+    "description": "Revisa la actividad del proyecto, indicadores de riesgo y estado operativo.",
+    "create_action": "Crear incidencia"
+  },
+  "filters": {
+    "title": "Filtros de incidencias",
+    "date_range": "Rango de fechas",
+    "status": "Estado",
+    "priority": "Prioridad",
+    "category": "Categoría",
+    "assignee": "Asignado",
+    "all_statuses": "Todos los estados",
+    "all_priorities": "Todas las prioridades",
+    "all_categories": "Todas las categorías",
+    "all_assignees": "Todos los asignados",
+    "ranges": {
+      "last_7_days": "Últimos 7 días",
+      "last_30_days": "Últimos 30 días"
+    }
+  },
+  "overview": {
+    "metrics": {
+      "label": "Resumen general",
+      "open": {
+        "label": "Abiertas",
+        "description": "actualmente"
+      },
+      "created": {
+        "label": "Creadas",
+        "description": "en el período"
+      },
+      "closed": {
+        "label": "Cerradas",
+        "description": "en el período"
+      },
+      "closure_rate": {
+        "label": "Tasa de cierre",
+        "description": "cerradas / creadas"
+      },
+      "overdue": {
+        "label": "Vencidas activas",
+        "description": "actualmente"
+      }
+    }
+  },
+  "risk": {
+    "title": "Indicadores de riesgo",
+    "description": "Click en cada chip para preparar el filtro relacionado de la tabla.",
+    "items": {
+      "overdue_today": "Vencidas hoy",
+      "stale_7_days": "Sin actualizar 7+ días",
+      "high_priority_open": "Alta prioridad abiertas",
+      "due_soon_7_days": "Próximas a vencer (7d)"
+    }
   }
 }

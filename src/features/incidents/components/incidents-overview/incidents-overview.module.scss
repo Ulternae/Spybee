@@ -1,0 +1,68 @@
+@use "styles" as *;
+
+.root {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, rem(180)), 1fr));
+  gap: space(3);
+}
+
+.card {
+  position: relative;
+  overflow: hidden;
+  background: color-mix(in srgb, var(--card) 86%, transparent);
+  @include transition-colors;
+
+  &::before {
+    position: absolute;
+    inset-block: 0;
+    left: 0;
+    width: rem(3);
+    content: "";
+    background: var(--muted-foreground);
+  }
+
+  &[data-tone="success"]::before {
+    background: var(--success);
+  }
+
+  &[data-tone="info"]::before {
+    background: var(--primary);
+  }
+
+  &[data-tone="warning"]::before {
+    background: var(--warning);
+  }
+
+  &[data-tone="danger"]::before {
+    background: var(--destructive);
+  }
+}
+
+.content {
+  display: grid;
+  gap: space(2);
+}
+
+.valueLine {
+  display: flex;
+  align-items: end;
+  padding: 0 0 space(2) 0;
+  border-bottom: 1px solid var(--border);
+  gap: space(1)
+}
+
+.label,
+.description {
+  color: var(--muted-foreground);
+  font-size: rem(12);
+}
+
+.label {
+  font-weight: 700;
+}
+
+.content strong {
+  color: var(--foreground);
+  font-size: rem(24);
+  line-height: 0.9;
+}

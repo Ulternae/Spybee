@@ -2,5 +2,61 @@
   "create": {
     "title": "Create incident",
     "description": "Complete the incident information for the active project."
+  },
+  "dashboard": {
+    "title": "Incidents",
+    "description": "Review project activity, risk indicators and operational status.",
+    "create_action": "Create incident"
+  },
+  "filters": {
+    "title": "Incident filters",
+    "date_range": "Date range",
+    "status": "Status",
+    "priority": "Priority",
+    "category": "Category",
+    "assignee": "Assignee",
+    "all_statuses": "All statuses",
+    "all_priorities": "All priorities",
+    "all_categories": "All categories",
+    "all_assignees": "All assignees",
+    "ranges": {
+      "last_7_days": "Last 7 days",
+      "last_30_days": "Last 30 days"
+    }
+  },
+  "overview": {
+    "metrics": {
+      "label": "General summary",
+      "open": {
+        "label": "Open",
+        "description": "currently"
+      },
+      "created": {
+        "label": "Created",
+        "description": "in the period"
+      },
+      "closed": {
+        "label": "Closed",
+        "description": "in the period"
+      },
+      "closure_rate": {
+        "label": "Closure rate",
+        "description": "closed / created"
+      },
+      "overdue": {
+        "label": "Active overdue",
+        "description": "currently"
+      }
+    }
+  },
+  "risk": {
+    "title": "Risk indicators",
+    "description": "Click a chip to prepare the related table filter.",
+    "items": {
+      "overdue_today": "Overdue today",
+      "stale_7_days": "Not updated 7+ days",
+      "high_priority_open": "High priority open",
+      "due_soon_7_days": "Due soon (7d)"
+    }
   }
 }

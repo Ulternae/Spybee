@@ -1,0 +1,18 @@
+@use "styles" as *;
+
+.root {
+  display: flex;
+  flex-wrap: wrap;
+  gap: space(2);
+  align-items: center;
+}
+
+.trigger {
+  width: rem(180);
+  max-width: 100%;
+  background: var(--input);
+
+  @include until("sm") {
+    width: 100%;
+  }
+}
