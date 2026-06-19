@@ -10,18 +10,21 @@ import { IncidentsFilters } from "../incidents-filters";
 import type { IncidentsFiltersValue } from "../incidents-filters";
 import { IncidentsOverview } from "../incidents-overview";
 import { IncidentsTable } from "../incidents-table";
+import { IncidentsTeamPerformancePanel } from "../incidents-team-performance-panel";
 import type { IncidentsActivity } from "../../queries/get-incidents-activity";
 import type { IncidentsTableData } from "../../queries/get-incidents-table";
 import type { IncidentsOverview as IncidentsOverviewData } from "../../queries/get-incidents-overview";
+import type { IncidentsTeamPerformance } from "../../queries/get-incidents-team-performance";
 import styles from "./incidents-panel.module.scss";
 
 interface IncidentsPanelProps {
   activity: IncidentsActivity;
   data: IncidentsOverviewData;
   incidents: IncidentsTableData;
+  teamPerformance: IncidentsTeamPerformance;
 }
 
-const IncidentsPanel = ({ activity, data, incidents }: IncidentsPanelProps) => {
+const IncidentsPanel = ({ activity, data, incidents, teamPerformance }: IncidentsPanelProps) => {
   const t = useTranslations("incidents.dashboard");
   const [filters, setFilters] = useState<IncidentsFiltersValue>({
     dateRange: data.filters.defaultDateRange,
@@ -63,9 +66,7 @@ const IncidentsPanel = ({ activity, data, incidents }: IncidentsPanelProps) => {
         <TabsList>
           <TabsTrigger value="activity">{t("tabs.activity")}</TabsTrigger>
           <TabsTrigger value="incidents">{t("tabs.incidents")}</TabsTrigger>
-          <TabsTrigger value="team" disabled>
-            {t("tabs.team")}
-          </TabsTrigger>
+          <TabsTrigger value="team">{t("tabs.team")}</TabsTrigger>
         </TabsList>
 
         <TabsContent value="activity">
@@ -78,6 +79,10 @@ const IncidentsPanel = ({ activity, data, incidents }: IncidentsPanelProps) => {
             options={data.filters.options}
             riskIndicators={data.riskIndicators}
           />
+        </TabsContent>
+
+        <TabsContent value="team">
+          <IncidentsTeamPerformancePanel performance={teamPerformance} />
         </TabsContent>
       </Tabs>
     </main>

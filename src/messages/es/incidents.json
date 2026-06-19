@@ -85,6 +85,25 @@
       }
     }
   },
+  "team": {
+    "title": "Desempeño del equipo",
+    "description": "Quién resuelve, quién reporta y quién carga el trabajo actual.",
+    "empty": "No hay actividad para este período.",
+    "resolvers": {
+      "title": "Quién resuelve más",
+      "description": "Incidencias cerradas en los últimos 30 días.",
+      "average_resolution": "{days}d promedio de resolución"
+    },
+    "reporters": {
+      "title": "Quién reporta más",
+      "description": "Incidencias creadas en los últimos 30 días."
+    },
+    "workload": {
+      "title": "Carga actual de trabajo",
+      "description": "Incidencias abiertas asignadas a cada miembro.",
+      "high_priority": "{count} alta prioridad"
+    }
+  },
   "table": {
     "title": "Críticas",
     "description": "{count} incidencias en total.",

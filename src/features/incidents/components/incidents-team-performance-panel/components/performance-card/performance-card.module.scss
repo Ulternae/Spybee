@@ -1,0 +1,121 @@
+@use "styles" as *;
+
+.card {
+  min-width: 0;
+  background: color-mix(in srgb, var(--card) 86%, transparent);
+  @include transition-colors;
+
+  &[data-tone="chart-3"] {
+    --performance-bar: var(--chart-2);
+  }
+
+  &[data-tone="chart-4"] {
+    --performance-bar: var(--chart-4);
+  }
+
+  &[data-tone="chart-5"] {
+    --performance-bar: var(--chart-5);
+  }
+}
+
+.cardHeader {
+  gap: space(1);
+  display: flex;
+  align-items: center;
+}
+
+.cardHeaderIcon {
+  width: rem(28);
+  height: rem(28);
+}
+
+.cardContent {
+  min-width: 0;
+}
+
+.list {
+  display: grid;
+  gap: space(3);
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.item {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: space(2);
+  align-items: center;
+  min-width: 0;
+}
+
+.avatar {
+  width: rem(28);
+  height: rem(28);
+}
+
+.itemContent {
+  display: grid;
+  min-width: 0;
+  gap: space(1);
+
+  p {
+    margin: 0;
+    color: var(--muted-foreground);
+    font-size: rem(11);
+  }
+}
+
+.itemHeader {
+  display: flex;
+  gap: space(2);
+  align-items: center;
+  justify-content: space-between;
+  min-width: 0;
+
+  span {
+    min-width: 0;
+    overflow: hidden;
+    color: var(--foreground);
+    font-size: rem(13);
+    font-weight: 700;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  strong {
+    flex: none;
+    color: var(--performance-bar);
+    font-size: rem(12);
+  }
+}
+
+.progressTrack {
+  overflow: hidden;
+  height: rem(6);
+  background: var(--muted);
+  border-radius: 999px;
+}
+
+.progressBar {
+  display: block;
+  height: 100%;
+  background: var(--performance-bar);
+  border-radius: inherit;
+  @include transition-colors;
+}
+
+.secondaryValue {
+  color: var(--warning);
+  font-size: rem(11);
+
+  &[data-tone="danger"] {
+    color: var(--destructive);
+  }
+}
+
+.empty {
+  margin: 0;
+  color: var(--muted-foreground);
+  font-size: rem(13);
+}

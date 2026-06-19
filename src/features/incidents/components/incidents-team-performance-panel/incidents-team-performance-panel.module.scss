@@ -1,0 +1,49 @@
+@use "styles" as *;
+
+.root {
+  display: grid;
+  gap: space(8);
+}
+
+.header {
+  display: flex;
+  gap: space(2);
+  align-items: center;
+}
+
+.headerIcon {
+  width: rem(24);
+  height: rem(24);
+  flex: none;
+  color: var(--foreground);
+}
+
+.headerContent {
+  display: grid;
+
+  h2,
+  p {
+    margin: 0;
+  }
+
+  h2 {
+    color: var(--foreground);
+    font-size: rem(16);
+    font-weight: 700;
+  }
+
+  p {
+    color: var(--muted-foreground);
+    font-size: rem(14);
+  }
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: space(4);
+
+  @include until("lg") {
+    grid-template-columns: 1fr;
+  }
+}

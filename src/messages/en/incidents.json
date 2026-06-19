@@ -85,6 +85,25 @@
       }
     }
   },
+  "team": {
+    "title": "Team performance",
+    "description": "Who resolves, reports and carries current workload.",
+    "empty": "No activity for this period.",
+    "resolvers": {
+      "title": "Who resolves more",
+      "description": "Closed incidents in the last 30 days.",
+      "average_resolution": "{days}d average resolution"
+    },
+    "reporters": {
+      "title": "Who reports more",
+      "description": "Created incidents in the last 30 days."
+    },
+    "workload": {
+      "title": "Current workload",
+      "description": "Open incidents assigned to each member.",
+      "high_priority": "{count} high priority"
+    }
+  },
   "table": {
     "title": "Critical",
     "description": "{count} incidents in total.",
