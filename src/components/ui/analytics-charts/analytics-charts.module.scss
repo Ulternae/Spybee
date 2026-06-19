@@ -1,0 +1,214 @@
+// src/components/analytics-charts/analytics-charts.module.scss
+
+@use "styles" as *;
+
+.card {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  overflow: hidden;
+  color: var(--card-foreground);
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-sm);
+}
+
+.cardHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: space(4);
+  padding: space(4) space(4) 0;
+}
+
+.cardTitle {
+  margin: 0;
+  color: var(--foreground);
+  font-size: rem(15);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.cardSubtitle {
+  margin: rem(2) 0 0;
+  color: var(--muted-foreground);
+  font-size: rem(13);
+  line-height: 1.3;
+}
+
+.cardAction {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+}
+
+.cardBody {
+  min-width: 0;
+  padding: space(4);
+}
+
+.radarChart {
+  width: 100%;
+  height: rem(310);
+}
+
+.treemapChart {
+  width: 100%;
+  height: rem(310);
+}
+
+.trendChart {
+  width: 100%;
+  height: rem(320);
+}
+
+.periodTabs {
+  display: inline-flex;
+  overflow: hidden;
+  padding: rem(2);
+  background: var(--muted);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+
+.periodTab {
+  @include transition-colors;
+
+  height: rem(28);
+  padding-inline: space(2.5);
+  color: var(--muted-foreground);
+  background: transparent;
+  border: 0;
+  border-radius: calc(var(--radius-md) - 2px);
+  outline: none;
+  font-size: rem(13);
+  font-weight: 600;
+  cursor: pointer;
+
+  &:hover {
+    color: var(--foreground);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 1px;
+  }
+
+  &[aria-selected="true"] {
+    color: var(--foreground);
+    background: var(--background);
+    box-shadow: var(--shadow-xs);
+  }
+}
+
+.tooltip {
+  min-width: rem(170);
+  padding: space(3);
+  color: var(--popover-foreground);
+  background: var(--popover);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+}
+
+.tooltipTitle {
+  margin: 0 0 space(2);
+  color: var(--foreground);
+  font-size: rem(13);
+  font-weight: 700;
+}
+
+.tooltipList {
+  display: grid;
+  gap: space(1.5);
+}
+
+.tooltipRow {
+  display: flex;
+  align-items: center;
+  gap: space(2);
+  font-size: rem(13);
+}
+
+.tooltipDot {
+  width: rem(8);
+  height: rem(8);
+  flex-shrink: 0;
+  border-radius: 999px;
+}
+
+.tooltipName {
+  min-width: 0;
+  flex: 1;
+  color: var(--muted-foreground);
+}
+
+.tooltipValue {
+  color: var(--foreground);
+  font-weight: 700;
+}
+
+.treemapTile {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: rem(3);
+  padding: space(2);
+  overflow: hidden;
+  pointer-events: none;
+  text-align: center;
+}
+
+.treemapLabel {
+  display: block;
+  max-width: 100%;
+  overflow: hidden;
+  font-size: rem(13);
+  font-weight: 700;
+  line-height: 1.15;
+  text-overflow: ellipsis;
+  text-shadow: none;
+  white-space: nowrap;
+}
+
+.treemapValue {
+  font-size: rem(14);
+  font-weight: 800;
+  line-height: 1;
+  text-shadow: none;
+}
+
+@include reduced-motion {
+  .periodTab {
+    transition-duration: 1ms !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .cardHeader {
+    flex-direction: column;
+  }
+
+  .cardAction {
+    width: 100%;
+  }
+
+  .periodTabs {
+    width: 100%;
+  }
+
+  .periodTab {
+    flex: 1;
+  }
+
+  .radarChart,
+  .treemapChart,
+  .trendChart {
+    height: rem(280);
+  }
+}
