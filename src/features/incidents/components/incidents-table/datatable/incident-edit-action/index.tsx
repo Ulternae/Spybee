@@ -48,6 +48,7 @@ const getIncidentInitialValues = (
 const IncidentEditAction = ({ incident, options, onSuccess }: IncidentEditActionProps) => {
   const tActions = useTranslations("common.actions");
   const tEdit = useTranslations("incidents.edit");
+  const [menuOpen, setMenuOpen] = useState(false);
   const [open, setOpen] = useState(false);
 
   const handleSuccess = () => {
@@ -55,9 +56,14 @@ const IncidentEditAction = ({ incident, options, onSuccess }: IncidentEditAction
     onSuccess();
   };
 
+  const handleOpenEdit = () => {
+    setMenuOpen(false);
+    window.setTimeout(() => setOpen(true), 0);
+  };
+
   return (
     <>
-      <DropdownMenu>
+      <DropdownMenu modal={false} open={menuOpen} onOpenChange={setMenuOpen}>
         <DropdownMenuTrigger asChild>
           <Button
             type="button"
@@ -76,7 +82,10 @@ const IncidentEditAction = ({ incident, options, onSuccess }: IncidentEditAction
         <DropdownMenuContent align="end" className={styles.actionsContent}>
           <DropdownMenuItem
             className={styles.actionItem}
-            onSelect={() => setOpen(true)}
+            onSelect={(event) => {
+              event.preventDefault();
+              handleOpenEdit();
+            }}
           >
             {tActions("edit")}
           </DropdownMenuItem>
