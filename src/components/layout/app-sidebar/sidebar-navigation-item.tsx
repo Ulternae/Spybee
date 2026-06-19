@@ -8,14 +8,15 @@ interface SidebarNavigationItemProps {
   pathname: string;
   isAuthenticated: boolean;
   hasActiveOrganization: boolean;
+  hasActiveProject: boolean;
   onNavigate: () => void;
 }
 
-const SidebarNavigationItem = ({ item, pathname, isAuthenticated, hasActiveOrganization, onNavigate }: SidebarNavigationItemProps) => {
+const SidebarNavigationItem = ({ item, pathname, isAuthenticated, hasActiveOrganization, hasActiveProject, onNavigate, }: SidebarNavigationItemProps) => {
 
   const Icon = item.icon;
 
-  const disabled = isItemDisabled({ item, isAuthenticated, hasActiveOrganization });
+  const disabled = isItemDisabled({ item, isAuthenticated, hasActiveOrganization, hasActiveProject, });
   const active = !disabled && isRouteActive({ pathname, href: item.href });
 
   const content = (

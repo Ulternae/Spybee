@@ -1,0 +1,27 @@
+{
+  "title": "Controla tu obra. Entiende su avance",
+  "description": "Actúa antes de los retrasos. Integra datos de drones, cámaras 360°, time-lapse y WhatsApp, con IA que anticipa riesgos y alinea a tu equipo en tiempo real.",
+  "routes_label": "Rutas principales",
+  "routes": {
+    "organizations": {
+      "title": "Organizaciones",
+      "description": "Crea o selecciona la empresa propietaria de tus proyectos."
+    },
+    "projects": {
+      "title": "Proyectos",
+      "description": "Gestiona las obras activas y sus equipos."
+    },
+    "incidents": {
+      "title": "Incidencias",
+      "description": "Revisa indicadores, filtros, tablas y detalles operativos."
+    },
+    "map": {
+      "title": "Mapa",
+      "description": "Visualiza y crea incidencias directamente sobre el mapa del proyecto."
+    },
+    "settings": {
+      "title": "Configuración",
+      "description": "Actualiza tu cuenta, seguridad y preferencias de la aplicación."
+    }
+  }
+}

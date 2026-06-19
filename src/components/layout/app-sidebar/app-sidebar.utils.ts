@@ -9,6 +9,7 @@ interface IsItemDisabledProps {
   item: NavigationItem;
   isAuthenticated: boolean;
   hasActiveOrganization: boolean;
+  hasActiveProject: boolean;
 }
 
 const isRouteActive = ({ pathname, href }: IsRouteActiveProps) => {
@@ -19,12 +20,16 @@ const isRouteActive = ({ pathname, href }: IsRouteActiveProps) => {
   return pathname === href || pathname.startsWith(`${href}/`);
 };
 
-const isItemDisabled = ({ item, isAuthenticated, hasActiveOrganization }: IsItemDisabledProps) => {
+const isItemDisabled = ({ item, isAuthenticated, hasActiveOrganization, hasActiveProject, }: IsItemDisabledProps) => {
   if (item.requiresAuth && !isAuthenticated) {
     return true;
   }
 
   if (item.requiresOrganization && !hasActiveOrganization) {
+    return true;
+  }
+
+  if (item.requiresProject && !hasActiveProject) {
     return true;
   }
 

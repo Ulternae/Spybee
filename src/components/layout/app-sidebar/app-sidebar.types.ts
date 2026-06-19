@@ -9,6 +9,7 @@ interface NavigationItem {
   badge?: string;
   requiresAuth?: boolean;
   requiresOrganization?: boolean;
+  requiresProject?: boolean;
 }
 
 interface NavigationGroup {

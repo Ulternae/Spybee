@@ -1,0 +1,27 @@
+{
+  "title": "Control your site. Understand its progress",
+  "description": "Act before delays happen. Integrate data from drones, 360° cameras, time-lapse and WhatsApp, with AI that anticipates risks and aligns your team in real time.",
+  "routes_label": "Main routes",
+  "routes": {
+    "organizations": {
+      "title": "Organizations",
+      "description": "Create or select the company that owns your projects."
+    },
+    "projects": {
+      "title": "Projects",
+      "description": "Manage the active construction sites and their teams."
+    },
+    "incidents": {
+      "title": "Incidents",
+      "description": "Review indicators, filters, tables and operational details."
+    },
+    "map": {
+      "title": "Map",
+      "description": "View and create incidents directly over the project map."
+    },
+    "settings": {
+      "title": "Settings",
+      "description": "Update your account, security and application preferences."
+    }
+  }
+}

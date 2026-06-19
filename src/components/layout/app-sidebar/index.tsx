@@ -40,6 +40,7 @@ const AppSidebar = () => {
   const isAuthenticated = useAppStore((state) => state.isAuthenticated);
   const hasActiveOrganization = useAppStore((state) => Boolean(state.activeOrganization),);
   const activeProject = useAppStore((state) => state.activeProject);
+  const hasActiveProject = Boolean(activeProject);
   const activeOrganization = useAppStore((state) => state.activeOrganization);
 
   const closeMobileSidebar = () => {
@@ -73,6 +74,7 @@ const AppSidebar = () => {
           badge: "3",
           requiresAuth: true,
           requiresOrganization: true,
+          requiresProject: true,
         },
         {
           label: tRoutes("map"),
@@ -80,6 +82,7 @@ const AppSidebar = () => {
           icon: MinaMap,
           requiresAuth: true,
           requiresOrganization: true,
+          requiresProject: true,
         },
         {
           label: tRoutes("organizations"),
@@ -135,6 +138,7 @@ const AppSidebar = () => {
                     pathname={pathname}
                     isAuthenticated={isAuthenticated}
                     hasActiveOrganization={hasActiveOrganization}
+                    hasActiveProject={hasActiveProject}
                     onNavigate={closeMobileSidebar}
                   />
                 ))}
@@ -151,6 +155,7 @@ const AppSidebar = () => {
             pathname={pathname}
             isAuthenticated={isAuthenticated}
             hasActiveOrganization={hasActiveOrganization}
+            hasActiveProject={hasActiveProject}
             onNavigate={closeMobileSidebar}
           />
         </SidebarMenu>
