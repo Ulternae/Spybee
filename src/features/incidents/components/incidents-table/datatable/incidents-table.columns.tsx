@@ -111,9 +111,9 @@ const useIncidentsTableColumns = ({ canUpdateIncidents, options, onEditSuccess }
     },
     {
       id: "actions",
-      minSize: 22,
-      maxSize: 22,
-      size: 22,
+      minSize: 50,
+      maxSize: 50,
+      size: 50,
       header: "",
       cell: ({ row }) => (
         <IncidentActionsCell

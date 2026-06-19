@@ -6,7 +6,7 @@
   left: space(2.5);
   z-index: 2;
   display: flex;
-  max-width: calc(100% - #{space(8)});
+  max-width: calc(100% - #{rem(220)});
   flex-wrap: wrap;
   gap: space(3);
   padding: space(2);
@@ -41,16 +41,21 @@
 
 @include until("md") {
   .root {
+    top: rem(62);
     right: space(3);
     left: space(3);
+    max-width: none;
+    flex-direction: column;
+    gap: space(2);
   }
 
   .label {
-    min-width: rem(70)
+    min-width: rem(70);
   }
 
   .field {
-    min-width: min(100%, rem(136));
-    flex: 1 1 rem(136);
+    width: 100%;
+    min-width: 0;
+    flex: none;
   }
 }

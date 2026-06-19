@@ -1,11 +1,11 @@
 @use "styles" as *;
 
-.content {
+.content:global([data-slot="popover-content"]) {
   width: min(calc(100vw - #{rem(16)}), rem(352));
   padding: 0;
 
   @media (min-width: 640px) {
-    width: auto;
+    width: min(calc(100vw - #{rem(32)}), rem(544));
   }
 }
 
@@ -123,6 +123,11 @@
   overflow-x: auto;
   border: 1px solid var(--input);
   border-radius: var(--radius-lg);
+
+  @media (min-width: 640px) {
+    min-width: rem(260);
+    overflow-x: hidden;
+  }
 }
 
 .calendarUi {
