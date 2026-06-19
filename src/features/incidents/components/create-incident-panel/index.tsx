@@ -14,6 +14,7 @@ import type {
   ReadyDataForm,
 } from "@/features/incidents/types/incident.types";
 import { IncidentForm } from "../incident-form";
+import styles from "./create-incident-panel.module.scss";
 
 interface CreateIncidentPanelProps {
   open: boolean;
@@ -27,8 +28,8 @@ const CreateIncidentPanel = ({ data, open, actions }: CreateIncidentPanelProps) 
 
   return (
     <Sheet open={open} onOpenChange={actions.onChangeState}>
-      <SheetContent>
-        <SheetHeader>
+      <SheetContent className={styles.content}>
+        <SheetHeader className={styles.header}>
           <SheetTitle>{t("title")}</SheetTitle>
           <SheetDescription>{t("description")}</SheetDescription>
         </SheetHeader>

@@ -127,158 +127,160 @@ const IncidentForm = ({ data, actions, incidentId, initialValues, mode = "create
       <input type="hidden" name="longitude" value={location.longitude} />
       <input type="hidden" name="dueDate" value={dueDate.toISOString()} />
 
-      <IncidentFormSection
-        title={t("fields.groups.general")}
-        description={t("fields.groups.general_description")}
-      >
-        <div className={styles.grid}>
-          <Input
-            name="title"
-            placeholder={t("fields.title")}
-            defaultValue={state.values.title}
-            isInvalid={Boolean(state.fieldErrors?.title)}
-            disabled={isDisabled}
-            required
-          />
-
-          <Select
-            name="categoryId"
-            defaultValue={state.values.categoryId}
-            disabled={isDisabled}
-          >
-            <SelectTrigger
-              aria-invalid={Boolean(state.fieldErrors?.categoryId)}
-              className={styles.select}
-            >
-              <SelectValue placeholder={t("fields.category")} />
-            </SelectTrigger>
-            <SelectContent>
-              {options.categories.map((category) => (
-                <SelectItem key={category.id} value={category.id}>
-                  {category[categoryNameKey]}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-
-          <Select
-            name="priority"
-            defaultValue={state.values.priority ?? IncidentPriority.MEDIUM}
-            disabled={isDisabled}
-          >
-            <SelectTrigger
-              aria-invalid={Boolean(state.fieldErrors?.priority)}
-              className={styles.select}
-            >
-              <SelectValue placeholder={t("fields.priority")} />
-            </SelectTrigger>
-            <SelectContent>
-              {Object.values(IncidentPriority).map((priority) => (
-                <SelectItem key={priority} value={priority}>
-                  {t(`enums.incident_priority.${priority}`)}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-
-          <Calendar
-            date={dueDate}
-            hour={dueHour}
-            onDateChange={handleDueDateChange}
-          >
+      <div className={styles.fields}>
+        <IncidentFormSection
+          title={t("fields.groups.general")}
+          description={t("fields.groups.general_description")}
+        >
+          <div className={styles.grid}>
             <Input
-              readOnly
-              placeholder={t("fields.due_date")}
-              value={dueDate.toLocaleString(locale)}
-              isInvalid={Boolean(state.fieldErrors?.dueDate)}
+              name="title"
+              placeholder={t("fields.title")}
+              defaultValue={state.values.title}
+              isInvalid={Boolean(state.fieldErrors?.title)}
+              disabled={isDisabled}
+              required
+            />
+
+            <Select
+              name="categoryId"
+              defaultValue={state.values.categoryId}
+              disabled={isDisabled}
+            >
+              <SelectTrigger
+                aria-invalid={Boolean(state.fieldErrors?.categoryId)}
+                className={styles.select}
+              >
+                <SelectValue placeholder={t("fields.category")} />
+              </SelectTrigger>
+              <SelectContent>
+                {options.categories.map((category) => (
+                  <SelectItem key={category.id} value={category.id}>
+                    {category[categoryNameKey]}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+
+            <Select
+              name="priority"
+              defaultValue={state.values.priority ?? IncidentPriority.MEDIUM}
+              disabled={isDisabled}
+            >
+              <SelectTrigger
+                aria-invalid={Boolean(state.fieldErrors?.priority)}
+                className={styles.select}
+              >
+                <SelectValue placeholder={t("fields.priority")} />
+              </SelectTrigger>
+              <SelectContent>
+                {Object.values(IncidentPriority).map((priority) => (
+                  <SelectItem key={priority} value={priority}>
+                    {t(`enums.incident_priority.${priority}`)}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+
+            <Calendar
+              date={dueDate}
+              hour={dueHour}
+              onDateChange={handleDueDateChange}
+            >
+              <Input
+                readOnly
+                placeholder={t("fields.due_date")}
+                value={dueDate.toLocaleString(locale)}
+                isInvalid={Boolean(state.fieldErrors?.dueDate)}
+                disabled={isDisabled}
+              />
+            </Calendar>
+          </div>
+        </IncidentFormSection>
+
+        <IncidentFormSection
+          title={t("fields.groups.description")}
+          description={t("fields.groups.description_description")}
+        >
+          <div className={styles.grid}>
+            <Textarea
+              name="description"
+              placeholder={t("fields.description")}
+              defaultValue={state.values.description}
+              aria-invalid={Boolean(state.fieldErrors?.description)}
+              disabled={isDisabled}
+              required
+            />
+
+            <Textarea
+              name="locationDescription"
+              placeholder={t("fields.location_description")}
+              defaultValue={state.values.locationDescription}
+              aria-invalid={Boolean(state.fieldErrors?.locationDescription)}
               disabled={isDisabled}
             />
-          </Calendar>
-        </div>
-      </IncidentFormSection>
+          </div>
+        </IncidentFormSection>
 
-      <IncidentFormSection
-        title={t("fields.groups.description")}
-        description={t("fields.groups.description_description")}
-      >
-        <div className={styles.grid}>
-          <Textarea
-            name="description"
-            placeholder={t("fields.description")}
-            defaultValue={state.values.description}
-            aria-invalid={Boolean(state.fieldErrors?.description)}
-            disabled={isDisabled}
-            required
-          />
+        <IncidentFormSection
+          title={t("fields.groups.location")}
+          description={t("fields.groups.location_description")}
+        >
+          <LocationPreview location={location} />
+        </IncidentFormSection>
 
-          <Textarea
-            name="locationDescription"
-            placeholder={t("fields.location_description")}
-            defaultValue={state.values.locationDescription}
-            aria-invalid={Boolean(state.fieldErrors?.locationDescription)}
-            disabled={isDisabled}
-          />
-        </div>
-      </IncidentFormSection>
+        <IncidentFormSection
+          title={t("fields.groups.classification")}
+          description={t("fields.groups.classification_description")}
+        >
+          <div className={styles.grid}>
+            <IncidentTagsCombobox
+              name="tagIds"
+              tags={options.tags}
+              value={tagIds}
+              onValueChange={setTagIds}
+              placeholder={t("fields.tags")}
+              searchPlaceholder={t("fields.search.tags")}
+              emptyMessage={t("fields.empty.tags")}
+              disabled={isDisabled}
+            />
+          </div>
+        </IncidentFormSection>
 
-      <IncidentFormSection
-        title={t("fields.groups.location")}
-        description={t("fields.groups.location_description")}
-      >
-        <LocationPreview location={location} />
-      </IncidentFormSection>
+        <IncidentFormSection
+          title={t("fields.groups.people")}
+          description={t("fields.groups.people_description")}
+        >
+          <div className={styles.grid}>
+            <IncidentUsersCombobox
+              name="assigneeIds"
+              users={options.members}
+              value={assigneeIds}
+              onValueChange={setAssigneeIds}
+              placeholder={t("fields.assignees")}
+              searchPlaceholder={t("fields.search.users")}
+              emptyMessage={t("fields.empty.users")}
+              disabled={isDisabled}
+            />
 
-      <IncidentFormSection
-        title={t("fields.groups.classification")}
-        description={t("fields.groups.classification_description")}
-      >
-        <div className={styles.grid}>
-          <IncidentTagsCombobox
-            name="tagIds"
-            tags={options.tags}
-            value={tagIds}
-            onValueChange={setTagIds}
-            placeholder={t("fields.tags")}
-            searchPlaceholder={t("fields.search.tags")}
-            emptyMessage={t("fields.empty.tags")}
-            disabled={isDisabled}
-          />
-        </div>
-      </IncidentFormSection>
+            <IncidentUsersCombobox
+              name="observerIds"
+              users={options.members}
+              value={observerIds}
+              onValueChange={setObserverIds}
+              placeholder={t("fields.observers")}
+              searchPlaceholder={t("fields.search.users")}
+              emptyMessage={t("fields.empty.users")}
+              disabled={isDisabled}
+            />
+          </div>
+        </IncidentFormSection>
 
-      <IncidentFormSection
-        title={t("fields.groups.people")}
-        description={t("fields.groups.people_description")}
-      >
-        <div className={styles.grid}>
-          <IncidentUsersCombobox
-            name="assigneeIds"
-            users={options.members}
-            value={assigneeIds}
-            onValueChange={setAssigneeIds}
-            placeholder={t("fields.assignees")}
-            searchPlaceholder={t("fields.search.users")}
-            emptyMessage={t("fields.empty.users")}
-            disabled={isDisabled}
-          />
-
-          <IncidentUsersCombobox
-            name="observerIds"
-            users={options.members}
-            value={observerIds}
-            onValueChange={setObserverIds}
-            placeholder={t("fields.observers")}
-            searchPlaceholder={t("fields.search.users")}
-            emptyMessage={t("fields.empty.users")}
-            disabled={isDisabled}
-          />
-        </div>
-      </IncidentFormSection>
-
-      <FormErrors
-        fieldErrors={state.fieldErrors}
-        formError={state.formError}
-      />
+        <FormErrors
+          fieldErrors={state.fieldErrors}
+          formError={state.formError}
+        />
+      </div>
 
       <div className={styles.actions}>
         <Button
